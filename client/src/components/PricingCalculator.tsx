@@ -1,8 +1,9 @@
+
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 
 interface PricingTier {
@@ -12,131 +13,95 @@ interface PricingTier {
   description: string;
   features: string[];
   popular?: boolean;
-}
-
-interface Component {
-  id: string;
-  name: string;
-  description: string;
-  additionalCost: number;
+  examples: string[];
 }
 
 const PRICING_TIERS: PricingTier[] = [
   {
     id: 'template',
-    name: 'Template',
+    name: 'Template Modules',
     price: 200,
-    description: 'Pre-built components with basic customization',
+    description: 'Complete learning topics using proven component combinations',
     features: [
-      'Choose from library',
-      'Color & font changes',
+      'Pre-designed learning experiences',
+      'Color & font customization',
       'Basic configuration',
-      '48hr delivery'
+      '24-48hr delivery'
+    ],
+    examples: [
+      'Introduction to Project Management',
+      'Basic Communication Skills',
+      'Time Management Fundamentals'
     ]
   },
   {
     id: 'curated',
-    name: 'Curated',
+    name: 'Curated Modules',
     price: 300,
-    description: 'Customized components for your brand',
+    description: 'Custom-designed complete learning experiences',
     features: [
       'Everything in Template',
       'Brand integration',
       'Content adaptation',
       'Custom interactions'
     ],
-    popular: true
+    popular: true,
+    examples: [
+      'Risk Assessment Training',
+      'Leadership Development Workshop',
+      'Customer Service Excellence'
+    ]
   },
   {
     id: 'custom',
-    name: 'Custom',
+    name: 'Custom Modules',
     price: 500,
-    description: 'Fully bespoke components built to spec',
+    description: 'Entirely new complete learning topics built to your specifications',
     features: [
       'Everything in Curated',
       'Unique functionality',
       'Advanced integrations',
       'Ongoing support'
+    ],
+    examples: [
+      'Company Values Workshop',
+      'Technical Skills Assessment',
+      'Compliance Training Suite'
     ]
-  }
-];
-
-const COMPONENTS: Component[] = [
-  {
-    id: 'quiz',
-    name: 'Quiz System',
-    description: 'Interactive assessments',
-    additionalCost: 50
-  },
-  {
-    id: 'reflection',
-    name: 'Reflection Journal',
-    description: 'Thoughtful responses',
-    additionalCost: 50
-  },
-  {
-    id: 'timeline',
-    name: 'Timeline',
-    description: 'Historical progression',
-    additionalCost: 50
-  },
-  {
-    id: 'comparison',
-    name: 'Comparison Tool',
-    description: 'Spectrum analysis',
-    additionalCost: 50
-  },
-  {
-    id: 'grid',
-    name: 'Grid Explorer',
-    description: 'Content organization',
-    additionalCost: 50
-  },
-  {
-    id: 'tabs',
-    name: 'Tab System',
-    description: 'Lesson navigation',
-    additionalCost: 50
   }
 ];
 
 interface PricingCalculatorProps {
   onOrderSubmit?: (orderData: {
     tier: string;
-    components: string[];
+    modules: number;
     totalCost: number;
   }) => void;
 }
 
 export default function PricingCalculator({ onOrderSubmit }: PricingCalculatorProps) {
   const [selectedTier, setSelectedTier] = useState<string | null>(null);
-  const [selectedComponents, setSelectedComponents] = useState<Set<string>>(new Set());
+  const [moduleCount, setModuleCount] = useState<number>(1);
   const { toast } = useToast();
 
   const selectedTierData = PRICING_TIERS.find(tier => tier.id === selectedTier);
-  const baseCost = selectedTierData?.price || 0;
-  const additionalComponentsCost = Math.max(0, selectedComponents.size - 1) * 50; // First component included
-  const totalCost = baseCost + additionalComponentsCost;
+  const baseCostPerModule = selectedTierData?.price || 0;
+  const totalCost = baseCostPerModule * moduleCount;
 
   const handleTierSelect = (tierId: string) => {
     setSelectedTier(tierId);
   };
 
-  const handleComponentToggle = (componentId: string) => {
-    const newSelection = new Set(selectedComponents);
-    if (newSelection.has(componentId)) {
-      newSelection.delete(componentId);
-    } else {
-      newSelection.add(componentId);
-    }
-    setSelectedComponents(newSelection);
+  const handleModuleCountChange = (value: string) => {
+    const count = parseInt(value) || 1;
+    setModuleCount(Math.max(1, Math.min(10, count))); // Limit between 1-10 modules
   };
 
   const handleOrderSubmit = () => {
-    if (!selectedTier || selectedComponents.size === 0) {
+    if (!selectedTier) {
       toast({
         title: "Please complete your selection",
-        description: "Select a service tier and at least one component to continue.",
+        description: "Select a service tier to continue.",
         variant: "destructive"
       });
       return;
@@ -144,7 +109,7 @@ export default function PricingCalculator({ onOrderSubmit }: PricingCalculatorPr
 
     const orderData = {
       tier: selectedTier,
-      components: Array.from(selectedComponents),
+      modules: moduleCount,
       totalCost
     };
 
@@ -152,23 +117,24 @@ export default function PricingCalculator({ onOrderSubmit }: PricingCalculatorPr
 
     toast({
       title: "Order Submitted!",
-      description: `Your ${selectedTierData?.name} project with ${selectedComponents.size} components has been submitted. Total: £${totalCost}`,
+      description: `Your ${selectedTierData?.name} project with ${moduleCount} module${moduleCount > 1 ? 's' : ''} has been submitted. Total: £${totalCost}`,
       variant: "default"
     });
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden" data-testid="pricing-calculator">
+    <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden" data-testid="pricing-calculator">
       <div className="gradient-primary text-white p-6">
         <h3 className="text-xl font-sf font-bold mb-2">Project Cost Calculator</h3>
-        <p className="text-white/90">Select your components and customization level to get instant pricing</p>
+        <p className="text-white/90">One Module = One Complete Learning Topic</p>
+        <p className="text-sm text-white/80 mt-1">Multiple components work together within each module to create cohesive learning experiences</p>
       </div>
 
       <div className="p-6">
         {/* Service Tier Selection */}
         <div className="mb-8">
-          <h4 className="text-lg font-semibold mb-4">Choose Your Service Level</h4>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <h4 className="text-lg font-semibold mb-4">Choose Your Module Type</h4>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {PRICING_TIERS.map((tier) => (
               <Card
                 key={tier.id}
@@ -180,55 +146,42 @@ export default function PricingCalculator({ onOrderSubmit }: PricingCalculatorPr
                 onClick={() => handleTierSelect(tier.id)}
                 data-testid={`tier-${tier.id}`}
               >
-                <CardContent className="p-4">
-                  <div className="text-center">
+                <CardContent className="p-5">
+                  <div className="text-center mb-4">
                     {tier.popular && (
-                      <Badge className="mb-2 bg-primary text-white" data-testid="badge-popular">
-                        Popular
+                      <Badge className="mb-3 bg-primary text-white" data-testid="badge-popular">
+                        Most Popular
                       </Badge>
                     )}
-                    <div className="text-2xl font-bold text-primary mb-2">£{tier.price}</div>
-                    <div className="font-semibold mb-2">{tier.name}</div>
+                    <div className="text-3xl font-bold text-primary mb-2">£{tier.price}</div>
+                    <div className="text-sm text-gray-500 mb-2">per module</div>
+                    <div className="font-semibold mb-3 text-lg">{tier.name}</div>
                     <div className="text-sm text-gray-600 mb-4">{tier.description}</div>
-                    <ul className="text-xs text-left space-y-1">
-                      {tier.features.map((feature, index) => (
-                        <li key={index}>✓ {feature}</li>
-                      ))}
-                    </ul>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Component Selection */}
-        <div className="mb-8">
-          <h4 className="text-lg font-semibold mb-4">
-            Select Components (£50 each additional)
-          </h4>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {COMPONENTS.map((component) => (
-              <Card
-                key={component.id}
-                className={`cursor-pointer transition-all ${
-                  selectedComponents.has(component.id)
-                    ? 'border-primary bg-primary/5'
-                    : 'hover:bg-gray-50'
-                }`}
-                onClick={() => handleComponentToggle(component.id)}
-                data-testid={`component-${component.id}`}
-              >
-                <CardContent className="p-3">
-                  <div className="flex items-center space-x-3">
-                    <Checkbox
-                      checked={selectedComponents.has(component.id)}
-                      onChange={() => {}} // Controlled by card click
-                      data-testid={`checkbox-${component.id}`}
-                    />
+                  
+                  <div className="text-left space-y-3">
                     <div>
-                      <div className="font-medium text-sm">{component.name}</div>
-                      <div className="text-xs text-gray-500">{component.description}</div>
+                      <div className="font-medium text-sm mb-2">Features:</div>
+                      <ul className="text-xs space-y-1">
+                        {tier.features.map((feature, index) => (
+                          <li key={index} className="flex items-start">
+                            <span className="text-green-500 mr-2">✓</span>
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+                    <div>
+                      <div className="font-medium text-sm mb-2">Example modules:</div>
+                      <ul className="text-xs text-gray-600 space-y-1">
+                        {tier.examples.map((example, index) => (
+                          <li key={index} className="flex items-start">
+                            <span className="text-primary mr-2">•</span>
+                            {example}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
                 </CardContent>
@@ -237,53 +190,92 @@ export default function PricingCalculator({ onOrderSubmit }: PricingCalculatorPr
           </div>
         </div>
 
+        {/* Module Count Selection */}
+        <div className="mb-8">
+          <h4 className="text-lg font-semibold mb-4">
+            How many modules do you need?
+          </h4>
+          <div className="flex items-center space-x-4">
+            <label htmlFor="moduleCount" className="text-sm font-medium">
+              Number of modules:
+            </label>
+            <Input
+              id="moduleCount"
+              type="number"
+              min="1"
+              max="10"
+              value={moduleCount}
+              onChange={(e) => handleModuleCountChange(e.target.value)}
+              className="w-24"
+              data-testid="input-module-count"
+            />
+            <span className="text-sm text-gray-600">
+              (each module is a complete learning topic)
+            </span>
+          </div>
+        </div>
+
+        {/* Available Tools Info */}
+        <div className="mb-8">
+          <h4 className="text-lg font-semibold mb-4">Available Tools for Your Modules</h4>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {[
+              { name: 'Quiz Systems', desc: 'Interactive assessments' },
+              { name: 'Reflection Journals', desc: 'Thoughtful responses' },
+              { name: 'Interactive Timelines', desc: 'Historical progression' },
+              { name: 'Comparison Tools', desc: 'Spectrum analysis' },
+              { name: 'Grid Explorers', desc: 'Content organization' },
+              { name: 'Tab Systems', desc: 'Lesson navigation' }
+            ].map((component, index) => (
+              <Card key={index} className="bg-gray-50">
+                <CardContent className="p-3">
+                  <div className="font-medium text-sm">{component.name}</div>
+                  <div className="text-xs text-gray-500">{component.desc}</div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          <p className="text-sm text-gray-600 mt-3">
+            Each module can include multiple components working together to create a complete learning experience.
+          </p>
+        </div>
+
         {/* Cost Breakdown */}
         <Card className="bg-gray-50">
           <CardHeader>
             <CardTitle className="text-lg">Project Summary</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2 mb-4">
+            <div className="space-y-3 mb-4">
               <div className="flex justify-between">
-                <span>Service Tier:</span>
+                <span>Module Type:</span>
                 <span data-testid="text-tier-display">
-                  {selectedTierData?.name || 'Select a tier above'}
+                  {selectedTierData?.name || 'Select a type above'}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span>Base Cost:</span>
-                <span data-testid="text-base-cost">£{baseCost}</span>
+                <span>Cost per Module:</span>
+                <span data-testid="text-cost-per-module">£{baseCostPerModule}</span>
               </div>
               <div className="flex justify-between">
-                <span>Additional Components:</span>
-                <span data-testid="text-component-cost">£{additionalComponentsCost}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Selected Components:</span>
-                <span data-testid="text-selected-components">
-                  {selectedComponents.size > 0 
-                    ? Array.from(selectedComponents).map(id => 
-                        COMPONENTS.find(c => c.id === id)?.name
-                      ).join(', ')
-                    : 'None'
-                  }
-                </span>
+                <span>Number of Modules:</span>
+                <span data-testid="text-module-count">{moduleCount}</span>
               </div>
               <hr className="my-3" />
               <div className="flex justify-between text-lg font-bold">
-                <span>Total Cost:</span>
+                <span>Total Project Cost:</span>
                 <span data-testid="text-total-cost">£{totalCost}</span>
               </div>
             </div>
             <Button
               onClick={handleOrderSubmit}
-              disabled={!selectedTier || selectedComponents.size === 0}
+              disabled={!selectedTier}
               className="w-full gradient-primary hover:opacity-90 transition-opacity"
               data-testid="button-order"
             >
-              {selectedTier && selectedComponents.size > 0
-                ? `Place Order - £${totalCost}`
-                : 'Place Order - Start Project'
+              {selectedTier
+                ? `Place Order - £${totalCost} for ${moduleCount} module${moduleCount > 1 ? 's' : ''}`
+                : 'Place Order - Select Module Type'
               }
             </Button>
           </CardContent>

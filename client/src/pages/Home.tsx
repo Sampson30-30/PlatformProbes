@@ -71,15 +71,21 @@ export default function Home() {
     }
   };
 
-  const handlePricingOrder = (orderData: { tier: string; components: string[]; totalCost: number }) => {
+  const handlePricingOrder = (orderData: { tier: string; modules: number; totalCost: number }) => {
     // Scroll to contact form and pre-fill it
     const contactSection = document.getElementById('contact');
     contactSection?.scrollIntoView({ behavior: 'smooth' });
     
+    const tierNames = {
+      template: 'Template Modules',
+      curated: 'Curated Modules', 
+      custom: 'Custom Modules'
+    };
+    
     setContactForm(prev => ({
       ...prev,
-      projectType: orderData.tier.charAt(0).toUpperCase() + orderData.tier.slice(1) + ` (£${orderData.totalCost})`,
-      components: orderData.components.join(', ')
+      projectType: `${tierNames[orderData.tier as keyof typeof tierNames]} (£${orderData.totalCost})`,
+      components: `${orderData.modules} module${orderData.modules > 1 ? 's' : ''}`
     }));
   };
 
@@ -180,8 +186,8 @@ export default function Home() {
               Interactive Component Library
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Every component includes working demos, complete documentation, and can be customised to match your brand. 
-              No black boxes - see exactly what you're getting.
+              These tools work together within your learning modules to create complete educational experiences. 
+              Every module includes working demos, complete documentation, and can be customised to match your brand.
             </p>
           </div>
 
@@ -296,7 +302,8 @@ export default function Home() {
               Transparent, Self-Service Pricing
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              No more lengthy consultations or surprise costs. Calculate exactly what your project will cost and place your order immediately.
+              One Module = One Complete Learning Topic. Multiple components work together within each module to create cohesive learning experiences. 
+              No more lengthy consultations or surprise costs.
             </p>
           </div>
 
@@ -338,11 +345,11 @@ export default function Home() {
                 <ul className="space-y-2 text-sm text-gray-600">
                   <li className="flex items-center">
                     <CheckCircle className="mr-2 text-green-500" size={16} />
-                    Production-ready components
+                    Complete learning modules
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="mr-2 text-green-500" size={16} />
-                    Complete documentation
+                    Multiple components per module
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="mr-2 text-green-500" size={16} />
@@ -364,15 +371,15 @@ export default function Home() {
                 <ul className="space-y-2 text-sm text-gray-600">
                   <li className="flex items-center">
                     <Clock className="mr-2 text-blue-500" size={16} />
-                    Template: 24-48 hours
+                    Template Modules: 24-48 hours
                   </li>
                   <li className="flex items-center">
                     <Clock className="mr-2 text-blue-500" size={16} />
-                    Curated: 3-5 business days
+                    Curated Modules: 3-5 business days
                   </li>
                   <li className="flex items-center">
                     <Clock className="mr-2 text-blue-500" size={16} />
-                    Custom: 5-10 business days
+                    Custom Modules: 5-10 business days
                   </li>
                   <li className="flex items-center">
                     <Clock className="mr-2 text-blue-500" size={16} />
@@ -437,19 +444,19 @@ export default function Home() {
                         <SelectValue placeholder="Select project type" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Template (£200)">Template (£200)</SelectItem>
-                        <SelectItem value="Curated (£300)">Curated (£300)</SelectItem>
-                        <SelectItem value="Custom (£500)">Custom (£500)</SelectItem>
+                        <SelectItem value="Template Modules (£200 per module)">Template Modules (£200 per module)</SelectItem>
+                        <SelectItem value="Curated Modules (£300 per module)">Curated Modules (£300 per module)</SelectItem>
+                        <SelectItem value="Custom Modules (£500 per module)">Custom Modules (£500 per module)</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   <div>
-                    <Label htmlFor="components">Required Components</Label>
+                    <Label htmlFor="components">Learning Topics / Modules Needed</Label>
                     <Textarea
                       id="components"
                       value={contactForm.components}
                       onChange={(e) => setContactForm(prev => ({ ...prev, components: e.target.value }))}
-                      placeholder="List the components you need or describe your requirements..."
+                      placeholder="Describe the learning topics you need (e.g., 'Risk Assessment Training', 'Company Values Workshop', 'Project Management Basics')..."
                       rows={3}
                       data-testid="textarea-components"
                     />

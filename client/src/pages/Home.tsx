@@ -194,7 +194,7 @@ export default function Home() {
               Interactive Component Library
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Every component includes working demos, complete documentation, and can be customized to match your brand. 
+              Every component includes working demos, complete documentation, and can be customised to match your brand. 
               No black boxes - see exactly what you're getting.
             </p>
           </div>
@@ -202,7 +202,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <ComponentDemo
               title="Interactive Quiz Component"
-              description="Engaging quiz system with instant feedback, progress tracking, and customizable scoring."
+              description="Engaging quiz system with instant feedback, progress tracking, and customisable scoring."
               badge="Popular"
               features={[
                 "Instant feedback",

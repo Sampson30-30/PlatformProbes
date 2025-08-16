@@ -140,20 +140,6 @@ export default function Home() {
                 Transform your learning platform with battle-tested interactive components. 
                 No more guesswork - see exactly what you're getting with live demos and transparent pricing.
               </p>
-              <div className="grid grid-cols-3 gap-6 mb-8">
-                <div className="text-center" data-testid="stat-components">
-                  <div className="text-3xl font-bold">200+</div>
-                  <div className="text-sm text-white/80">Components Delivered</div>
-                </div>
-                <div className="text-center" data-testid="stat-delivery">
-                  <div className="text-3xl font-bold">48hr</div>
-                  <div className="text-sm text-white/80">Average Delivery</div>
-                </div>
-                <div className="text-center" data-testid="stat-satisfaction">
-                  <div className="text-3xl font-bold">100%</div>
-                  <div className="text-sm text-white/80">Client Satisfaction</div>
-                </div>
-              </div>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   onClick={() => scrollToSection('components')}

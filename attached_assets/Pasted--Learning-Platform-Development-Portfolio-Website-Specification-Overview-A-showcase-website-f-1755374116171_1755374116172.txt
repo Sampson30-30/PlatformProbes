@@ -1,0 +1,154 @@
+# Learning Platform Development Portfolio Website Specification
+
+## Overview
+A showcase website for Alex's learning platform development services that demonstrates component templates and enables self-service pricing.
+
+## Core Objectives
+1. **Reduce unpaid consultations** - Let people understand what they're buying before they approach you
+2. **Demonstrate value clearly** - Show working examples of what £200 vs £300 vs £500 gets them
+3. **Enable self-service pricing** - People can calculate costs and place orders without extensive back-and-forth
+
+## Site Structure
+
+### 1. Header/Hero Section
+- **Headline**: "Custom Learning Platforms for Your Content"
+- **Subheading**: "Professional React-based learning modules built from proven educational components"
+- **Key stats**: "8+ proven templates • 1-4 week delivery • Used by [X] organisations"
+- **Primary CTA**: "Explore Templates" (scrolls to component showcase)
+
+### 2. Component Library Showcase
+**Layout**: Grid of interactive demo cards
+
+**Components to include** (prioritise these 6-8):
+- Lesson Template with tabs
+- Interactive Cards/Grid Explorer  
+- Process Section (step-by-step)
+- Reflection Journal
+- Quiz Component
+- Timeline Component
+- Tabbed Explorer
+- Comparison Spectrum
+
+**Each demo card shows**:
+- Live, working demo with sample content
+- Brief description: "Perfect for: [use cases]"
+- "£200 per module using this template"
+- "Try Demo" button to interact with component
+
+### 3. Pricing Structure
+**Three-tier explanation**:
+
+#### Template Modules - £200
+- **What you get**: Choose from our proven component library
+- **Your role**: Provide content, select which templates you want
+- **Our role**: Integrate your content into selected templates and deploy
+- **Best for**: Clients who know what they want and have content ready
+
+#### Curated Modules - £300  
+- **What you get**: Custom learning design using our component library
+- **Your role**: Provide raw content and learning objectives
+- **Our role**: Analyse content, design optimal learning flow, select and combine components
+- **Best for**: Clients with content but no learning design experience
+
+#### Custom Modules - £500
+- **What you get**: Entirely new components built for unique requirements
+- **Your role**: Provide detailed requirements for new functionality
+- **Our role**: Design and develop bespoke components and interactions
+- **Best for**: Unique visions that don't fit existing templates
+
+#### Additional Costs
+- **Setup Fee**: £100 (one-time - database, branding, deployment)
+- **Monthly Maintenance**: £150 (updates, hosting, support)
+
+### 4. How It Works Process
+**Simple 4-step visual**:
+1. **Choose**: Select templates or describe your needs
+2. **Content**: Send us your materials
+3. **Build**: We develop (1-4 weeks depending on tier)
+4. **Deploy**: Your learning platform goes live
+
+### 5. Pricing Calculator
+**Interactive tool**:
+- Checkboxes for template modules (each adds £200)
+- Radio button for service level (Template/Curated/Custom affects per-module price)
+- Checkbox for setup fee (£100)
+- Checkbox for maintenance (£150/month)
+- **Live total calculation**
+- **Capacity note**: "We deliver 1-2 modules per month"
+
+### 6. FAQ Section
+**Key questions**:
+- What's the difference between template and curated modules?
+- How long does delivery take?
+- What content formats do you accept?
+- Can I see examples of completed projects?
+- What happens if I need changes after delivery?
+- Do you provide training on how to use the platform?
+
+### 7. Contact/Order Section
+**Simple form**:
+- Contact details
+- Project description (brief)
+- Selected modules from calculator
+- Estimated timeline needs
+- **CTA**: "Get Started" (not "Contact us" - implies they're ready to proceed)
+
+### 8. About Alex (Small section)
+**Brief credibility builder**:
+- Teaching background + development skills
+- "The unique combination of classroom experience and technical expertise"
+- Built platforms for [church/governance client examples]
+- Currently working full-time, taking select evening/weekend projects
+
+## Technical Requirements
+
+### Performance & UX
+- Fast loading component demos
+- Mobile responsive
+- Professional, clean design
+- Working interactive elements (not just screenshots)
+
+### Component Demos
+- Each template should be populated with realistic sample content
+- Fully functional (people can click through, submit forms, see interactions)
+- Clear "This is a demo" messaging to avoid confusion
+- Examples should span different subject areas (business, education, training)
+
+### Pricing Calculator
+- Real-time calculation
+- Clear breakdown of costs
+- Export quote as PDF option
+- Integrate with contact form
+
+## Content Strategy
+
+### Messaging Focus
+- **Efficiency**: "Stop building learning platforms from scratch"
+- **Expertise**: "Pedagogy-driven design that actually works"
+- **Transparency**: "Clear pricing, clear deliverables, clear timelines"
+- **Quality**: "Proven templates used by real organisations"
+
+### Tone
+- Professional but approachable
+- Confident without being pushy
+- Focus on practical benefits
+- Avoid over-technical language
+
+## Success Metrics
+- Reduced "quick chat" requests at church
+- Increased qualified leads (people who understand pricing before contact)
+- Higher conversion rate (clearer value proposition)
+- More efficient project scoping (less back-and-forth)
+
+## Future Expansion Ideas (Not MVP)
+- Case studies showing before/after learning experiences
+- Client testimonials
+- Blog about learning design principles
+- More detailed pedagogical explanations
+- Video walkthroughs of components
+
+## Development Notes
+- Use your existing React components as the foundation
+- Ensure demos work offline/standalone
+- Consider using your lesson-template.tsx as the base for displaying component demos
+- Make it easy to add new components to the showcase as you build them

@@ -224,7 +224,7 @@ export default function Home() {
 
             <ComponentDemo
               title="Interactive Timeline"
-              description="Engaging historical progressions with expandable details and thematic connections."
+              description="I built this after watching too many teachers click through endless slides trying to show how something developed over time. Students would lose track of the bigger picture - they'd see individual events but miss the evolution. With this timeline, everything stays visible on one screen. I can explain connections between different periods while learners see the whole journey."
               badge="Visual"
               features={[
                 "Expandable events",
@@ -237,7 +237,7 @@ export default function Home() {
 
             <ComponentDemo
               title="Comparison Spectrum"
-              description="Help learners understand complex choices with visual spectrum comparisons."
+              description="Too often, students learn concepts in isolation - they understand Method A and Method B, but can't explain when to use which one. I built this component because I kept seeing learners struggle with 'why would I choose this approach over that one?' The comparison spectrum lets students explore different options side-by-side and understand the trade-offs. I've used it for everything from teaching Bible translation differences (when do you prioritise accuracy vs readability?) to helping businesses compare software solutions. Instead of just knowing what the options are, students learn how to make informed decisions between them."
               badge="Analytical"
               features={[
                 "Visual organization",
@@ -250,7 +250,7 @@ export default function Home() {
 
             <ComponentDemo
               title="Interactive Grid Explorer"
-              description="Organize complex content with multiple views, search, and rich hover interactions."
+              description="Dense information can overwhelm students before they even start learning. I built this component after watching learners struggle with large amounts of content - like trying to make sense of 66 Bible books or a company's entire course catalogue. The grid explorer lets students organise the same information in different ways - maybe they want to group things by topic one moment, then by difficulty level the next. Instead of drowning in data, they can slice and dice it however makes sense to them. I've used it for everything from exploring historical periods to helping teams navigate complex project portfolios. It turns cognitive overload into manageable, explorable chunks."
               badge="Versatile"
               features={[
                 "Multiple views",
@@ -263,7 +263,7 @@ export default function Home() {
 
             <ComponentDemo
               title="Lesson Tab System"
-              description="Clean lesson organization with progress tracking and smooth navigation."
+              description="Nothing kills motivation like opening a lesson and seeing endless scrolling ahead of you. I built this after watching students get overwhelmed before they'd even started - they'd see a wall of content and mentally check out. The tab system breaks everything into digestible sections, so learners feel like they're making real progress as they move through each part. Instead of 'this looks like it'll take forever,' they think 'okay, I can handle this section.' I've used it for everything from lengthy compliance training to comprehensive skill-building courses. It's amazing how much more willing people are to engage when content feels manageable rather than mountainous."
               badge="Essential"
               features={[
                 "Progress tracking",
@@ -276,7 +276,7 @@ export default function Home() {
 
             <ComponentDemo
               title="Interactive Assessment Tool"
-              description="Multi-dimensional rating system with real-time feedback and visual progress indicators."
+              description="Traditional assessment often feels like a pass/fail judgment, but I wanted something that actually helps people improve. This visual assessment lets students see their strengths and weaknesses at a glance - no hunting through text to understand where they stand. But here's what I love most: it works both ways. Students can use it to reflect on which parts of a lesson clicked for them, and I can see patterns across the group to spot where my teaching needs work. I've used it for everything from skills development programmes to course feedback. It turns assessment from a final judgment into an ongoing conversation about learning."
               badge="Engaging"
               features={[
                 "Real-time feedback",

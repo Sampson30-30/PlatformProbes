@@ -3,71 +3,114 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { ChevronRight, FileText, BookOpen, GraduationCap, ArrowLeft } from 'lucide-react';
 
-interface PricingTier {
+interface ContentType {
+  id: string;
+  name: string;
+  modules: string;
+  description: string;
+  examples: string[];
+  icon: React.ReactNode;
+  priceRange: string;
+}
+
+interface ServiceTier {
   id: string;
   name: string;
   price: number;
   description: string;
   features: string[];
   popular?: boolean;
-  examples: string[];
+  bestFor: string;
 }
 
-const PRICING_TIERS: PricingTier[] = [
+const CONTENT_TYPES: ContentType[] = [
+  {
+    id: 'single',
+    name: 'Single Session',
+    modules: '1 module',
+    description: 'One workshop, presentation, or standalone training',
+    examples: [
+      '2-hour workshop',
+      'Staff induction session', 
+      'Product training',
+      'Safety briefing'
+    ],
+    icon: <FileText className="w-8 h-8" />,
+    priceRange: '£200-500'
+  },
+  {
+    id: 'short',
+    name: 'Short Course',
+    modules: '2-4 modules',
+    description: 'Multi-session course covering several topics',
+    examples: [
+      '4-week course',
+      'Leadership programme',
+      'Skills development series',
+      'Multi-part certification'
+    ],
+    icon: <BookOpen className="w-8 h-8" />,
+    priceRange: '£400-2,000'
+  },
+  {
+    id: 'full',
+    name: 'Full Programme',
+    modules: '5+ modules',
+    description: 'Comprehensive training with multiple subjects',
+    examples: [
+      'Complete training manual',
+      'Annual curriculum',
+      'Certification programme',
+      'Department onboarding'
+    ],
+    icon: <GraduationCap className="w-8 h-8" />,
+    priceRange: '£1,000+'
+  }
+];
+
+const SERVICE_TIERS: ServiceTier[] = [
   {
     id: 'template',
-    name: 'Template Modules',
+    name: 'Template',
     price: 200,
-    description: 'Complete learning topics using proven component combinations',
+    description: 'Use our proven component library with your content',
     features: [
-      'Pre-designed learning experiences',
-      'Colour & font customisation',
-      'Basic configuration',
+      'Choose from existing templates',
+      'Your content integrated',
+      'Basic customisation',
       '24-48hr delivery'
     ],
-    examples: [
-      'Introduction to Project Management',
-      'Basic Communication Skills',
-      'Time Management Fundamentals'
-    ]
+    bestFor: 'You know what you want and have content ready'
   },
   {
     id: 'curated',
-    name: 'Curated Modules',
+    name: 'Curated',
     price: 300,
-    description: 'Custom-designed complete learning experiences',
+    description: 'We design the optimal learning experience for your content',
     features: [
-      'Everything in Template',
+      'Educational design expertise',
+      'Component selection & flow',
       'Brand integration',
-      'Content adaptation',
-      'Custom interactions'
+      'Content optimisation'
     ],
     popular: true,
-    examples: [
-      'Risk Assessment Training',
-      'Leadership Development Workshop',
-      'Customer Service Excellence'
-    ]
+    bestFor: 'You have great content but need learning design guidance'
   },
   {
     id: 'custom',
-    name: 'Custom Modules',
+    name: 'Custom',
     price: 500,
-    description: 'Entirely new complete learning topics built to your specifications',
+    description: 'Entirely new functionality built for your unique needs',
     features: [
-      'Everything in Curated',
-      'Unique functionality',
+      'Bespoke component development',
+      'Unique interactions',
       'Advanced integrations',
-      'Ongoing support'
+      'Ongoing consultation'
     ],
-    examples: [
-      'Company Values Workshop',
-      'Technical Skills Assessment',
-      'Compliance Training Suite'
-    ]
+    bestFor: 'You need something completely unique'
   }
 ];
 
@@ -80,206 +123,310 @@ interface PricingCalculatorProps {
 }
 
 export default function PricingCalculator({ onOrderSubmit }: PricingCalculatorProps) {
-  const [selectedTier, setSelectedTier] = useState<string | null>(null);
-  const [moduleCount, setModuleCount] = useState<number>(1);
+  const [step, setStep] = useState(1);
+  const [selectedContentType, setSelectedContentType] = useState<ContentType | null>(null);
+  const [selectedServiceTier, setSelectedServiceTier] = useState<ServiceTier | null>(null);
+  const [moduleCount, setModuleCount] = useState(1);
   const { toast } = useToast();
 
-  const selectedTierData = PRICING_TIERS.find(tier => tier.id === selectedTier);
-  const baseCostPerModule = selectedTierData?.price || 0;
-  const totalCost = baseCostPerModule * moduleCount;
-
-  const handleTierSelect = (tierId: string) => {
-    setSelectedTier(tierId);
-  };
-
-  const handleModuleCountChange = (value: string) => {
-    const count = parseInt(value) || 1;
-    setModuleCount(Math.max(1, Math.min(10, count))); // Limit between 1-10 modules
-  };
-
-  const handleOrderSubmit = () => {
-    if (!selectedTier) {
-      toast({
-        title: "Please complete your selection",
-        description: "Select a service tier to continue.",
-        variant: "destructive"
-      });
-      return;
+  // Calculate estimated module count based on content type
+  const getModuleEstimate = (contentType: ContentType) => {
+    switch (contentType.id) {
+      case 'single': return 1;
+      case 'short': return 3; // Mid-point of 2-4
+      case 'full': return 6; // Conservative estimate for 5+
+      default: return 1;
     }
+  };
 
-    const orderData = {
-      tier: selectedTier,
-      modules: moduleCount,
-      totalCost
-    };
+  const totalCost = selectedServiceTier && selectedContentType 
+    ? selectedServiceTier.price * getModuleEstimate(selectedContentType)
+    : 0;
 
-    onOrderSubmit?.(orderData);
+  const handleContentTypeSelect = (contentType: ContentType) => {
+    setSelectedContentType(contentType);
+    setModuleCount(getModuleEstimate(contentType));
+    setStep(2);
+  };
 
-    toast({
-      title: "Order Submitted!",
-      description: `Your ${selectedTierData?.name} project with ${moduleCount} module${moduleCount > 1 ? 's' : ''} has been submitted. Total: £${totalCost}`,
-      variant: "default"
-    });
+  const handleServiceTierSelect = (tier: ServiceTier) => {
+    setSelectedServiceTier(tier);
+    setStep(3);
+  };
+
+  const handleBack = () => {
+    if (step === 2) {
+      setStep(1);
+      setSelectedContentType(null);
+    } else if (step === 3) {
+      setStep(2);
+      setSelectedServiceTier(null);
+    }
+  };
+
+  const handleGetStarted = () => {
+    if (selectedContentType && selectedServiceTier) {
+      const orderData = {
+        tier: selectedServiceTier.id,
+        modules: getModuleEstimate(selectedContentType),
+        totalCost
+      };
+
+      onOrderSubmit?.(orderData);
+
+      toast({
+        title: "Let's get started!",
+        description: `Your ${selectedContentType.name} project using ${selectedServiceTier.name} approach. We'll be in touch within 24 hours.`,
+      });
+    }
   };
 
   return (
-    <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden" data-testid="pricing-calculator">
-      <div className="gradient-primary text-white p-6">
-        <h3 className="text-xl font-sf font-bold mb-2">Project Cost Calculator</h3>
-        <p className="text-white/90">One Module = One Complete Learning Topic</p>
-        <p className="text-sm text-white/80 mt-1">Multiple components work together within each module to create cohesive learning experiences</p>
+    <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden" data-testid="pricing-calculator">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6">
+        <h3 className="text-xl font-bold mb-2">Project Cost Calculator</h3>
+        <p className="text-white/90">Let's understand your content and find the right approach</p>
+        
+        {/* Progress indicator */}
+        <div className="flex items-center mt-4 space-x-2">
+          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+            step >= 1 ? 'bg-white text-blue-600' : 'bg-white/20 text-white/60'
+          }`}>1</div>
+          <div className={`h-1 w-8 ${step >= 2 ? 'bg-white' : 'bg-white/20'}`}></div>
+          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+            step >= 2 ? 'bg-white text-blue-600' : 'bg-white/20 text-white/60'
+          }`}>2</div>
+          <div className={`h-1 w-8 ${step >= 3 ? 'bg-white' : 'bg-white/20'}`}></div>
+          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+            step >= 3 ? 'bg-white text-blue-600' : 'bg-white/20 text-white/60'
+          }`}>3</div>
+        </div>
       </div>
 
       <div className="p-6">
-        {/* Service Tier Selection */}
-        <div className="mb-8">
-          <h4 className="text-lg font-semibold mb-4">Choose Your Module Type</h4>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {PRICING_TIERS.map((tier) => (
-              <Card
-                key={tier.id}
-                className={`cursor-pointer transition-all ${
-                  selectedTier === tier.id
-                    ? 'border-primary bg-primary/5 shadow-md'
-                    : 'hover:border-primary/50'
-                }`}
-                onClick={() => handleTierSelect(tier.id)}
-                data-testid={`tier-${tier.id}`}
-              >
-                <CardContent className="p-5">
-                  <div className="text-center mb-4">
-                    {tier.popular && (
-                      <Badge className="mb-3 bg-primary text-white" data-testid="badge-popular">
-                        Most Popular
-                      </Badge>
-                    )}
-                    <div className="text-3xl font-bold text-primary mb-2">£{tier.price}</div>
-                    <div className="text-sm text-gray-500 mb-2">per module</div>
-                    <div className="font-semibold mb-3 text-lg">{tier.name}</div>
-                    <div className="text-sm text-gray-600 mb-4">{tier.description}</div>
-                  </div>
-                  
-                  <div className="text-left space-y-3">
-                    <div>
-                      <div className="font-medium text-sm mb-2">Features:</div>
-                      <ul className="text-xs space-y-1">
-                        {tier.features.map((feature, index) => (
-                          <li key={index} className="flex items-start">
-                            <span className="text-green-500 mr-2">✓</span>
-                            {feature}
-                          </li>
+        
+        {/* Step 1: Content Type Selection */}
+        {step === 1 && (
+          <div>
+            <h4 className="text-xl font-semibold mb-2">What type of content do you have?</h4>
+            <p className="text-gray-600 mb-6">This helps us estimate how many learning modules you'll need</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {CONTENT_TYPES.map((type) => (
+                <Card
+                  key={type.id}
+                  className="cursor-pointer transition-all hover:shadow-md hover:border-blue-300"
+                  onClick={() => handleContentTypeSelect(type)}
+                  data-testid={`content-type-${type.id}`}
+                >
+                  <CardContent className="p-6 text-center">
+                    <div className="text-blue-600 mb-4 flex justify-center">
+                      {type.icon}
+                    </div>
+                    <h5 className="font-semibold text-lg mb-2">{type.name}</h5>
+                    <p className="text-sm text-gray-600 mb-3">{type.description}</p>
+                    <div className="text-xs text-blue-600 font-medium mb-3">{type.modules} • {type.priceRange}</div>
+                    
+                    <div className="text-left">
+                      <p className="text-xs font-medium mb-2 text-gray-700">Examples:</p>
+                      <ul className="text-xs text-gray-600 space-y-1">
+                        {type.examples.map((example, index) => (
+                          <li key={index}>• {example}</li>
                         ))}
                       </ul>
                     </div>
                     
-                    <div>
-                      <div className="font-medium text-sm mb-2">Example modules:</div>
-                      <ul className="text-xs text-gray-600 space-y-1">
-                        {tier.examples.map((example, index) => (
-                          <li key={index} className="flex items-start">
-                            <span className="text-primary mr-2">•</span>
-                            {example}
-                          </li>
-                        ))}
-                      </ul>
+                    <div className="mt-4 flex items-center justify-center text-blue-600 text-sm font-medium">
+                      Choose this <ChevronRight className="w-4 h-4 ml-1" />
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Step 2: Service Tier Selection */}
+        {step === 2 && selectedContentType && (
+          <div>
+            <div className="flex items-center mb-4">
+              <Button variant="ghost" onClick={handleBack} className="mr-4" data-testid="back-to-step-1">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back
+              </Button>
+              <div>
+                <h4 className="text-xl font-semibold">
+                  How would you like us to transform your {selectedContentType.name.toLowerCase()}?
+                </h4>
+                <p className="text-gray-600">
+                  Estimated: {getModuleEstimate(selectedContentType)} module{getModuleEstimate(selectedContentType) > 1 ? 's' : ''} based on your content type
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {SERVICE_TIERS.map((tier) => (
+                <Card
+                  key={tier.id}
+                  className="cursor-pointer transition-all hover:shadow-md hover:border-blue-300 relative"
+                  onClick={() => handleServiceTierSelect(tier)}
+                  data-testid={`service-tier-${tier.id}`}
+                >
+                  {tier.popular && (
+                    <Badge className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-blue-600" data-testid="badge-popular">
+                      Most Popular
+                    </Badge>
+                  )}
+                  <CardContent className="p-6">
+                    <div className="text-center mb-4">
+                      <div className="text-2xl font-bold text-blue-600 mb-1">
+                        £{tier.price * getModuleEstimate(selectedContentType)}
+                      </div>
+                      <div className="text-xs text-gray-500 mb-2">
+                        £{tier.price} per module × {getModuleEstimate(selectedContentType)}
+                      </div>
+                      <h5 className="font-semibold text-lg mb-2">{tier.name} Approach</h5>
+                      <p className="text-sm text-gray-600 mb-3">{tier.description}</p>
+                    </div>
+
+                    <div className="text-left space-y-3">
+                      <div>
+                        <p className="text-xs font-medium mb-2">What's included:</p>
+                        <ul className="text-xs space-y-1">
+                          {tier.features.map((feature, index) => (
+                            <li key={index} className="flex items-start">
+                              <span className="text-green-500 mr-2">✓</span>
+                              {feature}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      
+                      <div className="bg-gray-50 p-3 rounded text-xs">
+                        <span className="font-medium">Best for: </span>
+                        {tier.bestFor}
+                      </div>
+                    </div>
+                    
+                    <div className="mt-4 flex items-center justify-center text-blue-600 text-sm font-medium">
+                      Select {tier.name} <ChevronRight className="w-4 h-4 ml-1" />
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Step 3: Summary & Quote */}
+        {step === 3 && selectedContentType && selectedServiceTier && (
+          <div>
+            <div className="flex items-center mb-6">
+              <Button variant="ghost" onClick={handleBack} className="mr-4" data-testid="back-to-step-2">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back
+              </Button>
+              <h4 className="text-xl font-semibold">Your Project Quote</h4>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Project Summary */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Project Summary</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Content Type:</span>
+                    <span className="font-medium" data-testid="summary-content-type">{selectedContentType.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Estimated Modules:</span>
+                    <span className="font-medium" data-testid="summary-modules">{getModuleEstimate(selectedContentType)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Service Level:</span>
+                    <span className="font-medium" data-testid="summary-service-tier">{selectedServiceTier.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Cost per Module:</span>
+                    <span className="font-medium" data-testid="summary-cost-per-module">£{selectedServiceTier.price}</span>
+                  </div>
+                  <hr />
+                  <div className="flex justify-between text-lg font-bold">
+                    <span>Total Project Cost:</span>
+                    <span className="text-blue-600" data-testid="summary-total-cost">£{totalCost}</span>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* What Happens Next */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">What Happens Next</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex items-start">
+                      <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-3 mt-0.5 text-xs font-bold">1</div>
+                      <div>
+                        <p className="font-medium">Initial Consultation</p>
+                        <p className="text-gray-600">We'll review your content and confirm the scope (within 24 hours)</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start">
+                      <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-3 mt-0.5 text-xs font-bold">2</div>
+                      <div>
+                        <p className="font-medium">Development Begins</p>
+                        <p className="text-gray-600">1-4 weeks delivery depending on complexity</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start">
+                      <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-3 mt-0.5 text-xs font-bold">3</div>
+                      <div>
+                        <p className="font-medium">Your Platform Goes Live</p>
+                        <p className="text-gray-600">Fully functional learning platform ready for your learners</p>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Module Count Selection */}
-        <div className="mb-8">
-          <h4 className="text-lg font-semibold mb-4">
-            How many modules do you need?
-          </h4>
-          <div className="flex items-center space-x-4">
-            <label htmlFor="moduleCount" className="text-sm font-medium">
-              Number of modules:
-            </label>
-            <Input
-              id="moduleCount"
-              type="number"
-              min="1"
-              max="10"
-              value={moduleCount}
-              onChange={(e) => handleModuleCountChange(e.target.value)}
-              className="w-24"
-              data-testid="input-module-count"
-            />
-            <span className="text-sm text-gray-600">
-              (each module is a complete learning topic)
-            </span>
-          </div>
-        </div>
-
-        {/* Available Tools Info */}
-        <div className="mb-8">
-          <h4 className="text-lg font-semibold mb-4">Available Tools for Your Modules</h4>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {[
-              { name: 'Quiz Systems', desc: 'Interactive assessments' },
-              { name: 'Reflection Journals', desc: 'Thoughtful responses' },
-              { name: 'Interactive Timelines', desc: 'Historical progression' },
-              { name: 'Comparison Tools', desc: 'Spectrum analysis' },
-              { name: 'Grid Explorers', desc: 'Content organization' },
-              { name: 'Tab Systems', desc: 'Lesson navigation' }
-            ].map((component, index) => (
-              <Card key={index} className="bg-gray-50">
-                <CardContent className="p-3">
-                  <div className="font-medium text-sm">{component.name}</div>
-                  <div className="text-xs text-gray-500">{component.desc}</div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-          <p className="text-sm text-gray-600 mt-3">
-            Each module can include multiple components working together to create a complete learning experience.
-          </p>
-        </div>
-
-        {/* Cost Breakdown */}
-        <Card className="bg-gray-50">
-          <CardHeader>
-            <CardTitle className="text-lg">Project Summary</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3 mb-4">
-              <div className="flex justify-between">
-                <span>Module Type:</span>
-                <span data-testid="text-tier-display">
-                  {selectedTierData?.name || 'Select a type above'}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span>Cost per Module:</span>
-                <span data-testid="text-cost-per-module">£{baseCostPerModule}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Number of Modules:</span>
-                <span data-testid="text-module-count">{moduleCount}</span>
-              </div>
-              <hr className="my-3" />
-              <div className="flex justify-between text-lg font-bold">
-                <span>Total Project Cost:</span>
-                <span data-testid="text-total-cost">£{totalCost}</span>
-              </div>
             </div>
-            <Button
-              onClick={handleOrderSubmit}
-              disabled={!selectedTier}
-              className="w-full gradient-primary hover:opacity-90 transition-opacity"
-              data-testid="button-order"
-            >
-              {selectedTier
-                ? `Place Order - £${totalCost} for ${moduleCount} module${moduleCount > 1 ? 's' : ''}`
-                : 'Place Order - Select Module Type'
-              }
-            </Button>
-          </CardContent>
-        </Card>
+
+            {/* Additional Costs */}
+            <Card className="mt-6 bg-gray-50">
+              <CardContent className="p-4">
+                <h5 className="font-medium mb-3">Additional Costs (if needed)</h5>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                  <div className="flex justify-between">
+                    <span>Setup Fee (one-time):</span>
+                    <span>£100</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Monthly Maintenance:</span>
+                    <span>£150/month</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* CTA */}
+            <div className="mt-8 text-center">
+              <Button 
+                onClick={handleGetStarted}
+                size="lg"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-8"
+                data-testid="get-started-button"
+              >
+                Get Started - £{totalCost}
+              </Button>
+              <p className="text-sm text-gray-600 mt-2">
+                No commitment yet - we'll discuss your specific needs first
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

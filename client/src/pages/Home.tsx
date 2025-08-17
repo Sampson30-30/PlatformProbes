@@ -140,11 +140,11 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-4xl md:text-5xl font-sf font-bold mb-6 leading-tight">
-                Professional Educational Components That Actually Work
+                Making Educational Content More Engaging
               </h1>
               <p className="text-xl mb-8 text-white/90">
-                Transform your learning platform with battle-tested interactive components. 
-                No more guesswork - see exactly what you're getting with live demos and transparent pricing.
+                What started as a project for my church has grown into helping small businesses transform their training materials. 
+                See exactly what's possible with interactive learning components designed by someone who's actually taught in classrooms.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
@@ -168,7 +168,7 @@ export default function Home() {
             <div className="relative">
               <img 
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" 
-                alt="Professional development team collaborating on educational platform" 
+                alt="Educational content development and classroom teaching experience" 
                 className="rounded-xl shadow-2xl w-full h-auto"
                 data-testid="hero-image"
               />
@@ -183,18 +183,19 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-sf font-bold mb-4">
-              Interactive Component Library
+              From Real Projects, Real Results
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              These tools work together within your learning modules to create complete educational experiences. 
-              Every module includes working demos, complete documentation, and can be customised to match your brand.
+              Over the past year, I've helped several organisations move beyond static PDFs and PowerPoint presentations. 
+              Each component below was built for actual clients - from church Bible studies to business training programmes. 
+              Here's how they work and when I typically use them.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <ComponentDemo
               title="Interactive Quiz Component"
-              description="Engaging quiz system with instant feedback, progress tracking, and customisable scoring."
+              description="Originally built for our church's Bible study courses when people struggled to remember key concepts week to week. Now I use it for any content that needs reinforcement - compliance training, workshops, you name it."
               badge="Popular"
               features={[
                 "Instant feedback",
@@ -207,7 +208,7 @@ export default function Home() {
 
             <ComponentDemo
               title="Reflection Journal"
-              description="Thoughtful reflection space with auto-save, word counting, and guided prompts."
+              description="During my teaching career, I noticed students learned better when they could process and write about discoveries. I've since used this for leadership development, technical training, and anywhere deeper thinking matters."
               badge="Flexible"
               features={[
                 "Auto-save",
@@ -312,11 +313,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-sf font-bold mb-4">
-              Transparent, Self-Service Pricing
+              Three Ways We Can Work Together
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              One Module = One Complete Learning Topic. Multiple components work together within each module to create cohesive learning experiences. 
-              No more lengthy consultations or surprise costs.
+              I have a full-time job but love working evenings and weekends with organisations passionate about education. 
+              Whether you know exactly what you want or need some guidance on the best approach, here's how it works:
             </p>
           </div>
 
@@ -603,3 +604,45 @@ export default function Home() {
     </div>
   );
 }
+
+
+      {/* About Section */}
+      <section className="py-20 bg-gray-50" data-testid="about-section">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="mb-12">
+            <h2 className="text-3xl md:text-4xl font-sf font-bold mb-6">
+              About Alex
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              I'm Alex - I taught for 6 years at a university before moving into development. This started when my church needed better learning materials. 
+              Now I help small businesses and organisations who care about actually engaging their learners, not just delivering content.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card className="text-center">
+              <CardContent className="p-6">
+                <BookOpen className="text-primary mx-auto mb-4" size={32} />
+                <h3 className="font-semibold text-lg mb-2">Teaching Background</h3>
+                <p className="text-gray-600 text-sm">6 years university teaching experience with real classroom insights</p>
+              </CardContent>
+            </Card>
+            
+            <Card className="text-center">
+              <CardContent className="p-6">
+                <Code className="text-primary mx-auto mb-4" size={32} />
+                <h3 className="font-semibold text-lg mb-2">Technical Skills</h3>
+                <p className="text-gray-600 text-sm">Modern React development with focus on educational technology</p>
+              </CardContent>
+            </Card>
+            
+            <Card className="text-center">
+              <CardContent className="p-6">
+                <Heart className="text-primary mx-auto mb-4" size={32} />
+                <h3 className="font-semibold text-lg mb-2">Personal Mission</h3>
+                <p className="text-gray-600 text-sm">Helping organisations create genuinely engaging learning experiences</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>

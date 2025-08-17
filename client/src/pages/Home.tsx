@@ -18,7 +18,10 @@ import {
   Star,
   CheckCircle,
   ArrowRight,
-  ExternalLink
+  ExternalLink,
+  BookOpen,
+  Code,
+  Heart
 } from "lucide-react";
 
 export default function Home() {
@@ -604,45 +607,3 @@ export default function Home() {
     </div>
   );
 }
-
-
-      {/* About Section */}
-      <section className="py-20 bg-gray-50" data-testid="about-section">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="mb-12">
-            <h2 className="text-3xl md:text-4xl font-sf font-bold mb-6">
-              About Alex
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              I'm Alex - I taught for 6 years at a university before moving into development. This started when my church needed better learning materials. 
-              Now I help small businesses and organisations who care about actually engaging their learners, not just delivering content.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="text-center">
-              <CardContent className="p-6">
-                <BookOpen className="text-primary mx-auto mb-4" size={32} />
-                <h3 className="font-semibold text-lg mb-2">Teaching Background</h3>
-                <p className="text-gray-600 text-sm">6 years university teaching experience with real classroom insights</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="text-center">
-              <CardContent className="p-6">
-                <Code className="text-primary mx-auto mb-4" size={32} />
-                <h3 className="font-semibold text-lg mb-2">Technical Skills</h3>
-                <p className="text-gray-600 text-sm">Modern React development with focus on educational technology</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="text-center">
-              <CardContent className="p-6">
-                <Heart className="text-primary mx-auto mb-4" size={32} />
-                <h3 className="font-semibold text-lg mb-2">Personal Mission</h3>
-                <p className="text-gray-600 text-sm">Helping organisations create genuinely engaging learning experiences</p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>

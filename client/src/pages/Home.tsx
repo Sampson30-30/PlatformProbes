@@ -269,6 +269,19 @@ export default function Home() {
               ]}
               demoType="tabs"
             />
+
+            <ComponentDemo
+              title="Interactive Assessment Tool"
+              description="Multi-dimensional rating system with real-time feedback and visual progress indicators."
+              badge="Engaging"
+              features={[
+                "Real-time feedback",
+                "Visual progress",
+                "Custom dimensions",
+                "Immediate scoring"
+              ]}
+              demoType="rating"
+            />
           </div>
 
           {/* Call to Action */}

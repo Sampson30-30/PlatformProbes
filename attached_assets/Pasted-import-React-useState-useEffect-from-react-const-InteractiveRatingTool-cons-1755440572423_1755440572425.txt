@@ -1,0 +1,252 @@
+import React, { useState, useEffect } from 'react';
+
+const InteractiveRatingTool = () => {
+  const [ratings, setRatings] = useState({
+    clarity: 50,
+    relevance: 50,
+    engagement: 50,
+    accuracy: 50,
+    practicality: 50,
+    innovation: 50
+  });
+
+  const [overallScore, setOverallScore] = useState(50);
+
+  // Rating dimensions with detailed descriptions
+  const dimensions = {
+    clarity: {
+      label: 'Clarity',
+      description: 'How clearly and understandably the concept is presented',
+      lowEnd: 'Confusing',
+      highEnd: 'Crystal Clear',
+      icon: '🔍'
+    },
+    relevance: {
+      label: 'Relevance',
+      description: 'How applicable and important this is to the target context',
+      lowEnd: 'Not Relevant',
+      highEnd: 'Highly Relevant',
+      icon: '🎯'
+    },
+    engagement: {
+      label: 'Engagement',
+      description: 'How well this captures and maintains audience interest',
+      lowEnd: 'Boring',
+      highEnd: 'Captivating',
+      icon: '✨'
+    },
+    accuracy: {
+      label: 'Accuracy',
+      description: 'How factually correct and reliable the information is',
+      lowEnd: 'Inaccurate',
+      highEnd: 'Precise',
+      icon: '✅'
+    },
+    practicality: {
+      label: 'Practicality',
+      description: 'How easily this can be implemented or applied in real situations',
+      lowEnd: 'Theoretical',
+      highEnd: 'Actionable',
+      icon: '🛠️'
+    },
+    innovation: {
+      label: 'Innovation',
+      description: 'How novel, creative, or forward-thinking the approach is',
+      lowEnd: 'Conventional',
+      highEnd: 'Groundbreaking',
+      icon: '💡'
+    }
+  };
+
+  // Calculate overall score whenever ratings change
+  useEffect(() => {
+    const total = Object.values(ratings).reduce((sum, rating) => sum + rating, 0);
+    const average = Math.round(total / Object.keys(ratings).length);
+    setOverallScore(average);
+  }, [ratings]);
+
+  // Handle slider changes
+  const handleRatingChange = (dimension, value) => {
+    setRatings(prev => ({
+      ...prev,
+      [dimension]: parseInt(value)
+    }));
+  };
+
+  // Get feedback based on overall score
+  const getFeedback = (score) => {
+    if (score >= 85) {
+      return {
+        text: "Excellent! This demonstrates outstanding quality across multiple dimensions. This could serve as a benchmark example.",
+        colour: "text-green-600",
+        bgColour: "bg-green-50"
+      };
+    } else if (score >= 70) {
+      return {
+        text: "Very good! Strong performance with room for minor improvements in specific areas. Well above average quality.",
+        colour: "text-blue-600",
+        bgColour: "bg-blue-50"
+      };
+    } else if (score >= 55) {
+      return {
+        text: "Satisfactory. Meets basic requirements but has clear opportunities for enhancement in several dimensions.",
+        colour: "text-yellow-600",
+        bgColour: "bg-yellow-50"
+      };
+    } else if (score >= 40) {
+      return {
+        text: "Below expectations. Significant improvements needed across multiple areas to meet quality standards.",
+        colour: "text-orange-600",
+        bgColour: "bg-orange-50"
+      };
+    } else {
+      return {
+        text: "Needs substantial work. Consider a fundamental rethink of the approach or additional development time.",
+        colour: "text-red-600",
+        bgColour: "bg-red-50"
+      };
+    }
+  };
+
+  const feedback = getFeedback(overallScore);
+
+  // Visual score representation
+  const getScoreColour = (score) => {
+    if (score >= 85) return 'bg-green-500';
+    if (score >= 70) return 'bg-blue-500';
+    if (score >= 55) return 'bg-yellow-500';
+    if (score >= 40) return 'bg-orange-500';
+    return 'bg-red-500';
+  };
+
+  return (
+    <div className="max-w-4xl mx-auto p-6 bg-gray-50 min-h-screen">
+      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-6">
+          <h1 className="text-2xl font-bold mb-2">Interactive Assessment Tool</h1>
+          <p className="text-indigo-100">Evaluate [CONCEPT/ITEM] across multiple dimensions</p>
+        </div>
+
+        {/* Overall Score Display */}
+        <div className="bg-gray-50 p-6 border-b">
+          <div className="text-center mb-4">
+            <h2 className="text-lg font-semibold text-gray-800 mb-2">Overall Score</h2>
+            <div className="relative w-32 h-32 mx-auto mb-4">
+              {/* Circular progress indicator */}
+              <div className="w-32 h-32 rounded-full bg-gray-200 relative">
+                <div 
+                  className={`absolute inset-2 rounded-full ${getScoreColour(overallScore)} flex items-center justify-center`}
+                  style={{
+                    background: `conic-gradient(${
+                      overallScore >= 85 ? '#10b981' :
+                      overallScore >= 70 ? '#3b82f6' :
+                      overallScore >= 55 ? '#f59e0b' :
+                      overallScore >= 40 ? '#f97316' : '#ef4444'
+                    } ${overallScore * 3.6}deg, #e5e7eb 0deg)`
+                  }}
+                >
+                  <div className="bg-white rounded-full w-20 h-20 flex items-center justify-center">
+                    <span className="text-2xl font-bold text-gray-800">{overallScore}%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className={`p-4 rounded-lg ${feedback.bgColour}`}>
+              <p className={`${feedback.colour} font-medium`}>{feedback.text}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Rating Dimensions */}
+        <div className="p-6">
+          <h3 className="text-lg font-semibold mb-6 text-gray-800">Assessment Dimensions</h3>
+          <div className="space-y-6">
+            {Object.entries(dimensions).map(([key, dimension]) => (
+              <div key={key} className="bg-gray-50 p-4 rounded-lg">
+                <div className="flex items-center mb-2">
+                  <span className="text-xl mr-2">{dimension.icon}</span>
+                  <h4 className="font-semibold text-gray-800">{dimension.label}</h4>
+                  <span className="ml-auto text-lg font-bold text-indigo-600">
+                    {ratings[key]}%
+                  </span>
+                </div>
+                
+                <p className="text-sm text-gray-600 mb-3">{dimension.description}</p>
+                
+                <div className="space-y-2">
+                  <div className="flex justify-between text-xs text-gray-500">
+                    <span>{dimension.lowEnd}</span>
+                    <span>{dimension.highEnd}</span>
+                  </div>
+                  
+                  <div className="relative">
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      value={ratings[key]}
+                      onChange={(e) => handleRatingChange(key, e.target.value)}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                      style={{
+                        background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${ratings[key]}%, #e5e7eb ${ratings[key]}%, #e5e7eb 100%)`
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Teaching Applications */}
+        <div className="border-t bg-gray-50 p-6">
+          <h3 className="text-lg font-semibold mb-3 text-gray-800">
+            📚 Learning Applications
+          </h3>
+          <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-600">
+            <div className="bg-white p-4 rounded-lg">
+              <h4 className="font-medium text-gray-800 mb-2">Peer Assessment</h4>
+              <p>Students evaluate each other's work using consistent criteria, developing critical analysis skills.</p>
+            </div>
+            <div className="bg-white p-4 rounded-lg">
+              <h4 className="font-medium text-gray-800 mb-2">Self-Reflection</h4>
+              <p>Learners assess their own work, identifying strengths and areas for improvement.</p>
+            </div>
+            <div className="bg-white p-4 rounded-lg">
+              <h4 className="font-medium text-gray-800 mb-2">Quality Standards</h4>
+              <p>Establishes clear expectations and helps students understand what excellence looks like.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Reset Button */}
+        <div className="border-t p-4 text-center">
+          <button
+            onClick={() => setRatings({
+              clarity: 50,
+              relevance: 50,
+              engagement: 50,
+              accuracy: 50,
+              practicality: 50,
+              innovation: 50
+            })}
+            className="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+          >
+            Reset All Ratings
+          </button>
+        </div>
+
+        {/* Customisation Note */}
+        <div className="bg-blue-50 border-l-4 border-blue-400 p-4">
+          <p className="text-blue-800 text-sm">
+            <strong>Customisation:</strong> Adapt the dimensions, descriptions, and scoring criteria 
+            to match your specific subject area and assessment needs.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default InteractiveRatingTool;

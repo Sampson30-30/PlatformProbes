@@ -40,7 +40,7 @@ interface ComponentDemoProps {
   description: string;
   badge?: string;
   features: string[];
-  demoType: 'quiz' | 'reflection' | 'timeline' | 'comparison' | 'grid' | 'tabs';
+  demoType: 'quiz' | 'reflection' | 'timeline' | 'comparison' | 'grid' | 'tabs' | 'rating';
 }
 
 export default function ComponentDemo({ 
@@ -54,6 +54,12 @@ export default function ComponentDemo({
   const [activeTab, setActiveTab] = useState("overview");
   const [timelineExpanded, setTimelineExpanded] = useState<string | null>(null);
   const [comparisonTab, setComparisonTab] = useState("features");
+  const [ratings, setRatings] = useState({
+    dimension1: 50,
+    dimension2: 50,
+    dimension3: 50,
+    dimension4: 50
+  });
 
   const renderDemo = () => {
     switch (demoType) {
@@ -625,6 +631,224 @@ export default function ComponentDemo({
               <p className="text-sm text-gray-600">
                 📝 Perfect for organizing lessons, courses, portfolios, or any content that benefits 
                 from clear sections. Each tab can contain rich content, media, and interactive elements.
+              </p>
+            </div>
+          </div>
+        );
+
+      case 'rating':
+        const ratingDimensions = {
+          dimension1: {
+            label: '[Your First Dimension]',
+            description: '[Description of what this dimension measures]',
+            lowEnd: '[Low End Label]',
+            highEnd: '[High End Label]',
+            icon: '📊'
+          },
+          dimension2: {
+            label: '[Your Second Dimension]',
+            description: '[Description of what this dimension measures]',
+            lowEnd: '[Low End Label]',
+            highEnd: '[High End Label]',
+            icon: '🎯'
+          },
+          dimension3: {
+            label: '[Your Third Dimension]',
+            description: '[Description of what this dimension measures]',
+            lowEnd: '[Low End Label]',
+            highEnd: '[High End Label]',
+            icon: '✨'
+          },
+          dimension4: {
+            label: '[Your Fourth Dimension]',
+            description: '[Description of what this dimension measures]',
+            lowEnd: '[Low End Label]',
+            highEnd: '[High End Label]',
+            icon: '🔍'
+          }
+        };
+
+        const overallScore = Math.round(Object.values(ratings).reduce((sum, rating) => sum + rating, 0) / Object.keys(ratings).length);
+
+        const getFeedback = (score: number) => {
+          if (score >= 85) {
+            return {
+              text: "Excellent! Outstanding quality across multiple dimensions.",
+              colour: "text-green-600",
+              bgColour: "bg-green-50"
+            };
+          } else if (score >= 70) {
+            return {
+              text: "Very good! Strong performance with minor room for improvement.",
+              colour: "text-blue-600",
+              bgColour: "bg-blue-50"
+            };
+          } else if (score >= 55) {
+            return {
+              text: "Satisfactory. Meets basic requirements with opportunities for enhancement.",
+              colour: "text-yellow-600",
+              bgColour: "bg-yellow-50"
+            };
+          } else {
+            return {
+              text: "Needs improvement. Consider focusing on weaker areas.",
+              colour: "text-orange-600",
+              bgColour: "bg-orange-50"
+            };
+          }
+        };
+
+        const feedback = getFeedback(overallScore);
+
+        const getScoreColour = (score: number) => {
+          if (score >= 85) return 'bg-green-500';
+          if (score >= 70) return 'bg-blue-500';
+          if (score >= 55) return 'bg-yellow-500';
+          return 'bg-orange-500';
+        };
+
+        const handleRatingChange = (dimension: string, value: string) => {
+          setRatings(prev => ({
+            ...prev,
+            [dimension]: parseInt(value)
+          }));
+        };
+
+        return (
+          <div className="space-y-4" data-testid="rating-demo">
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="font-semibold">Interactive Assessment Tool</h4>
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="text-xs"
+                data-testid="customize-rating"
+              >
+                Customize Dimensions ✏️
+              </Button>
+            </div>
+
+            <Card className="overflow-hidden">
+              <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-4">
+                <h3 className="font-bold text-lg">[Your Assessment Title]</h3>
+                <p className="text-indigo-100">Try moving the sliders to see real-time feedback!</p>
+              </div>
+
+              {/* Overall Score Display */}
+              <div className="bg-gray-50 p-4 border-b">
+                <div className="text-center">
+                  <h4 className="font-semibold text-gray-800 mb-3">Overall Score</h4>
+                  <div className="relative w-20 h-20 mx-auto mb-3">
+                    <div className="w-20 h-20 rounded-full bg-gray-200 relative">
+                      <div 
+                        className={`absolute inset-1 rounded-full ${getScoreColour(overallScore)} flex items-center justify-center`}
+                        style={{
+                          background: `conic-gradient(${
+                            overallScore >= 85 ? '#10b981' :
+                            overallScore >= 70 ? '#3b82f6' :
+                            overallScore >= 55 ? '#f59e0b' : '#f97316'
+                          } ${overallScore * 3.6}deg, #e5e7eb 0deg)`
+                        }}
+                      >
+                        <div className="bg-white rounded-full w-14 h-14 flex items-center justify-center">
+                          <span className="text-lg font-bold text-gray-800">{overallScore}%</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={`p-3 rounded-lg ${feedback.bgColour}`}>
+                    <p className={`${feedback.colour} font-medium text-sm`}>{feedback.text}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Rating Dimensions */}
+              <div className="p-4">
+                <h5 className="font-semibold mb-4 text-gray-800 text-sm">Assessment Dimensions</h5>
+                <div className="space-y-4">
+                  {Object.entries(ratingDimensions).map(([key, dimension]) => (
+                    <div key={key} className="bg-gray-50 p-3 rounded-lg">
+                      <div className="flex items-center mb-2">
+                        <span className="text-sm mr-2">{dimension.icon}</span>
+                        <h6 className="font-medium text-gray-800 text-sm">{dimension.label}</h6>
+                        <span className="ml-auto text-sm font-bold text-indigo-600">
+                          {ratings[key as keyof typeof ratings]}%
+                        </span>
+                      </div>
+                      
+                      <p className="text-xs text-gray-600 mb-2">{dimension.description}</p>
+                      
+                      <div className="space-y-1">
+                        <div className="flex justify-between text-xs text-gray-500">
+                          <span>{dimension.lowEnd}</span>
+                          <span>{dimension.highEnd}</span>
+                        </div>
+                        
+                        <input
+                          type="range"
+                          min="0"
+                          max="100"
+                          value={ratings[key as keyof typeof ratings]}
+                          onChange={(e) => handleRatingChange(key, e.target.value)}
+                          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                          style={{
+                            background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${ratings[key as keyof typeof ratings]}%, #e5e7eb ${ratings[key as keyof typeof ratings]}%, #e5e7eb 100%)`
+                          }}
+                          data-testid={`rating-slider-${key}`}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Reset button */}
+              <div className="border-t p-3 text-center">
+                <Button
+                  onClick={() => setRatings({
+                    dimension1: 50,
+                    dimension2: 50,
+                    dimension3: 50,
+                    dimension4: 50
+                  })}
+                  variant="outline"
+                  size="sm"
+                  className="text-xs"
+                  data-testid="reset-ratings"
+                >
+                  Reset All Ratings
+                </Button>
+              </div>
+            </Card>
+
+            {/* Usage examples */}
+            <Card className="bg-blue-50 border-blue-200">
+              <CardContent className="p-4">
+                <h4 className="font-semibold text-blue-800 mb-2">Perfect for Assessment & Feedback</h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                  <div className="bg-white p-3 rounded border">
+                    <div className="font-medium text-gray-800 mb-1">Peer Review</div>
+                    <div className="text-gray-600">Students evaluate each other's work</div>
+                  </div>
+                  <div className="bg-white p-3 rounded border">
+                    <div className="font-medium text-gray-800 mb-1">Self-Assessment</div>
+                    <div className="text-gray-600">Learners reflect on their progress</div>
+                  </div>
+                  <div className="bg-white p-3 rounded border">
+                    <div className="font-medium text-gray-800 mb-1">Quality Standards</div>
+                    <div className="text-gray-600">Establish clear evaluation criteria</div>
+                  </div>
+                </div>
+                <p className="text-blue-700 text-xs mt-3">
+                  Customize the dimensions, labels, and scoring criteria to match your specific assessment needs.
+                </p>
+              </CardContent>
+            </Card>
+
+            <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+              <p className="text-sm text-gray-600">
+                📝 Perfect for peer assessments, self-reflection activities, project evaluations, 
+                or any scenario where multi-dimensional feedback is valuable. Real-time visual feedback keeps users engaged.
               </p>
             </div>
           </div>

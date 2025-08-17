@@ -1,0 +1,180 @@
+import React, { useState } from 'react';
+
+const ComparisonTool = () => {
+  const [activeTab, setActiveTab] = useState('features');
+
+  // Placeholder data - easily customisable for any subject
+  const comparisonData = {
+    features: {
+      approach1: [
+        "Structured step-by-step process",
+        "Clear documentation requirements",
+        "Built-in quality checkpoints",
+        "Standardised methodology"
+      ],
+      approach2: [
+        "Flexible, iterative cycles",
+        "Emphasis on working prototypes",
+        "Continuous stakeholder feedback",
+        "Adaptive planning framework"
+      ]
+    },
+    benefits: {
+      approach1: [
+        "Predictable timelines and costs",
+        "Comprehensive planning upfront",
+        "Clear role definitions",
+        "Suitable for complex, stable requirements"
+      ],
+      approach2: [
+        "Quick response to changing needs",
+        "Early delivery of working solutions",
+        "Enhanced collaboration",
+        "Reduced risk of final product mismatch"
+      ]
+    },
+    limitations: {
+      approach1: [
+        "Difficult to accommodate changes",
+        "Late discovery of issues",
+        "Higher upfront commitment",
+        "May produce outdated solutions"
+      ],
+      approach2: [
+        "Harder to predict final costs",
+        "Requires experienced team members",
+        "Can lack comprehensive documentation",
+        "May struggle with fixed-scope projects"
+      ]
+    },
+    useCases: {
+      approach1: [
+        "Large-scale enterprise systems",
+        "Regulatory compliance projects",
+        "Well-understood problem domains",
+        "Fixed budget and timeline constraints"
+      ],
+      approach2: [
+        "Innovative product development",
+        "Rapidly changing market conditions",
+        "Uncertain or evolving requirements",
+        "Customer-facing applications"
+      ]
+    }
+  };
+
+  const tabs = [
+    { id: 'features', label: 'Features', icon: '⚙️' },
+    { id: 'benefits', label: 'Benefits', icon: '✅' },
+    { id: 'limitations', label: 'Limitations', icon: '⚠️' },
+    { id: 'useCases', label: 'Use Cases', icon: '🎯' }
+  ];
+
+  return (
+    <div className="max-w-6xl mx-auto p-6 bg-gray-50 min-h-screen">
+      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6">
+          <h1 className="text-2xl font-bold mb-2">Interactive Comparison Tool</h1>
+          <p className="text-blue-100">Compare different approaches side-by-side</p>
+        </div>
+
+        {/* Subject Headers */}
+        <div className="grid grid-cols-2 bg-gray-100 border-b">
+          <div className="p-4 text-center border-r">
+            <h2 className="text-xl font-semibold text-gray-800">[APPROACH 1]</h2>
+            <p className="text-sm text-gray-600 mt-1">Traditional Methodology</p>
+          </div>
+          <div className="p-4 text-center">
+            <h2 className="text-xl font-semibold text-gray-800">[APPROACH 2]</h2>
+            <p className="text-sm text-gray-600 mt-1">Modern Alternative</p>
+          </div>
+        </div>
+
+        {/* Tab Navigation */}
+        <div className="flex border-b bg-white">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex-1 py-3 px-4 text-center font-medium transition-all duration-200 ${
+                activeTab === tab.id
+                  ? 'bg-blue-50 text-blue-600 border-b-2 border-blue-600'
+                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
+              }`}
+            >
+              <span className="mr-2">{tab.icon}</span>
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Comparison Content */}
+        <div className="grid grid-cols-2 min-h-96">
+          {/* Approach 1 Column */}
+          <div className="p-6 border-r bg-blue-25">
+            <div className="space-y-3">
+              {comparisonData[activeTab].approach1.map((item, index) => (
+                <div
+                  key={index}
+                  className="p-3 bg-white rounded-lg border-l-4 border-blue-400 shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <p className="text-gray-700">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Approach 2 Column */}
+          <div className="p-6 bg-purple-25">
+            <div className="space-y-3">
+              {comparisonData[activeTab].approach2.map((item, index) => (
+                <div
+                  key={index}
+                  className="p-3 bg-white rounded-lg border-l-4 border-purple-400 shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <p className="text-gray-700">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Teaching Applications Section */}
+        <div className="border-t bg-gray-50 p-6">
+          <h3 className="text-lg font-semibold mb-3 text-gray-800">
+            📚 Teaching Applications
+          </h3>
+          <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-600">
+            <div className="bg-white p-4 rounded-lg">
+              <h4 className="font-medium text-gray-800 mb-2">Learning Objectives</h4>
+              <ul className="space-y-1">
+                <li>• Identify key differences between methodologies</li>
+                <li>• Evaluate trade-offs in different contexts</li>
+                <li>• Apply decision-making frameworks</li>
+              </ul>
+            </div>
+            <div className="bg-white p-4 rounded-lg">
+              <h4 className="font-medium text-gray-800 mb-2">Classroom Activities</h4>
+              <ul className="space-y-1">
+                <li>• Group discussions on real-world scenarios</li>
+                <li>• Case study analysis exercises</li>
+                <li>• Decision matrix creation tasks</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Customisation Note */}
+        <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+          <p className="text-yellow-800 text-sm">
+            <strong>Customisation Note:</strong> Replace [APPROACH 1] and [APPROACH 2] with your specific 
+            subject matter. Update the comparison data to reflect the actual concepts you're teaching.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ComparisonTool;

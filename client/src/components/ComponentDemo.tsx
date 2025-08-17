@@ -144,79 +144,112 @@ export default function ComponentDemo({
       case 'comparison':
         return (
           <div className="space-y-4" data-testid="comparison-demo">
-            <div className="flex items-center mb-4">
-              <Scale className="text-primary mr-2" size={20} />
-              <h4 className="font-semibold">Learning Approach Spectrum</h4>
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center">
+                <Scale className="text-primary mr-2" size={20} />
+                <h4 className="font-semibold">Interactive Comparison Tool</h4>
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="text-xs"
+                data-testid="customize-comparison"
+              >
+                Customize This ✏️
+              </Button>
             </div>
-            <div className="space-y-3">
-              <Card className="overflow-hidden">
-                <div className="px-4 py-2 bg-blue-600 text-white font-semibold">
-                  Self-Paced Learning
-                  <span className="text-sm font-normal ml-3">(Individual focus)</span>
+
+            {/* Mini version of the comparison tool */}
+            <Card className="overflow-hidden">
+              <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4">
+                <h3 className="font-bold text-sm">Remote vs In-Person Training</h3>
+                <p className="text-xs text-blue-100">Compare different approaches side-by-side</p>
+              </div>
+
+              {/* Subject headers */}
+              <div className="grid grid-cols-2 bg-gray-100 border-b text-xs">
+                <div className="p-2 text-center border-r">
+                  <h4 className="font-semibold text-gray-800">Remote Training</h4>
+                  <p className="text-gray-600">Digital delivery</p>
                 </div>
-                <CardContent className="p-3 bg-blue-50">
-                  <div className="grid grid-cols-3 gap-2">
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="text-xs bg-white hover:shadow-sm"
-                      data-testid="comparison-item-online-courses"
-                    >
-                      Online Courses
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="text-xs bg-white hover:shadow-sm"
-                      data-testid="comparison-item-video-tutorials"
-                    >
-                      Video Tutorials
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="text-xs bg-white hover:shadow-sm"
-                      data-testid="comparison-item-reading-materials"
-                    >
-                      Reading Materials
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card className="overflow-hidden">
-                <div className="px-4 py-2 bg-green-600 text-white font-semibold">
-                  Collaborative Learning
-                  <span className="text-sm font-normal ml-3">(Group interaction)</span>
+                <div className="p-2 text-center">
+                  <h4 className="font-semibold text-gray-800">In-Person Training</h4>
+                  <p className="text-gray-600">Face-to-face delivery</p>
                 </div>
-                <CardContent className="p-3 bg-green-50">
-                  <div className="grid grid-cols-3 gap-2">
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="text-xs bg-white hover:shadow-sm"
-                      data-testid="comparison-item-workshops"
-                    >
-                      Workshops
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="text-xs bg-white hover:shadow-sm"
-                      data-testid="comparison-item-group-projects"
-                    >
-                      Group Projects
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="text-xs bg-white hover:shadow-sm"
-                      data-testid="comparison-item-peer-review"
-                    >
-                      Peer Review
-                    </Button>
+              </div>
+
+              {/* Simplified tabs */}
+              <div className="flex border-b bg-white text-xs">
+                <div className="flex-1 py-2 px-3 text-center bg-blue-50 text-blue-600 border-b-2 border-blue-600">
+                  ⚙️ Features
+                </div>
+                <div className="flex-1 py-2 px-3 text-center text-gray-600">
+                  ✅ Benefits
+                </div>
+                <div className="flex-1 py-2 px-3 text-center text-gray-600">
+                  ⚠️ Challenges
+                </div>
+              </div>
+
+              {/* Content preview */}
+              <div className="grid grid-cols-2 text-xs">
+                <div className="p-3 border-r bg-blue-25">
+                  <div className="space-y-2">
+                    <div className="p-2 bg-white rounded border-l-2 border-blue-400">
+                      Self-paced learning modules
+                    </div>
+                    <div className="p-2 bg-white rounded border-l-2 border-blue-400">
+                      Virtual collaboration tools
+                    </div>
+                    <div className="p-2 bg-white rounded border-l-2 border-blue-400">
+                      Online assessment system
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+                <div className="p-3 bg-purple-25">
+                  <div className="space-y-2">
+                    <div className="p-2 bg-white rounded border-l-2 border-purple-400">
+                      Interactive workshops
+                    </div>
+                    <div className="p-2 bg-white rounded border-l-2 border-purple-400">
+                      Hands-on group activities
+                    </div>
+                    <div className="p-2 bg-white rounded border-l-2 border-purple-400">
+                      Real-time feedback sessions
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            {/* Customization preview */}
+            <Card className="bg-yellow-50 border-yellow-200">
+              <CardContent className="p-4">
+                <h4 className="font-semibold text-yellow-800 mb-2">Easy to Customize for Any Topic</h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                  <div className="bg-white p-3 rounded border">
+                    <div className="font-medium text-gray-800 mb-1">Healthcare Training</div>
+                    <div className="text-gray-600">Online vs Simulation Labs</div>
+                  </div>
+                  <div className="bg-white p-3 rounded border">
+                    <div className="font-medium text-gray-800 mb-1">Software Development</div>
+                    <div className="text-gray-600">Agile vs Waterfall</div>
+                  </div>
+                  <div className="bg-white p-3 rounded border">
+                    <div className="font-medium text-gray-800 mb-1">Leadership Styles</div>
+                    <div className="text-gray-600">Autocratic vs Democratic</div>
+                  </div>
+                </div>
+                <p className="text-yellow-700 text-xs mt-3">
+                  Simply replace the categories and content to match your specific training needs.
+                </p>
+              </CardContent>
+            </Card>
+
+            <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+              <p className="text-sm text-gray-600">
+                Perfect for helping learners understand trade-offs between different approaches, methods, or philosophies.
+              </p>
             </div>
           </div>
         );
@@ -351,13 +384,13 @@ export default function ComponentDemo({
         </div>
         <p className="text-gray-600 mb-6">{description}</p>
       </CardHeader>
-      
+
       <CardContent>
         {/* Live Demo */}
         <div className="bg-white rounded-lg border mb-4">
           {renderDemo()}
         </div>
-        
+
         {/* Features List */}
         <div className="text-sm text-gray-500">
           {features.map((feature, index) => (

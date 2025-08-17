@@ -240,7 +240,7 @@ export default function Home() {
               description="Too often, students learn concepts in isolation - they understand Method A and Method B, but can't explain when to use which one. I built this component because I kept seeing learners struggle with 'why would I choose this approach over that one?' The comparison spectrum lets students explore different options side-by-side and understand the trade-offs. I've used it for everything from teaching Bible translation differences (when do you prioritise accuracy vs readability?) to helping businesses compare software solutions. Instead of just knowing what the options are, students learn how to make informed decisions between them."
               badge="Analytical"
               features={[
-                "Visual organization",
+                "Visual organisation",
                 "Hover details",
                 "Sample comparisons",
                 "Flexible categories"
@@ -268,7 +268,7 @@ export default function Home() {
               features={[
                 "Progress tracking",
                 "Smooth transitions",
-                "Mobile optimized",
+                "Mobile optimised",
                 "Custom styling"
               ]}
               demoType="tabs"
@@ -550,8 +550,8 @@ export default function Home() {
                   <div className="flex items-center">
                     <Shield className="text-success mr-3" size={20} />
                     <div>
-                      <div className="font-semibold text-success">100% Satisfaction Guarantee</div>
-                      <div className="text-sm text-gray-600">Not happy? Full refund within 7 days.</div>
+                      <div className="font-semibold text-success">Your Satisfaction is My Priority</div>
+                      <div className="text-sm text-gray-600">Not happy? I'm happy to work on revisions within reason.</div>
                     </div>
                   </div>
                 </CardContent>

@@ -24,7 +24,7 @@ const PRICING_TIERS: PricingTier[] = [
     description: 'Complete learning topics using proven component combinations',
     features: [
       'Pre-designed learning experiences',
-      'Color & font customization',
+      'Colour & font customisation',
       'Basic configuration',
       '24-48hr delivery'
     ],

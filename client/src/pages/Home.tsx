@@ -75,13 +75,13 @@ export default function Home() {
     // Scroll to contact form and pre-fill it
     const contactSection = document.getElementById('contact');
     contactSection?.scrollIntoView({ behavior: 'smooth' });
-    
+
     const tierNames = {
       template: 'Template Modules',
       curated: 'Curated Modules', 
       custom: 'Custom Modules'
     };
-    
+
     setContactForm(prev => ({
       ...prev,
       projectType: `${tierNames[orderData.tier as keyof typeof tierNames]} (£${orderData.totalCost})`,
@@ -288,10 +288,10 @@ export default function Home() {
           <div className="text-center mt-16">
             <Card className="gradient-primary text-white p-8">
               <CardContent className="p-0">
-                <h3 className="text-2xl font-sf font-bold mb-4">Ready to See These Components in Action?</h3>
+                <h3 className="text-2xl font-sf font-bold mb-4">Ready to Transform Your Training Content?</h3>
                 <p className="text-white/90 mb-6 max-w-2xl mx-auto">
-                  Every component comes with complete documentation, customization options, and ongoing support. 
-                  No surprises, no hidden costs.
+                  Stop losing learners to boring content. Get interactive modules that increase completion rates and improve learning outcomes. 
+                  No technical skills required on your end.
                 </p>
                 <Button 
                   onClick={() => scrollToSection('pricing')}

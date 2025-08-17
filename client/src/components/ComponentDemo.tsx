@@ -53,6 +53,7 @@ export default function ComponentDemo({
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("overview");
   const [timelineExpanded, setTimelineExpanded] = useState<string | null>(null);
+  const [comparisonTab, setComparisonTab] = useState("features");
 
   const renderDemo = () => {
     switch (demoType) {
@@ -184,6 +185,72 @@ export default function ComponentDemo({
         );
 
       case 'comparison':
+        const comparisonData = {
+          features: {
+            option1: [
+              "[Your first feature for Option A]",
+              "[Your second key feature]",
+              "[Another important aspect]",
+              "[Final feature point]"
+            ],
+            option2: [
+              "[Your first feature for Option B]",
+              "[Your second key feature]",
+              "[Another important aspect]",
+              "[Final feature point]"
+            ]
+          },
+          benefits: {
+            option1: [
+              "[Primary benefit of Option A]",
+              "[Another advantage]",
+              "[Key strength of this approach]",
+              "[Why this works well]"
+            ],
+            option2: [
+              "[Primary benefit of Option B]",
+              "[Another advantage]",
+              "[Key strength of this approach]",
+              "[Why this works well]"
+            ]
+          },
+          limitations: {
+            option1: [
+              "[First limitation to consider]",
+              "[Potential drawback]",
+              "[Challenge with this option]",
+              "[When this might not work]"
+            ],
+            option2: [
+              "[First limitation to consider]",
+              "[Potential drawback]",
+              "[Challenge with this option]",
+              "[When this might not work]"
+            ]
+          },
+          usecases: {
+            option1: [
+              "[Perfect for scenario A]",
+              "[Great when you need X]",
+              "[Ideal for specific situations]",
+              "[Best choice for Y context]"
+            ],
+            option2: [
+              "[Perfect for scenario A]",
+              "[Great when you need X]",
+              "[Ideal for specific situations]",
+              "[Best choice for Y context]"
+            ]
+          }
+        };
+
+        const comparisonTabs = [
+          { id: 'features', label: 'Features', icon: '⚙️' },
+          { id: 'benefits', label: 'Benefits', icon: '✅' },
+          { id: 'limitations', label: 'Limitations', icon: '⚠️' },
+          { id: 'usecases', label: 'Use Cases', icon: '🎯' }
+        ];
+
         return (
           <div className="space-y-4" data-testid="comparison-demo">
             <div className="flex items-center justify-between mb-4">
@@ -201,96 +268,106 @@ export default function ComponentDemo({
               </Button>
             </div>
 
-            {/* Mini version of the comparison tool */}
+            {/* Full interactive comparison tool */}
             <Card className="overflow-hidden">
               <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4">
-                <h3 className="font-bold text-sm">[Your Comparison Title] vs [Alternative]</h3>
-                <p className="text-xs text-blue-100">Compare your options side-by-side</p>
+                <h3 className="font-bold text-lg">[Your Comparison Title]</h3>
+                <p className="text-blue-100">Compare your options side-by-side - try clicking the tabs!</p>
               </div>
 
               {/* Subject headers */}
-              <div className="grid grid-cols-2 bg-gray-100 border-b text-xs">
-                <div className="p-2 text-center border-r">
+              <div className="grid grid-cols-2 bg-gray-100 border-b">
+                <div className="p-3 text-center border-r">
                   <h4 className="font-semibold text-gray-800">[Option A Title]</h4>
-                  <p className="text-gray-600">[Option A subtitle]</p>
+                  <p className="text-sm text-gray-600">[Option A description]</p>
                 </div>
-                <div className="p-2 text-center">
+                <div className="p-3 text-center">
                   <h4 className="font-semibold text-gray-800">[Option B Title]</h4>
-                  <p className="text-gray-600">[Option B subtitle]</p>
+                  <p className="text-sm text-gray-600">[Option B description]</p>
                 </div>
               </div>
 
-              {/* Simplified tabs */}
-              <div className="flex border-b bg-white text-xs">
-                <div className="flex-1 py-2 px-3 text-center bg-blue-50 text-blue-600 border-b-2 border-blue-600">
-                  ⚙️ [Category 1]
-                </div>
-                <div className="flex-1 py-2 px-3 text-center text-gray-600">
-                  ✅ [Category 2]
-                </div>
-                <div className="flex-1 py-2 px-3 text-center text-gray-600">
-                  ⚠️ [Category 3]
-                </div>
+              {/* Interactive tabs */}
+              <div className="flex border-b bg-white">
+                {comparisonTabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setComparisonTab(tab.id)}
+                    className={`flex-1 py-3 px-4 text-center font-medium transition-all duration-200 text-sm ${
+                      comparisonTab === tab.id
+                        ? 'bg-blue-50 text-blue-600 border-b-2 border-blue-600'
+                        : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
+                    }`}
+                    data-testid={`comparison-tab-${tab.id}`}
+                  >
+                    <span className="mr-2">{tab.icon}</span>
+                    {tab.label}
+                  </button>
+                ))}
               </div>
 
-              {/* Content preview */}
-              <div className="grid grid-cols-2 text-xs">
-                <div className="p-3 border-r bg-blue-25">
-                  <div className="space-y-2">
-                    <div className="p-2 bg-white rounded border-l-2 border-blue-400">
-                      [Your first point for Option A]
-                    </div>
-                    <div className="p-2 bg-white rounded border-l-2 border-blue-400">
-                      [Your second point for Option A]
-                    </div>
-                    <div className="p-2 bg-white rounded border-l-2 border-blue-400">
-                      [Your third point for Option A]
-                    </div>
+              {/* Dynamic content based on selected tab */}
+              <div className="grid grid-cols-2 min-h-64">
+                {/* Option A Column */}
+                <div className="p-4 border-r bg-blue-25">
+                  <div className="space-y-3">
+                    {comparisonData[comparisonTab as keyof typeof comparisonData].option1.map((item, index) => (
+                      <div
+                        key={index}
+                        className="p-3 bg-white rounded-lg border-l-4 border-blue-400 shadow-sm hover:shadow-md transition-shadow"
+                        data-testid={`comparison-item-a-${index}`}
+                      >
+                        <p className="text-sm text-gray-700">{item}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
-                <div className="p-3 bg-purple-25">
-                  <div className="space-y-2">
-                    <div className="p-2 bg-white rounded border-l-2 border-purple-400">
-                      [Your first point for Option B]
-                    </div>
-                    <div className="p-2 bg-white rounded border-l-2 border-purple-400">
-                      [Your second point for Option B]
-                    </div>
-                    <div className="p-2 bg-white rounded border-l-2 border-purple-400">
-                      [Your third point for Option B]
-                    </div>
+
+                {/* Option B Column */}
+                <div className="p-4 bg-purple-25">
+                  <div className="space-y-3">
+                    {comparisonData[comparisonTab as keyof typeof comparisonData].option2.map((item, index) => (
+                      <div
+                        key={index}
+                        className="p-3 bg-white rounded-lg border-l-4 border-purple-400 shadow-sm hover:shadow-md transition-shadow"
+                        data-testid={`comparison-item-b-${index}`}
+                      >
+                        <p className="text-sm text-gray-700">{item}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
             </Card>
 
-            {/* Customization preview */}
+            {/* Usage examples */}
             <Card className="bg-yellow-50 border-yellow-200">
               <CardContent className="p-4">
-                <h4 className="font-semibold text-yellow-800 mb-2">Perfect for Any Comparison</h4>
+                <h4 className="font-semibold text-yellow-800 mb-2">Perfect for Teaching Complex Decisions</h4>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
                   <div className="bg-white p-3 rounded border">
-                    <div className="font-medium text-gray-800 mb-1">[Your Topic 1]</div>
-                    <div className="text-gray-600">[Option A] vs [Option B]</div>
+                    <div className="font-medium text-gray-800 mb-1">[Your Subject Area]</div>
+                    <div className="text-gray-600">[Concept A] vs [Concept B]</div>
                   </div>
                   <div className="bg-white p-3 rounded border">
-                    <div className="font-medium text-gray-800 mb-1">[Your Topic 2]</div>
+                    <div className="font-medium text-gray-800 mb-1">[Another Topic]</div>
                     <div className="text-gray-600">[Method A] vs [Method B]</div>
                   </div>
                   <div className="bg-white p-3 rounded border">
-                    <div className="font-medium text-gray-800 mb-1">[Your Topic 3]</div>
-                    <div className="text-gray-600">[Approach A] vs [Approach B]</div>
+                    <div className="font-medium text-gray-800 mb-1">[Third Example]</div>
+                    <div className="text-gray-600">[Option A] vs [Option B]</div>
                   </div>
                 </div>
                 <p className="text-yellow-700 text-xs mt-3">
-                  Simply replace the categories and content to match your specific comparison needs.
+                  Simply replace the brackets with your content. Students love clicking through the different comparison categories!
                 </p>
               </CardContent>
             </Card>
 
             <div className="mt-4 p-3 bg-gray-50 rounded-lg">
               <p className="text-sm text-gray-600">
-                Perfect for helping learners understand trade-offs between different approaches, methods, or philosophies.
+                📝 Perfect for helping learners understand trade-offs, make informed decisions, and explore 
+                different approaches to complex problems. Fully interactive with clickable tabs and rich content areas.
               </p>
             </div>
           </div>

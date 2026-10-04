@@ -265,3 +265,47 @@ toast('Course deleted', { tone: 'danger', action: { label: 'Undo', onClick: rest
 | `action` | `{ label, onClick }` adds a button, such as Undo. It dismisses the toast. |
 
 Messages are plain text. Warnings and errors are announced immediately to screen readers; others politely. A toast pauses while the pointer or focus is on it, and every toast has a dismiss button. Use toasts for confirmations, never for information the learner must act on. The region fires `lk-dismiss` with `{ id, reason }`, where reason is `timeout`, `user`, `action` or `api`.
+
+
+### `<lk-quiz>`
+
+A knowledge check. One question at a time, instant feedback, then a score and a retry.
+
+```html
+<lk-quiz label="Check your understanding" title="Formative assessment">
+  <div data-lk-question="Which of these is formative assessment?">
+    <div data-lk-option correct data-feedback="Yes: it informs the next lesson.">A quick quiz in class</div>
+    <div data-lk-option>A final exam</div>
+    <p data-lk-explanation>Formative assessment happens during learning, to guide teaching.</p>
+  </div>
+</lk-quiz>
+```
+
+Mark more than one option `correct` to make a "choose all that apply" question. The same quiz as JSON, in a child script or through the `data` property:
+
+```html
+<lk-quiz label="Check">
+  <script type="application/json">
+    { "title": "Quick check",
+      "questions": [
+        { "prompt": "Pick one", "options": ["A", "B", "C"], "answer": 1, "explanation": "Because." },
+        { "prompt": "Pick two", "options": [
+            { "text": "A", "correct": true, "feedback": "Yes." }, "B", { "text": "C", "correct": true } ] }
+      ] }
+  </script>
+</lk-quiz>
+```
+
+| Attribute | Description |
+| --- | --- |
+| `label` | Accessible name. |
+| `title` | Visible title (the JSON `title` is used if this is missing). |
+| `level` | Heading level for the title and results. Default `2`. |
+| `shuffle` | Shuffle option order on each attempt. |
+
+| Event | Detail |
+| --- | --- |
+| `lk-answer` | `{ id, index, correct, selected }` after each question is checked |
+| `lk-complete` | `{ correct, total, percent, points }` when the results show. `points` gives partial credit on multiple-answer questions. |
+
+Methods: `reset()` restarts the quiz, and `quiz.data = {...}` replaces the questions. A question with no prompt, fewer than two options or no correct option is skipped, and the quiz explains that it could not be shown if nothing usable is left. Feedback always uses words ("Correct", "Incorrect", "Correct answer"), never colour alone.

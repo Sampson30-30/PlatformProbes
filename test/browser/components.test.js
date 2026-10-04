@@ -213,3 +213,63 @@ test('toast: errors use alert role, stay until dismissed, support actions', asyn
   t2.element.querySelector('.lk-toast__close').click();
   assert(!t2.element.isConnected, 'dismissed by user');
 });
+
+// ---- lk-quiz ----
+
+const QUIZ = `<lk-quiz label="Check" title="Quick check" shuffle>
+  <div data-lk-question="Pick the right one">
+    <div data-lk-option correct data-feedback="Well done">Right</div>
+    <div data-lk-option>Wrong</div>
+    <p data-lk-explanation>Because it is.</p>
+  </div>
+  <div data-lk-question="Pick both">
+    <div data-lk-option correct>One</div>
+    <div data-lk-option correct>Two</div>
+    <div data-lk-option>Three</div>
+  </div>
+</lk-quiz>`;
+
+const pick = (quiz, text) => [...quiz.querySelectorAll('label')].find((l) => l.textContent.trim().startsWith(text)).querySelector('input');
+const button = (quiz, text) => [...quiz.querySelectorAll('button')].find((b) => b.textContent === text);
+
+test('quiz: parses markup, requires an answer, gives feedback', async () => {
+  const quiz = await mount(QUIZ);
+  equal(quiz.querySelectorAll('input[type=radio]').length, 2);
+  assert(quiz.textContent.includes('Question 1 of 2'));
+  const answers = listen(quiz, 'lk-answer');
+  button(quiz, 'Check answer').click();
+  assert(!quiz.querySelector('.lk-quiz__error').hidden, 'asks for an answer');
+  equal(answers.length, 0);
+  pick(quiz, 'Right').click();
+  button(quiz, 'Check answer').click();
+  equal(answers[0].correct, true);
+  assert(quiz.querySelector('.lk-quiz__result').textContent.includes('Correct.'));
+  assert(quiz.querySelector('.lk-quiz__result').textContent.includes('Because it is.'));
+  assert(quiz.textContent.includes('Well done'), 'per-option feedback');
+  assert(quiz.querySelector('input').disabled, 'locked after checking');
+});
+
+test('quiz: multiple choice, results, completion event and retry', async () => {
+  const quiz = await mount(QUIZ);
+  const done = listen(quiz, 'lk-complete');
+  pick(quiz, 'Wrong').click();
+  button(quiz, 'Check answer').click();
+  assert(quiz.querySelector('.lk-quiz__result').textContent.includes('Not quite'));
+  button(quiz, 'Next question').click();
+  equal(quiz.querySelectorAll('input[type=checkbox]').length, 3);
+  pick(quiz, 'One').click();
+  button(quiz, 'Check answer').click();
+  assert(quiz.querySelector('.lk-quiz__result').textContent.includes('1 of 2'), 'partial credit message');
+  button(quiz, 'See your results').click();
+  equal(done[0], { total: 2, correct: 0, percent: 0, points: 0.5 });
+  assert(quiz.textContent.includes('You got 0 of 2 correct'));
+  button(quiz, 'Try again').click();
+  assert(quiz.textContent.includes('Question 1 of 2'), 'restarted');
+});
+
+test('quiz: reads JSON and reports bad data instead of throwing', async () => {
+  const quiz = await mount(`<lk-quiz><script type="application/json">{"questions":[{"prompt":"Q?","options":["a","b"],"answer":1}]}</script></lk-quiz>`);
+  equal(quiz.querySelectorAll('input').length, 2);
+  const bad = await mount(`<lk-quiz><script type="application/json">{"questions":[{"prompt":"Q?"}]}</script></lk-quiz>`);
+  assert(bad.textContent.includes('could not be shown'));
+});

@@ -13,7 +13,7 @@ This is a plan, not a promise. Order and scope may change.
 - [x] Tabs
 - [x] Accordion
 - [x] Modal dialog (focus trapping, Escape to close, focus return)
-- [ ] Tooltip and popover
+- [x] Tooltip and popover
 - [ ] Toast notifications
 - [x] Buttons and badges
 - [x] Form controls: text field, select, checkbox and radio groups, slider

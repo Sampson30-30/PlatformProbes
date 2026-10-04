@@ -82,6 +82,16 @@
       <span class="lk-badge" data-tone="info">Optional</span>
     </p>
 
+    <h2>Tooltip and popover</h2>
+    <p>
+      <button type="button" class="lk-button" id="tt-help">Hover or focus me</button>
+      <lk-tooltip for="tt-help">Opens the course guide in a new tab</lk-tooltip>
+      <button type="button" class="lk-button" data-lk-popover="info-pop">More about this</button>
+    </p>
+    <lk-popover id="info-pop" label="About this topic">
+      <p>Popovers can hold links and controls: <a href="#">read the guide</a>.</p>
+    </lk-popover>
+
     <h2>Progress and stepper</h2>
     <lk-progress label="Course progress" value="40" show-value></lk-progress>
     <p></p>

@@ -722,4 +722,46 @@
       display: none;
     }
   }
+
+  /* lk-tooltip and lk-popover */
+
+  lk-tooltip,
+  lk-popover {
+    position: fixed;
+    inset: auto;
+    top: 0;
+    left: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: var(--lk-font);
+    font-size: 0.875rem;
+    line-height: 1.45;
+    overflow: visible;
+  }
+
+  lk-tooltip:not([data-open]),
+  lk-popover:not([data-open]) {
+    display: none;
+  }
+
+  lk-tooltip {
+    max-width: min(20rem, calc(100vw - 1rem));
+    padding: 0.375rem 0.625rem;
+    color: var(--lk-color-bg);
+    background: var(--lk-color-text);
+    border: var(--lk-border-width) solid var(--lk-color-text);
+    border-radius: min(var(--lk-radius-control), 0.5rem);
+    box-shadow: var(--lk-shadow);
+  }
+
+  lk-popover {
+    width: max-content;
+    max-width: min(24rem, calc(100vw - 1rem));
+    padding: var(--lk-space);
+    color: var(--lk-color-text);
+    background: var(--lk-color-bg);
+    border: var(--lk-border-width) solid var(--lk-color-border);
+    border-radius: var(--lk-radius);
+    box-shadow: var(--lk-shadow);
+  }
 }

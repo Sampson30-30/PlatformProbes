@@ -147,3 +147,38 @@ test('stepper: marks states and aria-current', async () => {
   equal(steps.map((s) => s.dataset.state), ['complete', 'complete', 'current']);
   assert(!steps[1].hasAttribute('aria-current'));
 });
+
+// ---- lk-tooltip and lk-popover ----
+
+test('tooltip: describes its target, opens on focus, closes on Escape', async () => {
+  const wrap = await mount(`<div style="padding:100px"><button id="tt1">Help</button><lk-tooltip for="tt1">Opens the guide</lk-tooltip></div>`);
+  const btn = wrap.querySelector('button');
+  const tip = wrap.querySelector('lk-tooltip');
+  assert(btn.getAttribute('aria-describedby') === tip.id, 'described by');
+  equal(tip.getAttribute('role'), 'tooltip');
+  btn.dispatchEvent(new FocusEvent('focus'));
+  await tick(10);
+  assert(tip.isOpen, 'open on focus');
+  assert(tip.style.top !== '', 'positioned');
+  document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+  assert(!tip.isOpen, 'closed on Escape');
+});
+
+test('popover: toggles from trigger with ARIA state and restores focus', async () => {
+  const wrap = await mount(`<div style="padding:100px"><button id="pp1" data-lk-popover="pop1">More</button><lk-popover id="pop1" label="More info"><p>Text</p><a href="#x">Link</a></lk-popover></div>`);
+  const btn = wrap.querySelector('button');
+  const pop = wrap.querySelector('lk-popover');
+  const seen = listen(pop, 'lk-open');
+  btn.focus();
+  btn.click();
+  assert(pop.isOpen, 'open');
+  equal(btn.getAttribute('aria-expanded'), 'true');
+  equal(seen.length, 1);
+  press(pop, 'Escape');
+  assert(!pop.isOpen, 'closed');
+  equal(btn.getAttribute('aria-expanded'), 'false');
+  assert(document.activeElement === btn, 'focus restored');
+  btn.click();
+  btn.click();
+  assert(!pop.isOpen, 'second click closes');
+});

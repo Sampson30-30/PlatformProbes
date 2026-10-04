@@ -204,3 +204,44 @@ Shows where the learner is in a sequence. It does not hold the step content. For
 | `label` | Accessible name for the list. |
 
 The current step has `aria-current="step"`, and each step carries a hidden "(completed)" or "(current step)" note for screen readers. On narrow screens the steps stack vertically.
+
+
+### `<lk-tooltip>`
+
+A short hint for a focusable element.
+
+```html
+<button id="help" class="lk-button">Help</button>
+<lk-tooltip for="help">Opens the course guide</lk-tooltip>
+```
+
+| Attribute | Description |
+| --- | --- |
+| `for` | Id of the target. Without it, the previous sibling is used. |
+| `placement` | `top` (default), `bottom`, `left` or `right`. It flips when there is no room. |
+
+It opens on hover and keyboard focus, stays open while the pointer is over it, and closes on Escape. The target gets `aria-describedby`. Keep tooltips short and never put essential information only in one: touch users cannot hover. Methods: `show()` and `hide()`.
+
+### `<lk-popover>`
+
+A small panel next to a trigger that can hold links, buttons and form controls.
+
+```html
+<button class="lk-button" data-lk-popover="info">More about this</button>
+<lk-popover id="info" label="About this topic">
+  <p>Extra detail with a <a href="/guide">link</a>.</p>
+</lk-popover>
+```
+
+| Attribute | Description |
+| --- | --- |
+| `label` | Accessible name. Always provide one. |
+| `placement` | `bottom` (default), `top`, `left` or `right`. |
+
+| Event | Detail |
+| --- | --- |
+| `lk-open`, `lk-close` | `{}` |
+
+Opens and closes from the trigger. Escape closes it and returns focus to the trigger. A click outside, or moving focus out, also closes it. Focus moves to the first focusable element inside when it opens. Methods: `show(trigger)`, `hide()`, `toggle(trigger)`. Use `<lk-modal>` instead when the learner must deal with the content before going on.
+
+Both use the browser's top layer (the Popover API), so they are never clipped by a scrolling parent, and fall back to fixed positioning in older browsers.

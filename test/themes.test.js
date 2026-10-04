@@ -48,7 +48,7 @@ for (const { name, t } of sets) {
     ['color-muted', 'color-bg', 4.5],
     ['color-muted', 'color-surface', 4.5],
     ['color-primary-text', 'color-primary', 4.5],
-    ['color-primary', 'color-bg', 3],
+    ['color-primary', 'color-bg', 4.5],
     ['color-focus', 'color-bg', 3],
     ['color-focus', 'color-surface', 3],
     ['color-focus', 'color-page', 3],

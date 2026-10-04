@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { uid, clamp, wrap, toggleOpen, normaliseOpen, percent, stepState, toastDuration } from '../src/core/utils.js';
+import { uid, clamp, wrap, toggleOpen, normaliseOpen, percent, stepState, toastDuration, gridMove } from '../src/core/utils.js';
 
 test('uid returns unique prefixed ids', () => {
   const a = uid('lk-demo');
@@ -57,4 +57,18 @@ test('toastDuration scales with length and keeps errors until dismissed', () => 
   assert.ok(toastDuration('x'.repeat(100), 'info') > toastDuration('Saved', 'info'));
   assert.equal(toastDuration('x'.repeat(1000), 'info'), 15000);
   assert.equal(toastDuration('Failed', 'danger'), 0);
+});
+
+test('gridMove navigates a grid in reading order', () => {
+  // 3 columns, 8 items:  0 1 2 / 3 4 5 / 6 7
+  assert.equal(gridMove(0, 'ArrowRight', 3, 8), 1);
+  assert.equal(gridMove(7, 'ArrowRight', 3, 8), 7);
+  assert.equal(gridMove(0, 'ArrowLeft', 3, 8), 0);
+  assert.equal(gridMove(1, 'ArrowDown', 3, 8), 4);
+  assert.equal(gridMove(5, 'ArrowDown', 3, 8), 5);
+  assert.equal(gridMove(4, 'ArrowUp', 3, 8), 1);
+  assert.equal(gridMove(1, 'ArrowUp', 3, 8), 1);
+  assert.equal(gridMove(4, 'Home', 3, 8), 0);
+  assert.equal(gridMove(4, 'End', 3, 8), 7);
+  assert.equal(gridMove(4, 'a', 3, 8), 4);
 });

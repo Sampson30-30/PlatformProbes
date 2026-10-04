@@ -59,3 +59,22 @@ export function toastDuration(message, tone = 'info') {
   const length = String(message).length;
   return Math.min(4000 + length * 60, 15000);
 }
+
+/**
+ * Moves through a grid of `count` items laid out in `columns` columns, in
+ * reading order. Returns the new index for an arrow, Home or End key, or the
+ * same index if the key does nothing there.
+ */
+export function gridMove(index, key, columns, count) {
+  const cols = Math.max(1, columns);
+  const last = count - 1;
+  switch (key) {
+    case 'ArrowRight': return Math.min(index + 1, last);
+    case 'ArrowLeft': return Math.max(index - 1, 0);
+    case 'ArrowDown': return index + cols <= last ? index + cols : index;
+    case 'ArrowUp': return index - cols >= 0 ? index - cols : index;
+    case 'Home': return 0;
+    case 'End': return last;
+    default: return index;
+  }
+}

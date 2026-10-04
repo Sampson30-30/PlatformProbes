@@ -373,3 +373,117 @@ test('rating: builds radio groups, remembers and summarises', async () => {
   el.reset();
   assert(localStorage.getItem(`lk-rating:${name}`) === null, 'storage cleared');
 });
+
+// ---- lk-timeline ----
+
+test('timeline: builds an ordered list; collapsible items toggle', async () => {
+  const el = await mount(`<lk-timeline label="History" collapsible>
+    <div data-lk-date="1962" data-title="Founded">First classes.</div>
+    <div data-lk-date="1990" data-title="Campus">New campus.</div></lk-timeline>`);
+  equal(el.querySelectorAll('ol > li').length, 2);
+  equal(el.querySelector('ol').getAttribute('aria-label'), 'History');
+  const first = el.querySelector('button');
+  equal(first.getAttribute('aria-expanded'), 'false');
+  const seen = listen(el, 'lk-toggle');
+  first.click();
+  equal(first.getAttribute('aria-expanded'), 'true');
+  assert(!document.getElementById(first.getAttribute('aria-controls')).hidden, 'body shown');
+  equal(seen[0], { index: 0, title: 'Founded', open: true });
+});
+
+test('timeline: stepped mode reveals one event at a time', async () => {
+  const el = await mount(`<lk-timeline stepped><div data-lk-date="A" data-title="One">1</div><div data-lk-date="B" data-title="Two">2</div><div data-lk-date="C" data-title="Three">3</div></lk-timeline>`);
+  const items = [...el.querySelectorAll('li')];
+  equal(items.map((i) => i.hidden), [false, true, true]);
+  const seen = listen(el, 'lk-reveal');
+  const more = [...el.querySelectorAll('button')].find((b) => b.textContent === 'Show next event');
+  more.click();
+  more.click();
+  equal(items.map((i) => i.hidden), [false, false, false]);
+  assert(more.hidden, 'button hides when done');
+  equal(seen[1].remaining, 0);
+  assert(el.textContent.includes('All 3 events'), 'status');
+});
+
+// ---- lk-grid-explorer ----
+
+test('grid explorer: opens details, tracks exploration, completes', async () => {
+  const el = await mount(`<lk-grid-explorer label="Theories" columns="2">
+    <div data-lk-cell="A">About A</div><div data-lk-cell="B">About B</div></lk-grid-explorer>`);
+  const tiles = el.querySelectorAll('.lk-grid__tile');
+  const explored = listen(el, 'lk-explore');
+  const done = listen(el, 'lk-complete');
+  assert(el.querySelector('.lk-grid__detail').hidden, 'closed at first');
+  tiles[0].click();
+  equal(tiles[0].getAttribute('aria-expanded'), 'true');
+  assert(el.querySelector('.lk-grid__detail').textContent.includes('About A'));
+  assert(el.textContent.includes('1 of 2 explored'));
+  tiles[0].click();
+  assert(el.querySelector('.lk-grid__detail').hidden, 'toggles closed');
+  equal(done.length, 0);
+  tiles[1].click();
+  equal(done[0], { explored: 2, total: 2 });
+  equal(explored.length, 2);
+  assert(tiles[0].textContent.includes('(explored)'), 'screen reader status');
+  press(el.querySelector('.lk-grid__detail'), 'Escape');
+  assert(el.querySelector('.lk-grid__detail').hidden, 'Escape closes');
+});
+
+// ---- lk-process ----
+
+test('process: shows one step at a time and completes', async () => {
+  const el = await mount(`<lk-process label="Plan"><div data-lk-step="Outcome">First</div><div data-lk-step="Activities">Second</div></lk-process>`);
+  const panels = [...el.querySelectorAll('.lk-process__step')];
+  equal(panels.map((p) => p.hidden), [false, true]);
+  assert(el.textContent.includes('Step 1 of 2'));
+  const steps = listen(el, 'lk-step');
+  const done = listen(el, 'lk-complete');
+  const button = (t) => [...el.querySelectorAll('button')].find((b) => b.textContent === t);
+  assert(button('Previous step').disabled, 'cannot go back from the first step');
+  button('Next step').click();
+  equal(panels.map((p) => p.hidden), [true, false]);
+  equal(el.querySelector('lk-stepper').getAttribute('current'), '1');
+  equal(steps.at(-1), { index: 1, title: 'Activities' });
+  button('Finish').click();
+  equal(done[0], { steps: 2 });
+  assert(el.textContent.includes('completed all 2 steps'));
+  button('Start again').click();
+  assert(!panels[0].hidden, 'restarted');
+});
+
+// ---- lk-scenario ----
+
+const SCENARIO = `<lk-scenario label="Late work" start="start">
+  <div data-lk-node="start" data-title="An email arrives"><p>A learner asks for more time.</p>
+    <ul data-lk-choices><li data-lk-goto="no">Say no</li><li data-lk-goto="yes">Agree an extension</li></ul></div>
+  <div data-lk-node="no" data-end data-outcome="poor" data-title="Disengaged"><p>They stop attending.</p></div>
+  <div data-lk-node="yes" data-end data-outcome="good" data-title="Caught up"><p>They submit on the new date.</p></div>
+</lk-scenario>`;
+
+test('scenario: follows choices to an ending and reports the path', async () => {
+  const el = await mount(SCENARIO);
+  const choices = listen(el, 'lk-choose');
+  const ends = listen(el, 'lk-end');
+  assert(el.textContent.includes('A learner asks for more time.'));
+  const buttons = () => [...el.querySelectorAll('.lk-scenario__choice')];
+  equal(buttons().map((b) => b.textContent), ['Say no', 'Agree an extension']);
+  buttons()[1].click();
+  equal(choices[0], { from: 'start', to: 'yes', choice: 'Agree an extension', path: ['Agree an extension'] });
+  assert(el.textContent.includes('Best outcome'), 'outcome word');
+  assert(el.textContent.includes('They submit on the new date.'));
+  equal(ends[0], { node: 'yes', outcome: 'good', path: ['Agree an extension'] });
+  assert(el.textContent.includes('Your choices'), 'review of the path');
+  [...el.querySelectorAll('button')].find((b) => b.textContent === 'Go back one step').click();
+  equal(buttons().length, 2);
+  buttons()[0].click();
+  assert(el.textContent.includes('Poor outcome'));
+  [...el.querySelectorAll('button')].find((b) => b.textContent === 'Try again').click();
+  assert(el.textContent.includes('Decision 1'), 'restarted');
+});
+
+test('scenario: reads JSON and survives bad data', async () => {
+  const ok = await mount(`<lk-scenario label="J"><script type="application/json">{"start":"a","nodes":{"a":{"text":"Hello","choices":[{"text":"On","goto":"b"}]},"b":{"text":"Bye","end":true}}}</script></lk-scenario>`);
+  assert(ok.textContent.includes('Hello'));
+  const bad = await mount(`<lk-scenario label="B"><script type="application/json">{"nodes":{}}</script></lk-scenario>`);
+  assert(bad.textContent.includes('could not be shown'));
+});

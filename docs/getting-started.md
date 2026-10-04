@@ -390,3 +390,108 @@ A self-assessment. The learner rates themselves on a scale for each statement.
 | `lk-summary` | `{ total, answered, complete, average, focus }` when every statement is rated (`focus` lists statements) |
 
 Each statement is a radio group, so arrow keys move between points. `ratings` returns the current values and `reset()` clears them.
+
+
+### `<lk-timeline>`
+
+Events in order, each a child marked with `data-lk-date`.
+
+```html
+<lk-timeline label="History of the college" collapsible>
+  <div data-lk-date="1962" data-title="Founded">The first classes began...</div>
+  <div data-lk-date="1990" data-title="New campus">...</div>
+</lk-timeline>
+```
+
+| Attribute | Description |
+| --- | --- |
+| `label` | Accessible name for the list. |
+| `level` | Heading level for event titles. Default `3`. |
+| `collapsible` | Event details open and close when the title is pressed. |
+| `stepped` | Show one event at a time, with a "Show next event" button. |
+
+Events: `lk-toggle` `{ index, title, open }` (collapsible) and `lk-reveal` `{ index, date, title, remaining }` (stepped). It is an ordered list, so the order is available to assistive technology. `revealNext()` reveals the next event from your own code.
+
+### `<lk-grid-explorer>`
+
+A grid of tiles. Choosing a tile shows its details below and ticks it off.
+
+```html
+<lk-grid-explorer label="Learning theories" columns="3">
+  <div data-lk-cell="Behaviourism">Learning as a change in behaviour...</div>
+  <div data-lk-cell="Constructivism">Learners build knowledge...</div>
+</lk-grid-explorer>
+```
+
+| Attribute | Description |
+| --- | --- |
+| `label` | Accessible name for the grid. |
+| `columns` | Columns on wide screens, 1 to 6. Default `3`. Narrow screens use fewer. |
+| `level` | Heading level for the detail title. Default `3`. |
+
+| Event | Detail |
+| --- | --- |
+| `lk-explore` | `{ index, title, explored, total }` |
+| `lk-complete` | `{ explored, total }` when every tile has been opened |
+
+Arrow keys, Home and End move between tiles in the grid's layout. Choosing the open tile again closes it. After choosing, focus moves to the details; Escape returns to the tile. Explored tiles carry a tick and a hidden "(explored)" note.
+
+### `<lk-process>`
+
+Walks the learner through steps one at a time, with a stepper showing where they are.
+
+```html
+<lk-process label="Planning a lesson">
+  <div data-lk-step="Set the outcome">Decide what learners will be able to do...</div>
+  <div data-lk-step="Plan the activities">...</div>
+</lk-process>
+```
+
+| Attribute | Description |
+| --- | --- |
+| `label` | Accessible name. |
+| `level` | Heading level for step titles. Default `3`. |
+
+Events: `lk-step` `{ index, title }` on every change, and `lk-complete` `{ steps }` when the learner finishes the last step. Moving between steps moves focus to the step's title. `go(index)` jumps to a step and `current` reads the index. Without JavaScript every step is shown in order.
+
+### `<lk-scenario>`
+
+A branching story: read a situation, choose what to do, see where it leads.
+
+```html
+<lk-scenario label="A late submission" start="start">
+  <div data-lk-node="start" data-title="An email arrives">
+    <p>A learner asks for more time...</p>
+    <ul data-lk-choices>
+      <li data-lk-goto="strict">Say no</li>
+      <li data-lk-goto="flex">Agree an extension</li>
+    </ul>
+  </div>
+  <div data-lk-node="strict" data-end data-outcome="poor" data-title="The learner disengages">...</div>
+  <div data-lk-node="flex" data-end data-outcome="good" data-title="The learner catches up">...</div>
+</lk-scenario>
+```
+
+A node with no choices is an ending. `data-outcome` can be `good`, `mixed` or `poor` and shows a labelled badge ("Best outcome", "Mixed outcome", "Poor outcome"). The same scenario as JSON, in a child `<script type="application/json">` or through the `data` property:
+
+```json
+{ "start": "a",
+  "nodes": {
+    "a": { "title": "An email arrives", "text": "A learner asks for more time.",
+           "choices": [ { "text": "Say no", "goto": "b" }, { "text": "Agree an extension", "goto": "c" } ] },
+    "b": { "text": "They disengage.", "end": true, "outcome": "poor" },
+    "c": { "text": "They catch up.", "end": true, "outcome": "good" } } }
+```
+
+| Attribute | Description |
+| --- | --- |
+| `label` | Accessible name. |
+| `start` | Id of the first node. Default: the first node. |
+| `level` | Heading level for node titles. Default `3`. |
+
+| Event | Detail |
+| --- | --- |
+| `lk-choose` | `{ from, to, choice, path }` |
+| `lk-end` | `{ node, outcome, path }` where `path` lists the choices made |
+
+Choices that point to a missing node are dropped and unreachable nodes are reported by the parser, so a mistake in a long scenario does not break it. "Go back one step" and "Start again" are always available after the first choice, and the ending lists the learner's choices. Methods: `restart()`; `path` reads the choices so far.

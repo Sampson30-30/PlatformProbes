@@ -97,6 +97,57 @@
       </div>
     </lk-quiz>
 
+    <h2>lk-timeline</h2>
+    <lk-timeline label="History of the college" collapsible>
+      <div data-lk-date="1962" data-title="Founded"><p>The first classes began in a rented hall.</p></div>
+      <div data-lk-date="1990" data-title="New campus"><p>The college moved to its current site.</p></div>
+      <div data-lk-date="2024" data-title="Blended learning"><p>Online and face-to-face teaching were combined across the curriculum.</p></div>
+    </lk-timeline>
+    <h3>Stepped</h3>
+    <lk-timeline label="A learner's journey" stepped>
+      <div data-lk-date="Week 1" data-title="Induction"><p>Meet your tutor and set goals.</p></div>
+      <div data-lk-date="Week 6" data-title="First review"><p>Check progress against your goals.</p></div>
+      <div data-lk-date="Week 12" data-title="Final assessment"><p>Show what you have learned.</p></div>
+    </lk-timeline>
+
+    <h2>lk-grid-explorer</h2>
+    <lk-grid-explorer label="Learning theories" columns="3">
+      <div data-lk-cell="Behaviourism"><p>Learning as a change in behaviour, shaped by reinforcement.</p></div>
+      <div data-lk-cell="Cognitivism"><p>Learning as processing and organising information in memory.</p></div>
+      <div data-lk-cell="Constructivism"><p>Learners build knowledge from experience and reflection.</p></div>
+      <div data-lk-cell="Social learning"><p>Learning by observing and interacting with others.</p></div>
+      <div data-lk-cell="Connectivism"><p>Learning across networks of people and information.</p></div>
+      <div data-lk-cell="Humanism"><p>Learning driven by the whole person and their needs.</p></div>
+    </lk-grid-explorer>
+
+    <h2>lk-process</h2>
+    <lk-process label="Planning a lesson">
+      <div data-lk-step="Set the outcome"><p>Decide what learners will be able to do by the end.</p></div>
+      <div data-lk-step="Plan the activities"><p>Choose activities that let learners practise that outcome.</p></div>
+      <div data-lk-step="Check understanding"><p>Decide how you will know the outcome was met.</p></div>
+    </lk-process>
+
+    <h2>lk-scenario</h2>
+    <lk-scenario label="A late submission" start="start">
+      <div data-lk-node="start" data-title="An email arrives">
+        <p>A learner who has never been late before asks for an extra week on their assignment.</p>
+        <ul data-lk-choices>
+          <li data-lk-goto="strict">Refuse: the deadline was clear</li>
+          <li data-lk-goto="ask">Ask why they need the time</li>
+        </ul>
+      </div>
+      <div data-lk-node="ask" data-title="A conversation">
+        <p>They explain a family emergency. You can agree an extension or offer support.</p>
+        <ul data-lk-choices>
+          <li data-lk-goto="ext">Agree a short extension and a check-in</li>
+          <li data-lk-goto="ext-only">Agree the extension and say nothing more</li>
+        </ul>
+      </div>
+      <div data-lk-node="strict" data-end data-outcome="poor" data-title="The learner disengages"><p>They submit nothing and stop attending sessions.</p></div>
+      <div data-lk-node="ext" data-end data-outcome="good" data-title="The learner catches up"><p>They submit on the new date and say the check-in helped.</p></div>
+      <div data-lk-node="ext-only" data-end data-outcome="mixed" data-title="Work arrives late"><p>The work arrives, but a chance to offer support was missed.</p></div>
+    </lk-scenario>
+
     <h2>lk-spectrum</h2>
     <lk-spectrum statement="How should feedback be given to learners?" left="Written" right="Spoken" expert="70"
       explanation="Spoken feedback allows a conversation and quick clarification, but it works best when the key points are also written down."></lk-spectrum>

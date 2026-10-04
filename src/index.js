@@ -11,3 +11,7 @@ export { LkQuiz } from './lk-quiz.js';
 export { LkJournal } from './lk-journal.js';
 export { LkSpectrum } from './lk-spectrum.js';
 export { LkRating } from './lk-rating.js';
+export { LkTimeline } from './lk-timeline.js';
+export { LkGridExplorer } from './lk-grid.js';
+export { LkProcess } from './lk-process.js';
+export { LkScenario } from './lk-scenario.js';

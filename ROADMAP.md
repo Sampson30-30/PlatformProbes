@@ -25,10 +25,10 @@ This is a plan, not a promise. Order and scope may change.
 - [x] Reflection journal with export
 - [x] Comparison spectrum
 - [x] Rating or self-assessment tool
-- [ ] Timeline
-- [ ] Grid explorer
-- [ ] Step-by-step process
-- [ ] Scenario or branching
+- [x] Timeline
+- [x] Grid explorer
+- [x] Step-by-step process
+- [x] Scenario or branching
 
 ## Layer 3: Themes and customisation
 

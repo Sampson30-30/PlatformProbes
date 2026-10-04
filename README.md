@@ -29,6 +29,16 @@ Version 0.1.0. Everything on the [roadmap](ROADMAP.md) is built.
 | `<lk-field>`, `<lk-choices>` | Labelled inputs, selects, sliders, checkbox and radio groups with validation |
 | `<lk-progress>`, `<lk-stepper>` | Progress bar and step indicator |
 
+**Display components**
+
+| Component | Description |
+| --- | --- |
+| `<lk-table>` | Native table made sortable and filterable, announced to screen readers |
+| `<lk-alert>`, `<lk-chip>`, `<lk-avatar>` | Messages, tags and people |
+| `<lk-switch>` | On/off setting built on a native checkbox |
+| `<lk-breadcrumbs>`, `<lk-pagination>` | Where you are, and moving between pages |
+| `.lk-card`, `.lk-divider`, `.lk-skeleton` | CSS-only surfaces and loading placeholders |
+
 **Learning components**
 
 | Component | Description |

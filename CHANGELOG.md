@@ -9,6 +9,7 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 - `lk-stepper` with many steps or long names no longer squashes its labels: it goes compact (current label only, others kept for screen readers) when there are more than five steps.
 
 ### Added
+- Display components, modelled on the MudBlazor catalogue: `<lk-table>` (sort, filter, striped), `<lk-alert>`, `<lk-chip>`, `<lk-avatar>`, `<lk-switch>`, `<lk-breadcrumbs>`, `<lk-pagination>`, and CSS-only `.lk-card`, `.lk-divider` and `.lk-skeleton`. Logic in `core/table.js` and `core/widgets.js`.
 - Project foundation: `LkElement` base class, utilities, design tokens and base stylesheet.
 - `<lk-tabs>` component.
 - `<lk-accordion>` component, with Homepage theme styling.

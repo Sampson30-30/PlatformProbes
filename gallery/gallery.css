@@ -33,6 +33,8 @@ body {
 }
 
 a { color: var(--g-accent); }
+/* Unlayered shell styles beat LearnKit's layers, so let the demos use their theme. */
+.demo a { color: revert-layer; }
 
 .page-header,
 .controls,

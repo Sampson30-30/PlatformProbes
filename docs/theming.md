@@ -66,6 +66,10 @@ Put the attribute on a wrapper instead of `<html>` to theme one section, or to s
 
 To see every component in every theme, run `npm start` and open `/gallery/`. It can show one component across all themes, or one theme across all components, in light, dark or system mode, and the address keeps your choices so you can share a view.
 
+## Customiser
+
+To make your own variation of a theme without writing CSS, run `npm start` and open `/customiser/`. Pick a theme to start from, then change colours (separately for light and dark), corner radius, border width, spacing, shadow and fonts. The preview updates as you go, and every colour pair is checked against the same contrast rules as `npm test`, with a clear pass or fail. When you are done, copy the CSS or download `customisation.css`. It contains only what you changed, so load it after `learnkit.css` and the theme file. Your work in progress is kept in your browser.
+
 Available themes:
 
 | Theme | Look |

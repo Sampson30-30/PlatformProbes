@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LearnKit customiser</title>
+    <link rel="stylesheet" href="../src/learnkit.css" />
+    <link rel="stylesheet" href="../src/themes/homepage.css" />
+    <link rel="stylesheet" href="../src/themes/clean.css" />
+    <link rel="stylesheet" href="../src/themes/contrast.css" />
+    <link rel="stylesheet" href="../src/themes/bold.css" />
+    <link rel="stylesheet" href="../src/themes/soft.css" />
+    <link rel="stylesheet" href="../gallery/gallery.css" />
+    <link rel="stylesheet" href="customiser.css" />
+    <script type="module" src="customiser.js"></script>
+  </head>
+  <body>
+    <header class="page-header">
+      <h1>LearnKit customiser</h1>
+      <p>Start from a theme, change colours, shape and fonts, and watch the components update. Contrast is checked as you go. When you are happy, copy the CSS and load it after the theme.</p>
+    </header>
+
+    <div class="layout">
+      <form class="settings" aria-label="Customiser settings" onsubmit="return false">
+        <fieldset class="group">
+          <legend>Start from</legend>
+          <label class="field"><span>Theme</span><select id="base"></select></label>
+          <div class="radios" role="radiogroup" aria-label="Which mode to edit">
+            <span class="radios-label">Editing colours for</span>
+            <label><input type="radio" name="editing" value="light" checked /> Light</label>
+            <label><input type="radio" name="editing" value="dark" /> Dark</label>
+          </div>
+          <p class="note">Colours are set separately for light and dark. Shape, spacing and fonts apply to both.</p>
+        </fieldset>
+
+        <fieldset class="group" id="colours"><legend>Colours</legend></fieldset>
+
+        <fieldset class="group" id="shape">
+          <legend>Shape and spacing</legend>
+        </fieldset>
+
+        <fieldset class="group" id="fonts">
+          <legend>Fonts</legend>
+        </fieldset>
+
+        <p><button type="button" id="reset" class="plain-button">Reset all changes</button></p>
+      </form>
+
+      <div class="side">
+        <section class="preview-wrap" aria-label="Preview">
+          <h2>Preview</h2>
+          <div id="preview" class="preview"></div>
+        </section>
+
+        <section class="checks" aria-labelledby="checks-title">
+          <h2 id="checks-title">Contrast</h2>
+          <p id="check-summary" class="summary" role="status"></p>
+          <div class="table-wrap"><table id="check-table"><caption class="visually-hidden">Contrast checks for the mode being edited</caption>
+            <thead><tr><th scope="col">Pair</th><th scope="col">Ratio</th><th scope="col">Needs</th><th scope="col">Result</th></tr></thead>
+            <tbody></tbody></table></div>
+        </section>
+
+        <section class="export" aria-labelledby="export-title">
+          <h2 id="export-title">Your CSS</h2>
+          <textarea id="css" readonly rows="14" aria-label="Generated CSS"></textarea>
+          <p class="row">
+            <button type="button" id="copy" class="plain-button primary">Copy CSS</button>
+            <button type="button" id="download" class="plain-button">Download customisation.css</button>
+            <span id="export-status" role="status"></span>
+          </p>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>

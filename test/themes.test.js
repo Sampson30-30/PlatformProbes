@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
-import { contrastRatio } from '../src/core/contrast.js';
+import { checkTokens } from '../src/core/contrast.js';
 
 const root = new URL('../src/', import.meta.url);
 
@@ -41,31 +41,11 @@ for (const { name, t } of sets) {
     }
   });
 
-  const checks = [
-    ['color-text', 'color-bg', 4.5],
-    ['color-text', 'color-surface', 4.5],
-    ['color-text', 'color-page', 4.5],
-    ['color-muted', 'color-bg', 4.5],
-    ['color-muted', 'color-surface', 4.5],
-    ['color-primary-text', 'color-primary', 4.5],
-    ['color-primary', 'color-bg', 4.5],
-    ['color-primary', 'color-surface', 4.5],
-    ['color-focus', 'color-bg', 3],
-    ['color-focus', 'color-surface', 3],
-    ['color-focus', 'color-page', 3],
-    ...TONES.flatMap((k) => [
-      [`color-${k}`, `color-${k}-bg`, 4.5],
-      ['color-text', `color-${k}-bg`, 4.5],
-    ]),
-  ];
-  // The contrast theme promises WCAG AAA for text.
-  const strict = name.startsWith('contrast');
-  for (const [fg, bg, base] of checks) {
-    const min = strict && base === 4.5 ? 7 : base;
-    test(`${name}: ${fg} on ${bg} is at least ${min}:1`, () => {
-      if (!t || !t[fg] || !t[bg]) return; // reported by the token test
-      const ratio = contrastRatio(t[fg], t[bg]);
-      assert.ok(ratio >= min, `${t[fg]} on ${t[bg]} is ${ratio.toFixed(2)}:1`);
+  // The contrast theme promises WCAG AAA (7:1) for text.
+  const strictText = name.startsWith('contrast') ? 7 : 4.5;
+  for (const result of checkTokens(t || {}, { strictText })) {
+    test(`${name}: ${result.label} is at least ${result.min}:1`, () => {
+      assert.ok(result.pass, `${result.fg} on ${result.bg} is ${result.ratio.toFixed(2)}:1`);
     });
   }
 }

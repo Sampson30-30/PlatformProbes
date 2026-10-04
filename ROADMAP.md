@@ -6,7 +6,7 @@ LearnKit is a free UI shop: a set of components that are not the standard UI lib
 - **Themes** are complete skins. Any component can wear any theme.
 - **Customiser** helps people choose a theme and adjust it to suit them.
 
-This is a plan, not a promise. Order and scope may change.
+Everything below is built (see the checked items). It is kept as a record of the plan, and a starting point for what comes next.
 
 ## Layer 1: Core primitives
 
@@ -37,17 +37,14 @@ This is a plan, not a promise. Order and scope may change.
 - [x] A second theme that looks very different from Homepage (`clean`). This was the test that components are skin-agnostic. It needed no component changes.
 - [x] More themes (`contrast`, `bold`, `soft`), each documented and contrast-checked in light and dark
 - [x] Theme gallery: a static page showing every component in every theme, side by side (`/gallery/`)
-- [ ] Customiser: pick a theme, change tokens with live preview, warn on failing contrast, export the CSS
+- [x] Customiser: pick a theme, change tokens with live preview, warn on failing contrast, export the CSS (`/customiser/`)
 
-## Suggested build order
+## Build order followed
 
-1. Accordion and modal, to prove the primitives pattern beyond tabs. Each one is styled in both themes as it lands.
-2. The second theme, as soon as there are two components, to prove the skin split.
-3. Quiz, the first learning component.
-4. Reflection journal, which exercises persistence and export.
-5. Theme gallery, once there are several components and themes to show.
-6. Customiser, last. It is the largest piece and depends on a stable token contract.
-7. The remainder, prioritised by demand.
+1. Accordion and modal, to prove the primitives pattern beyond tabs.
+2. The second theme (`clean`) as soon as there were two components, to prove the skin split.
+3. Buttons, form controls, progress, tooltips and toasts, then the learning components, each with a browser test.
+4. More themes, the gallery, and finally the customiser, once the token contract was stable.
 
 ## Shared decisions
 
@@ -57,4 +54,4 @@ This is a plan, not a promise. Order and scope may change.
 - **Layers and scoping:** LearnKit CSS lives in `lk.tokens`, `lk.components` and `lk.theme` cascade layers. Themes are scoped by `data-lk-theme`, so several can share a page.
 - **Content as data:** learning components accept JSON as well as markup, so tooling can be built on top later.
 - **Testing:** Node tests for logic, plus a browser test for each component.
-- **No dependencies and no build step** for consumers. The gallery and customiser will also be plain HTML, CSS and JavaScript.
+- **No dependencies and no build step** for consumers. The gallery and customiser are plain HTML, CSS and JavaScript too.

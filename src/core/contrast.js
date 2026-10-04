@@ -35,3 +35,53 @@ export function grade(ratio) {
   if (ratio >= 3) return 'AA large';
   return 'fail';
 }
+
+/** Expands #rgb to #rrggbb, lower-cased. Returns null if the value is not a hex colour. */
+export function toHex6(value) {
+  const rgb = parseHex(value);
+  return rgb ? `#${rgb.map((n) => n.toString(16).padStart(2, '0')).join('')}` : null;
+}
+
+const TONES = ['success', 'warning', 'danger', 'info'];
+
+/**
+ * The colour pairs a theme must get right. `min` is the lowest acceptable
+ * contrast ratio. `text` pairs are held to `strictText` (default 4.5, or 7
+ * for a high contrast theme).
+ */
+export function themeChecks() {
+  return [
+    ['color-text', 'color-bg', 'text'],
+    ['color-text', 'color-surface', 'text'],
+    ['color-text', 'color-page', 'text'],
+    ['color-muted', 'color-bg', 'text'],
+    ['color-muted', 'color-surface', 'text'],
+    ['color-primary-text', 'color-primary', 'text'],
+    ['color-primary', 'color-bg', 'text'],
+    ['color-primary', 'color-surface', 'text'],
+    ['color-focus', 'color-bg', 'ui'],
+    ['color-focus', 'color-surface', 'ui'],
+    ['color-focus', 'color-page', 'ui'],
+    ...TONES.flatMap((k) => [
+      [`color-${k}`, `color-${k}-bg`, 'text'],
+      ['color-text', `color-${k}-bg`, 'text'],
+    ]),
+  ].map(([fg, bg, kind]) => ({ fg, bg, kind }));
+}
+
+/**
+ * Checks a set of tokens (keys without the --lk- prefix, hex values) against
+ * themeChecks(). Returns [{ fg, bg, ratio, min, pass, label }]. A pair is
+ * skipped if either colour is missing or is not hex.
+ */
+export function checkTokens(tokens, { strictText = 4.5 } = {}) {
+  const results = [];
+  for (const { fg, bg, kind } of themeChecks()) {
+    if (!tokens[fg] || !tokens[bg]) continue;
+    const ratio = contrastRatio(tokens[fg], tokens[bg]);
+    if (Number.isNaN(ratio)) continue;
+    const min = kind === 'ui' ? 3 : strictText;
+    results.push({ fg, bg, ratio, min, pass: ratio >= min, label: `${fg.replace('color-', '')} on ${bg.replace('color-', '')}` });
+  }
+  return results;
+}

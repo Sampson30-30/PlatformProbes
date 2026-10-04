@@ -14,15 +14,35 @@ Dependency-free Web Components: accessible UI primitives, plus interactive compo
 
 ## Status
 
-Early foundation (v0.1.0). Currently included:
+Version 0.1.0. Everything on the [roadmap](ROADMAP.md) is built.
+
+**Core primitives**
 
 | Component | Description |
 | --- | --- |
 | `<lk-tabs>` | Accessible tabbed content with keyboard support |
 | `<lk-accordion>` | Collapsible sections, one open at a time or several |
 | `<lk-modal>` | Modal dialog with focus containment and focus return |
+| `<lk-tooltip>`, `<lk-popover>` | Hover and focus hints, and click-open panels |
+| `toast()` | Notifications with tones, actions and reading-time durations |
+| `.lk-button`, `.lk-badge` | CSS-only buttons and badges |
+| `<lk-field>`, `<lk-choices>` | Labelled inputs, selects, sliders, checkbox and radio groups with validation |
+| `<lk-progress>`, `<lk-stepper>` | Progress bar and step indicator |
 
-LearnKit is a free UI shop with three layers: general-purpose **core primitives** (tabs, accordion, modal and so on), **learning components** built on top of them (quiz, reflection journal, comparison spectrum, timeline and more), and **themes** that give any component a complete look. Available themes: `homepage`, `clean`, `contrast`, `bold` and `soft`. See the [roadmap](ROADMAP.md) for what is planned.
+**Learning components**
+
+| Component | Description |
+| --- | --- |
+| `<lk-quiz>` | Knowledge check with feedback, scoring and retry, from markup or JSON |
+| `<lk-journal>` | Reflection journal that saves locally and exports as text or JSON |
+| `<lk-spectrum>` | Place a view between two poles, then compare with an expert |
+| `<lk-rating>` | Self-assessment scales with a summary |
+| `<lk-timeline>` | Events in order, collapsible or revealed one at a time |
+| `<lk-grid-explorer>` | A grid of tiles that tracks what has been explored |
+| `<lk-process>` | Step-by-step walkthrough with a stepper |
+| `<lk-scenario>` | Branching story from markup or JSON |
+
+LearnKit is a free UI shop with three layers: **components**, **themes** that give any component a complete look, and a **customiser** to make a theme your own. Available themes: `homepage`, `clean`, `contrast`, `bold` and `soft`.
 
 ## Principles
 
@@ -36,7 +56,7 @@ LearnKit is a free UI shop with three layers: general-purpose **core primitives*
 
 ```sh
 npm start        # serves the repo at http://localhost:8080
-# then open /examples/ or /gallery/
+# then open /examples/, /gallery/ or /customiser/
 npm test         # unit tests for helpers, plus contrast checks for every theme
 # component tests run in the browser: open /test/browser/
 ```
@@ -47,6 +67,7 @@ npm test         # unit tests for helpers, plus contrast checks for every theme
 - [Getting started](docs/getting-started.md)
 - [Theming](docs/theming.md)
 - Theme gallery: run `npm start`, then open `/gallery/`
+- Customiser: run `npm start`, then open `/customiser/`
 - [Contributing](CONTRIBUTING.md)
 
 ## Licence

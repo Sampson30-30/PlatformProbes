@@ -1,4 +1,4 @@
-import { test, assert, equal, mount, click, press, listen, tick } from './harness.js';
+import { test, assert, equal, mount, click, press, listen, tick, waitFor } from './harness.js';
 
 // ---- lk-menu ----
 
@@ -220,8 +220,8 @@ test('drawer: opens as a modal dialog docked to the chosen side', async () => {
   click(wrap.querySelector('#drw-open'));
   assert(drawer.isOpen);
   equal(seen.length, 1);
-  await tick(250); // let the slide-in finish
   const dialog = drawer.querySelector('dialog');
+  await waitFor(() => Math.abs(dialog.getBoundingClientRect().left) < 1, 2000); // the slide-in finishes
   assert(dialog.matches(':modal'), 'is modal');
   equal(dialog.dataset.side, 'start');
   assert(dialog.classList.contains('lk-drawer__dialog'));
@@ -239,9 +239,9 @@ test('drawer: end side docks to the other edge, and closing returns focus and a 
   const opener = wrap.querySelector('#drw-open');
   opener.focus();
   click(opener);
-  await tick(250);
-  const r = drawer.querySelector('dialog').getBoundingClientRect();
-  assert(Math.abs(r.right - document.documentElement.clientWidth) < 1, 'docked to the end edge');
+  const dialog = drawer.querySelector('dialog');
+  const docked = await waitFor(() => Math.abs(dialog.getBoundingClientRect().right - document.documentElement.clientWidth) < 1, 2000);
+  assert(docked, 'docked to the end edge');
   click(drawer.querySelector('[data-lk-close]'));
   equal(closed, [{ returnValue: 'done' }]);
   assert(document.activeElement === opener, 'focus returned');

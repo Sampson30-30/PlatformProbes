@@ -690,3 +690,54 @@ A panel that slides in from the side for navigation, filters or details. It is a
 ```
 
 It takes every attribute, method and event of `<lk-modal>` (including `data-lk-open` and `data-lk-close`), plus `side` (`start` or `end`, default `end`; it follows the reading direction). Set `--lk-drawer-width` to change the width (default `24rem`, never wider than the screen). The slide-in is skipped when the user prefers reduced motion.
+
+## Diagrams
+
+### `<lk-flow>`
+
+A process chart or a decision tree, drawn from nested lists, with an optional walk-through that asks one question at a time and highlights the route on the chart.
+
+```html
+<lk-flow label="Handling a late submission" walkthrough>
+  <ol>
+    <li data-type="start">Work arrives after the deadline</li>
+    <li>Was an extension agreed?
+      <ul>
+        <li data-label="Yes">Mark it as normal</li>
+        <li data-label="No">Is there a good reason?
+          <ul>
+            <li data-label="Yes">Offer a short extension</li>
+            <li data-label="No">Apply the late penalty</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Record the outcome</li>
+    <li data-type="end">Return feedback</li>
+  </ol>
+</lk-flow>
+```
+
+**Writing it**
+
+| Markup | Meaning |
+| --- | --- |
+| `<ol>` | Steps, in order. |
+| `<ul>` inside an `<li>` | Branches. The item becomes a decision and each branch `<li>` is one answer. |
+| `data-label` on a branch | The answer, shown on the connector ("Yes"). |
+| `<ol>` inside a branch `<li>` | More steps in that branch, after the first. |
+| `data-type` | `start`, `end`, `step` or `decision`. A decision is the default for an item with branches. |
+
+Branches rejoin whatever follows the decision, however deeply they are nested. A branch that finishes in an `end` stops there instead.
+
+| Attribute | Description |
+| --- | --- |
+| `label` | Accessible name. Always provide one. |
+| `layout` | `process` (default) or `tree`. A tree never rejoins: every branch ends in a result, and anything written after a decision is ignored with a console warning. |
+| `walkthrough` | Adds a panel. Each step shows its question and one button per answer, with Back and Start again, and the route so far. |
+
+**Accessibility.** The chart is real nested lists, not a picture. A screen reader hears "Start:", "Decision:", "End:" and "If Yes" in words, and the lines and arrows are decoration. The chart scrolls sideways inside its own labelled region when it is wider than the page, so it never forces the page to scroll. Walk-through steps are announced, focus moves to the next answer, and nothing takes focus on load.
+
+Events: `lk-flowstep` `{ id, text, route }` and `lk-flowend` `{ route }`. Methods: `restart()` and `back()`; `route` reads the route so far.
+
+Use `<lk-process>` instead when each step has its own content to read. Use `<lk-scenario>` when the choices lead to story passages and outcomes rather than a short answer.

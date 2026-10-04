@@ -207,6 +207,31 @@
       </ul>
     </lk-tree>
 
+    <h2>lk-flow</h2>
+    <lk-flow label="Handling a late submission" walkthrough>
+      <ol>
+        <li data-type="start">Work arrives after the deadline</li>
+        <li>Was an extension agreed?
+          <ul>
+            <li data-label="Yes">Mark it as normal</li>
+            <li data-label="No">Apply the late penalty</li>
+          </ul>
+        </li>
+        <li data-type="end">Return feedback</li>
+      </ol>
+    </lk-flow>
+    <p></p>
+    <lk-flow label="Which tool should I use?" layout="tree">
+      <ul>
+        <li>Does the content need to behave differently for each learner?
+          <ul>
+            <li data-label="No">Use Rise</li>
+            <li data-label="Yes">Build it with code</li>
+          </ul>
+        </li>
+      </ul>
+    </lk-flow>
+
     <h2>Toast notifications</h2>
     <p>
       <button type="button" class="lk-button" id="toast-ok">Show a confirmation</button>

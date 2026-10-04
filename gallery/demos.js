@@ -370,4 +370,43 @@ export const DEMOS = [
         <div class="lk-modal__actions"><button type="button" class="lk-button" data-variant="primary" data-lk-close="apply">Apply</button></div>
       </lk-drawer>`,
   },
+  {
+    id: 'lk-flow',
+    title: 'Process chart and decision tree',
+    html: () => `
+      <lk-flow label="Handling a late submission" walkthrough>
+        <ol>
+          <li data-type="start">Work arrives after the deadline</li>
+          <li>Was an extension agreed?
+            <ul>
+              <li data-label="Yes">Mark it as normal</li>
+              <li data-label="No">Is there a good reason?
+                <ul>
+                  <li data-label="Yes">Offer a short extension</li>
+                  <li data-label="No">Apply the late penalty</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>Record the outcome</li>
+          <li data-type="end">Return feedback</li>
+        </ol>
+      </lk-flow>
+      <p></p>
+      <lk-flow label="Which tool should I use?" layout="tree" walkthrough>
+        <ul>
+          <li>Does the content need to behave differently for each learner?
+            <ul>
+              <li data-label="No">Is it mostly text and images?
+                <ul>
+                  <li data-label="Yes">Use Rise</li>
+                  <li data-label="No">Use Storyline</li>
+                </ul>
+              </li>
+              <li data-label="Yes">Build it with code</li>
+            </ul>
+          </li>
+        </ul>
+      </lk-flow>`,
+  },
 ];

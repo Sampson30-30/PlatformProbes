@@ -27,3 +27,4 @@ export { LkHotspot } from './lk-hotspot.js';
 export { LkMenu } from './lk-menu.js';
 export { LkTree } from './lk-tree.js';
 export { LkDrawer } from './lk-drawer.js';
+export { LkFlow } from './lk-flow.js';

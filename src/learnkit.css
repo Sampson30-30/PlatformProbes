@@ -1643,6 +1643,276 @@
     }
   }
 
+  /* lk-flow */
+
+  lk-flow {
+    --lk-flow-line: var(--lk-color-muted);
+    --lk-flow-gap: 1.25rem;
+    display: block;
+    font-family: var(--lk-font);
+    color: var(--lk-color-text);
+  }
+
+  .lk-flow__scroll {
+    padding: 1rem;
+    overflow-x: auto;
+    background: var(--lk-color-surface);
+    border: var(--lk-border-width) solid var(--lk-color-border);
+    border-radius: var(--lk-radius);
+  }
+
+  .lk-flow__seq,
+  .lk-flow__branches {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .lk-flow__seq {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .lk-flow__root {
+    width: max-content;
+    min-width: 100%;
+  }
+
+  .lk-flow__step {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* A line and an arrowhead lead into every step except the very first. */
+  .lk-flow__step + .lk-flow__step,
+  .lk-flow__branch > .lk-flow__seq > .lk-flow__step:first-child {
+    padding-block-start: calc(var(--lk-flow-gap) + 0.5rem);
+  }
+
+  .lk-flow__step + .lk-flow__step::before,
+  .lk-flow__branch > .lk-flow__seq > .lk-flow__step:first-child::before {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 50%;
+    height: var(--lk-flow-gap);
+    content: '';
+    border-inline-start: 2px solid var(--lk-flow-line);
+    transform: translateX(-1px);
+  }
+
+  .lk-flow__step + .lk-flow__step::after,
+  .lk-flow__branch > .lk-flow__seq > .lk-flow__step:first-child::after {
+    position: absolute;
+    inset-block-start: var(--lk-flow-gap);
+    inset-inline-start: 50%;
+    content: '';
+    border-inline: 0.4rem solid transparent;
+    border-block-start: 0.5rem solid var(--lk-flow-line);
+    transform: translateX(-50%);
+  }
+
+  .lk-flow__node {
+    box-sizing: border-box;
+    min-width: 7rem;
+    max-width: 15rem;
+    padding: 0.625rem 1rem;
+    text-align: center;
+    overflow-wrap: anywhere;
+    color: var(--lk-color-text);
+    background: var(--lk-color-bg);
+    border: var(--lk-border-width) solid var(--lk-color-border);
+    border-radius: var(--lk-radius-control);
+  }
+
+  /* Start and end are pills; a decision is a boxed question with a double rule. */
+  .lk-flow__step[data-type='start'] > .lk-flow__node,
+  .lk-flow__step[data-type='end'] > .lk-flow__node {
+    font-weight: 700;
+    border-radius: 999px;
+  }
+
+  .lk-flow__step[data-type='decision'] > .lk-flow__node {
+    font-weight: 600;
+    color: var(--lk-color-info);
+    background: var(--lk-color-info-bg);
+    border: 3px double var(--lk-color-info);
+  }
+
+  .lk-flow__step[data-leaf] > .lk-flow__node {
+    font-weight: 600;
+    color: var(--lk-color-success);
+    background: var(--lk-color-success-bg);
+    border-color: var(--lk-color-success);
+  }
+
+  /* Branches of a decision sit side by side under it. */
+  .lk-flow__branches {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    margin-block-start: var(--lk-flow-gap);
+  }
+
+  .lk-flow__branches::before {
+    position: absolute;
+    inset-block-start: calc(var(--lk-flow-gap) * -1);
+    inset-inline-start: 50%;
+    height: var(--lk-flow-gap);
+    content: '';
+    border-inline-start: 2px solid var(--lk-flow-line);
+    transform: translateX(-1px);
+  }
+
+  .lk-flow__branch {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--lk-flow-gap) 0.5rem 0;
+  }
+
+  .lk-flow__branch::before,
+  .lk-flow__branch::after {
+    position: absolute;
+    content: '';
+  }
+
+  /* The bar across the tops of the branches, trimmed at each end. */
+  .lk-flow__branch::before {
+    inset-block-start: 0;
+    inset-inline: 0;
+    border-block-start: 2px solid var(--lk-flow-line);
+  }
+
+  .lk-flow__branch[data-pos='first']::before {
+    inset-inline-start: 50%;
+  }
+
+  .lk-flow__branch[data-pos='last']::before {
+    inset-inline-end: 50%;
+  }
+
+  .lk-flow__branch[data-pos='only']::before {
+    display: none;
+  }
+
+  .lk-flow__branch::after {
+    inset-block-start: 0;
+    inset-inline-start: 50%;
+    height: var(--lk-flow-gap);
+    border-inline-start: 2px solid var(--lk-flow-line);
+    transform: translateX(-1px);
+  }
+
+  .lk-flow__edge {
+    position: relative;
+    z-index: 1;
+    padding: 0.125rem 0.625rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--lk-color-text);
+    background: var(--lk-color-surface);
+    border: var(--lk-border-width) solid var(--lk-color-border);
+    border-radius: 999px;
+  }
+
+  /* Where branches come back together: a line down from each branch that
+     flows on, and one bar (placed by script) that gathers them. */
+  .lk-flow__join {
+    position: relative;
+    flex: 1 0 var(--lk-flow-gap);
+    align-self: stretch;
+    min-height: var(--lk-flow-gap);
+  }
+
+  .lk-flow__join::before {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 50%;
+    content: '';
+    border-inline-start: 2px solid var(--lk-flow-line);
+    transform: translateX(-1px);
+  }
+
+  .lk-flow__joinbar {
+    position: absolute;
+    inset-block-end: 0;
+    height: 0;
+    border-block-end: 2px solid var(--lk-flow-line);
+  }
+
+  .lk-flow__joinbar[hidden] {
+    display: none;
+  }
+
+  /* The walk-through marks the route on the chart. */
+  .lk-flow__step[data-visited] > .lk-flow__node {
+    color: var(--lk-color-primary-text);
+    background: var(--lk-color-primary);
+    border-color: var(--lk-color-primary);
+  }
+
+  .lk-flow__node[aria-current] {
+    outline: 3px solid var(--lk-color-focus);
+    outline-offset: 3px;
+  }
+
+  .lk-flow__branch[data-taken] > .lk-flow__edge {
+    color: var(--lk-color-primary-text);
+    background: var(--lk-color-primary);
+    border-color: var(--lk-color-primary);
+  }
+
+  .lk-flow__branch[data-taken]::after {
+    border-inline-start-color: var(--lk-color-primary);
+  }
+
+  .lk-flow__walk {
+    margin-block-start: 0.75rem;
+    padding: 1rem;
+    background: var(--lk-color-bg);
+    border: var(--lk-border-width) solid var(--lk-color-border);
+    border-radius: var(--lk-radius);
+    box-shadow: var(--lk-shadow);
+  }
+
+  .lk-flow__kicker {
+    margin: 0 0 0.25rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--lk-color-muted);
+  }
+
+  .lk-flow__prompt {
+    margin: 0;
+    font-family: var(--lk-font-heading);
+    font-size: 1.1875rem;
+    font-weight: 700;
+  }
+
+  .lk-flow__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-block-start: 0.75rem;
+  }
+
+  .lk-flow__route {
+    margin: 0.75rem 0 0;
+    font-size: 0.875rem;
+    color: var(--lk-color-muted);
+  }
+
+  .lk-flow__route:empty {
+    display: none;
+  }
+
   /* lk-table */
 
   lk-table {

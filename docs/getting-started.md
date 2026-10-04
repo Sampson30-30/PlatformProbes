@@ -50,3 +50,30 @@ document.addEventListener('lk-tabchange', (event) => {
 Keyboard: Left and Right arrows move between tabs, Home and End jump to the first and last.
 
 Markup inside `<lk-tabs>` is plain HTML. Without JavaScript, all panels are simply visible in order.
+
+
+### `<lk-accordion>`
+
+```html
+<lk-accordion label="Course topics">
+  <div data-lk-item="What you will learn" open>...</div>
+  <div data-lk-item="How it is assessed">...</div>
+</lk-accordion>
+```
+
+| Attribute | Description |
+| --- | --- |
+| `multiple` | Allow several sections to be open at once. Without it, opening one closes the others. |
+| `level` | Heading level for the section headings, 1 to 6. Default `3`. Pick the level that fits the page outline. |
+| `label` | Accessible name for the group. |
+| `open` (on a section) | Start that section expanded. |
+
+| Event | Detail |
+| --- | --- |
+| `lk-toggle` | `{ index, title, open }`. In single mode a section that closes because another opened also fires its own event. |
+
+Methods: `toggle(index)`, `open(index)`, `close(index)`, and the read-only `openIndexes`.
+
+Keyboard: Enter and Space open or close the focused section. Up and Down arrows move between headings, Home and End jump to the first and last.
+
+Without JavaScript, every section is simply visible in order.

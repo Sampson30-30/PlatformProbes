@@ -136,4 +136,73 @@
   .lk-tabs__panel[hidden] {
     display: none;
   }
+
+  /* lk-accordion */
+
+  lk-accordion {
+    display: block;
+    font-family: var(--lk-font);
+    color: var(--lk-color-text);
+    background: var(--lk-color-bg);
+    border: var(--lk-border-width) solid var(--lk-color-border);
+    border-radius: var(--lk-radius);
+    box-shadow: var(--lk-shadow);
+    overflow: hidden;
+  }
+
+  .lk-accordion__heading {
+    margin: 0;
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  .lk-accordion__heading:not(:first-child) {
+    border-top: var(--lk-border-width) solid var(--lk-color-divider);
+  }
+
+  .lk-accordion__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--lk-space);
+    width: 100%;
+    font: inherit;
+    font-weight: 600;
+    text-align: start;
+    color: var(--lk-color-text);
+    background: var(--lk-color-surface);
+    border: 0;
+    padding: 0.75rem var(--lk-space);
+    cursor: pointer;
+    transition: color var(--lk-transition);
+  }
+
+  .lk-accordion__trigger:hover,
+  .lk-accordion__trigger[aria-expanded='true'] {
+    color: var(--lk-color-primary);
+  }
+
+  /* Chevron drawn with borders; themes can replace it. */
+  .lk-accordion__icon {
+    flex: none;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform var(--lk-transition);
+  }
+
+  .lk-accordion__trigger[aria-expanded='true'] .lk-accordion__icon {
+    transform: rotate(-135deg);
+  }
+
+  .lk-accordion__panel {
+    padding: var(--lk-space);
+    border-top: var(--lk-border-width) solid var(--lk-color-divider);
+  }
+
+  .lk-accordion__panel[hidden] {
+    display: none;
+  }
 }

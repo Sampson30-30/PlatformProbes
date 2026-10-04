@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { uid, clamp, wrap } from '../src/core/utils.js';
+import { uid, clamp, wrap, toggleOpen, normaliseOpen } from '../src/core/utils.js';
 
 test('uid returns unique prefixed ids', () => {
   const a = uid('lk-demo');
@@ -21,4 +21,18 @@ test('wrap loops indexes around both ends', () => {
   assert.equal(wrap(4, 4), 0);
   assert.equal(wrap(2, 4), 2);
   assert.equal(wrap(1, 0), 0);
+});
+
+test('toggleOpen opens, closes and respects single mode', () => {
+  assert.deepEqual(toggleOpen([], 1), [1]);
+  assert.deepEqual(toggleOpen([1], 2), [2]);
+  assert.deepEqual(toggleOpen([1], 1), []);
+  assert.deepEqual(toggleOpen([2], 0, true), [0, 2]);
+  assert.deepEqual(toggleOpen([0, 2], 2, true), [0]);
+});
+
+test('normaliseOpen keeps one item in single mode', () => {
+  assert.deepEqual(normaliseOpen([1, 2], false), [1]);
+  assert.deepEqual(normaliseOpen([1, 2], true), [1, 2]);
+  assert.deepEqual(normaliseOpen([], false), []);
 });

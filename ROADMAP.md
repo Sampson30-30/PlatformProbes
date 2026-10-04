@@ -11,7 +11,7 @@ This is a plan, not a promise. Order and scope may change.
 ## Layer 1: Core primitives
 
 - [x] Tabs
-- [ ] Accordion
+- [x] Accordion
 - [ ] Modal dialog (focus trapping, Escape to close, focus return)
 - [ ] Tooltip and popover
 - [ ] Toast notifications

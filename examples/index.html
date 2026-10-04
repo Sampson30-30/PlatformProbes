@@ -26,6 +26,20 @@
 
     <p id="log" aria-live="polite"></p>
 
+    <h2>lk-accordion</h2>
+    <lk-accordion label="Course topics">
+      <div data-lk-item="What you will learn" open><p>One section is open at a time by default.</p></div>
+      <div data-lk-item="How it is assessed"><p>Use the up and down arrows, Home and End to move between headings.</p></div>
+      <div data-lk-item="What you need"><p>Press Enter or Space to open or close a section.</p></div>
+    </lk-accordion>
+
+    <h3>With <code>multiple</code></h3>
+    <lk-accordion label="Frequently asked questions" multiple level="4">
+      <div data-lk-item="Can several sections be open?" open><p>Yes. Add the <code>multiple</code> attribute.</p></div>
+      <div data-lk-item="Which heading level is used?" open><p>Set <code>level</code> from 1 to 6. The default is 3.</p></div>
+      <div data-lk-item="How do I react to changes?"><p>Listen for <code>lk-toggle</code>.</p></div>
+    </lk-accordion>
+
     <h2>Themes</h2>
     <p>
       A theme is a stylesheet plus a <code>data-lk-theme</code> attribute. Put the attribute on a wrapper to theme one section.
@@ -38,6 +52,10 @@
         <div data-lk-tab="Overview"><p>The built-in look.</p></div>
         <div data-lk-tab="Details"><p>Overridden only by tokens.</p></div>
       </lk-tabs>
+      <lk-accordion label="Default accordion" style="margin-top: 1rem">
+        <div data-lk-item="Section one" open><p>Built-in accordion.</p></div>
+        <div data-lk-item="Section two"><p>More content.</p></div>
+      </lk-accordion>
     </div>
 
     <div class="theme-box" data-lk-theme="homepage">
@@ -46,6 +64,10 @@
         <div data-lk-tab="Overview"><p>Same component, same markup, different skin.</p></div>
         <div data-lk-tab="Details"><p>Square panel, bevelled tabs, hard shadow.</p></div>
       </lk-tabs>
+      <lk-accordion label="Homepage accordion" style="margin-top: 1rem">
+        <div data-lk-item="Section one" open><p>Bevelled bars, text triangles.</p></div>
+        <div data-lk-item="Section two"><p>More content.</p></div>
+      </lk-accordion>
     </div>
 
     <script>

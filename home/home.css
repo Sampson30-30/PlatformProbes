@@ -1,0 +1,65 @@
+/* The LearnKit home page. Uses only LearnKit's own tokens, so every look works. */
+
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--lk-font); line-height: 1.6; color: var(--lk-color-text); background: var(--lk-color-page); }
+.hub { max-width: 68rem; margin-inline: auto; padding: 2rem 1rem 3rem; }
+h1 { margin: 0; font-size: clamp(2.25rem, 6vw, 3.5rem); font-weight: 800; line-height: 1.1; }
+h2 { margin: 3rem 0 0.5rem; font-size: 1.5rem; }
+h3 { margin: 0; font-size: 1.0625rem; }
+.lede { margin: 0.75rem 0 0; max-width: 40rem; font-size: 1.1875rem; color: var(--lk-color-muted); }
+.section-intro { margin: 0 0 1rem; max-width: 42rem; color: var(--lk-color-muted); }
+.eyebrow { margin: 0 0 0.5rem; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--lk-color-muted); }
+
+/* ---- Top: what it is, and something to try ---- */
+
+.intro { display: grid; gap: 2rem; align-items: center; }
+@media (min-width: 52rem) { .intro { grid-template-columns: 1.1fr 1fr; } }
+.intro__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1.5rem 0 0; }
+.intro__sample { padding: 1.25rem; background: var(--lk-color-surface); border: var(--lk-border-width) solid var(--lk-color-border); border-radius: var(--lk-radius); }
+
+/* ---- What it does ---- */
+
+.does { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem; margin: 0; padding: 0; list-style: none; }
+.does li { padding: 1rem 1.125rem; background: var(--lk-color-bg); border: var(--lk-border-width) solid var(--lk-color-divider); border-radius: var(--lk-radius); }
+.does h3 { color: var(--lk-color-primary); }
+.does p { margin: 0.25rem 0 0; font-size: 0.9375rem; color: var(--lk-color-muted); }
+
+/* ---- The library ---- */
+
+.shelf-blurb { margin: 0 0 1rem; color: var(--lk-color-muted); }
+.pieces { display: grid; grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr)); gap: 1rem; margin: 0; padding: 0; list-style: none; }
+.piece { display: flex; flex-direction: column; min-width: 0; padding: 1rem; background: var(--lk-color-bg); border: var(--lk-border-width) solid var(--lk-color-divider); border-radius: var(--lk-radius); box-shadow: var(--lk-shadow); }
+.piece--wide { grid-column: 1 / -1; }
+.piece__name { display: flex; flex-wrap: wrap; gap: 0.25rem 0.75rem; align-items: baseline; justify-content: space-between; }
+.piece__name a { color: var(--lk-color-primary); }
+.piece__tag { font-size: 0.8125rem; font-weight: 400; color: var(--lk-color-muted); }
+.piece__what { margin: 0.25rem 0 0.75rem; font-size: 0.9375rem; color: var(--lk-color-muted); }
+.piece__demo { flex: 1; min-width: 0; padding-top: 0.75rem; overflow-x: auto; border-top: 1px solid var(--lk-color-divider); }
+.piece__demo > :first-child { margin-top: 0; }
+.piece__demo p.row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.5rem 0; }
+
+/* ---- Looks ---- */
+
+.looks { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 1rem; margin: 0; padding: 0; list-style: none; }
+.look { height: 100%; padding: 1rem; color: var(--lk-color-text); background: var(--lk-color-page); border: var(--lk-border-width) solid var(--lk-color-border); border-radius: var(--lk-radius); font-family: var(--lk-font); }
+.look h3 { margin: 0 0 0.125rem; font-family: var(--lk-font-heading); }
+.look p { margin: 0 0 0.75rem; font-size: 0.875rem; color: var(--lk-color-muted); }
+.look__sample { display: grid; gap: 0.625rem; }
+.look__sample .row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin: 0; }
+.look-links { margin: 1rem 0 0; }
+
+/* ---- Go further, and the maintainer area ---- */
+
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: 1rem; margin: 0; padding: 0; list-style: none; }
+.card { display: block; height: 100%; padding: 1.25rem; color: inherit; text-decoration: none; background: var(--lk-color-bg); border: var(--lk-border-width) solid var(--lk-color-divider); border-radius: var(--lk-radius); box-shadow: var(--lk-shadow); }
+.card:hover { border-color: var(--lk-color-primary); }
+.card:focus-visible { outline: 3px solid var(--lk-color-focus); outline-offset: 2px; }
+.card h3 { margin: 0 0 0.25rem; font-size: 1.125rem; color: var(--lk-color-primary); }
+.card p { margin: 0; font-size: 0.9375rem; color: var(--lk-color-muted); }
+.maintainers { margin-top: 3rem; }
+.maintainers h3.group { margin: 1.25rem 0 0.5rem; font-size: 1rem; }
+.run { margin-top: 1.5rem; padding: 1rem 1.25rem; font-size: 0.9375rem; background: var(--lk-color-surface); border-radius: var(--lk-radius); }
+.run code { padding: 0.1em 0.4em; background: var(--lk-color-bg); border-radius: 4px; }
+
+/* Ordinary links take the look's own colour. */
+a:not(.lk-button, .card) { color: var(--lk-color-primary); }

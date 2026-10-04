@@ -9,6 +9,7 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 - `lk-stepper` with many steps or long names no longer squashes its labels: it goes compact (current label only, others kept for screen readers) when there are more than five steps.
 
 ### Added
+- A new home page that works as a shop-front for the library: what LearnKit does in four plain points, a sample to try straight away, every piece working live on five shelves grouped by what it is for (`home/catalogue.js`), and the five looks side by side. The area for the person who looks after the code is now folded away at the bottom. A test checks that every piece in the gallery is on exactly one shelf, so a new piece cannot be forgotten.
 - `.lk-guide`, a plain-English "About this page" panel built on a native `<details>`, now at the top of the home page, gallery, customiser and examples, with plain-English wording across them. A test keeps the helper text free of developer jargon and its sentences short.
 - `rise-test/`: one self-contained page that checks which browser features work inside a Rise course (the `hidden` attribute, dialogs, popovers, custom elements, modules, storage, modern CSS, clipboard, resizing, network), and writes a plain-text report to send back. Nothing runs against the internet unless a button is pressed.
 - `<lk-flow>`: a process chart or decision tree drawn from nested lists, with branches that rejoin, a `tree` layout, and an optional walk-through that highlights the route. Graph and walk logic in `core/flow.js`.

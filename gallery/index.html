@@ -17,7 +17,20 @@
     <header class="page-header">
       <p class="back-link"><a href="../">&larr; LearnKit home</a></p>
       <h1>LearnKit theme gallery</h1>
-      <p>Every component in every theme, using the same markup. Choose what to compare, flip between light and dark, then copy the theme file you like.</p>
+      <p>Every building block in every look, using the same content each time so you can compare fairly.</p>
+      <details class="lk-guide" open>
+        <summary>About this page</summary>
+        <div class="lk-guide__body">
+          <p><strong>What this is.</strong> A component is one ready-made block, such as a quiz or a tab set. A theme is a complete look for all the blocks: colours, corners and fonts. This page shows them side by side.</p>
+          <p class="lk-guide__title">What you can do here</p>
+          <ul>
+            <li>Choose &ldquo;One component, all themes&rdquo; to see one block in every look.</li>
+            <li>Choose &ldquo;One theme, all components&rdquo; to see one look across every block.</li>
+            <li>Switch between light and dark, to check a look works in both.</li>
+            <li>When you find a look you like, tell Claude its name. For example: &ldquo;use the Clean theme&rdquo;.</li>
+          </ul>
+        </div>
+      </details>
     </header>
 
     <form class="controls" aria-label="Gallery options" onsubmit="return false">
@@ -45,7 +58,11 @@
     <main id="stage" aria-live="polite"></main>
 
     <footer class="page-footer">
-      <p>To use a theme, load <code>learnkit.css</code>, then the theme file, then set <code>data-lk-theme="name"</code> on <code>&lt;html&gt;</code> or any wrapper. See <a href="../docs/theming.md">the theming guide</a>.</p>
+      <p>To use a look in something you are building, tell Claude its name. You do not need to do anything else.</p>
+      <details class="lk-guide">
+        <summary>For the person who looks after the code</summary>
+        <div class="lk-guide__body"><p>Load <code>learnkit.css</code>, then the theme file, then set <code>data-lk-theme="name"</code> on <code>&lt;html&gt;</code> or any wrapper. See <a href="../docs/theming.md">the theming guide</a>.</p></div>
+      </details>
     </footer>
   </body>
 </html>

@@ -742,3 +742,22 @@ Branches rejoin whatever follows the decision, however deeply they are nested. A
 Events: `lk-flowstep` `{ id, text, route }` and `lk-flowend` `{ route }`. Methods: `restart()` and `back()`; `route` reads the route so far.
 
 Use `<lk-process>` instead when each step has its own content to read. Use `<lk-scenario>` when the choices lead to story passages and outcomes rather than a short answer.
+
+## Helper text
+
+### `.lk-guide`
+
+A plain-English "About this page" panel. It is CSS only, built on a native `<details>`, so it needs no script, opens and closes with the keyboard, and still reads well without any styling.
+
+```html
+<details class="lk-guide" open>
+  <summary>About this page</summary>
+  <div class="lk-guide__body">
+    <p><strong>What this is.</strong> One or two plain sentences.</p>
+    <p class="lk-guide__title">What you can do here</p>
+    <ul><li>Try the first thing.</li><li>Then the next.</li></ul>
+  </div>
+</details>
+```
+
+Write it for someone with no developer background: say what the page is, then what they can do on it, starting each item with a verb. Avoid words like framework, dependency, markup or build step. If a technical word cannot be avoided, say what it means in the same sentence. Put the panel straight after the page's main heading, open by default so a first-time visitor sees it, and keep it short enough that a returning visitor can close it and carry on.

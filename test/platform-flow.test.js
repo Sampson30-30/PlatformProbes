@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { validateBlocks, checkWording } from '../platform/lib/content.js';
+import { HOME } from '../platform/data/home.js';
 import { reachBlocks } from '../platform/data/topics/reach.js';
 import { prepare, walkStart, walkOptions, walkChoose, walkFinished, walkCurrent } from '../src/core/flow.js';
 
@@ -52,4 +53,35 @@ test('every path through the reach chart ends in a different result', () => {
     const node = graph.nodes[id];
     if (node.edges.length === 0) assert.ok(node.detail.length > 40, `the result "${node.text}" explains what to do`);
   }
+});
+
+// ---- the home page ----
+
+
+const homeFlow = HOME.blocks.find((b) => b.type === 'flow');
+
+test('the home page has a Rise or build tree that is valid and every path ends in advice', () => {
+  assert.ok(homeFlow, 'the home page has a flow block');
+  assert.deepEqual(validateBlocks(HOME.blocks, 'home'), []);
+  assert.equal(homeFlow.layout, 'tree');
+  const graph = prepare(structuredClone(homeFlow.items), { rejoin: false });
+  const results = [];
+  (function walk(state) {
+    if (walkFinished(graph, state)) {
+      const node = walkCurrent(graph, state);
+      results.push(node);
+      return;
+    }
+    for (const option of walkOptions(graph, state)) walk(walkChoose(graph, state, option.index));
+  })(walkStart(graph));
+  assert.equal(results.length, 4);
+  for (const node of results) assert.ok(node.detail.length > 40, `"${node.text}" says what to do next`);
+  assert.equal(results.filter((n) => n.text === 'Use Rise').length, 2, 'there are two honest ways to land on Rise');
+  assert.equal(results.filter((n) => n.text.startsWith('Build it')).length, 2);
+});
+
+test('the first thing the tree says is that Rise is often right', () => {
+  const first = homeFlow.items[0].branches[0];
+  assert.equal(first.label, 'Yes');
+  assert.equal(first.items[0].text, 'Use Rise');
 });

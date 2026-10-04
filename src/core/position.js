@@ -52,3 +52,20 @@ export function computePosition({ anchor, size, viewport, side = 'bottom', gap =
     side: used,
   };
 }
+
+/**
+ * Places a dropdown panel below its trigger, lined up with the trigger's
+ * start edge. Opens above instead when there is no room below and more room
+ * above, then keeps the panel inside the viewport. Returns { top, left, side }.
+ */
+export function alignedPosition({ anchor, size, viewport, gap = 4, margin = 8, rtl = false }) {
+  const below = anchor.top + anchor.height + gap;
+  const above = anchor.top - size.height - gap;
+  const roomBelow = viewport.height - below - margin;
+  const roomAbove = anchor.top - gap - margin;
+  const flip = size.height > roomBelow && roomAbove > roomBelow;
+  const top = flip ? Math.max(margin, above) : below;
+  const wanted = rtl ? anchor.left + anchor.width - size.width : anchor.left;
+  const max = Math.max(margin, viewport.width - size.width - margin);
+  return { top, left: Math.min(Math.max(wanted, margin), max), side: flip ? 'top' : 'bottom' };
+}

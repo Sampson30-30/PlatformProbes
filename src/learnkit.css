@@ -1,93 +1,139 @@
 /* LearnKit base styles and design tokens.
-   Override any --lk-* variable on :root, or on any wrapper element, to theme. */
 
-:root {
-  --lk-font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --lk-color-text: #1f2430;
-  --lk-color-muted: #5b6475;
-  --lk-color-bg: #ffffff;
-  --lk-color-surface: #f4f6fa;
-  --lk-color-border: #d5dae3;
-  --lk-color-primary: #2f5bea;
-  --lk-color-primary-text: #ffffff;
-  --lk-color-focus: #2f5bea;
-  --lk-radius: 8px;
-  --lk-space: 1rem;
-  --lk-transition: 120ms ease;
-}
+   Everything lives in a cascade layer so that themes and consumers can
+   override it without fighting specificity:
 
-@media (prefers-color-scheme: dark) {
+     lk.tokens      default values for the --lk-* token contract
+     lk.components  structural styles for each component
+     lk.theme       where theme files (src/themes/*.css) put their rules
+
+   Later layers win over earlier ones, and any CSS you write outside a layer
+   wins over all of them. */
+
+@layer lk.tokens, lk.components, lk.theme;
+
+/* ---- Tokens ---- */
+
+@layer lk.tokens {
   :root {
-    --lk-color-text: #e8ebf2;
-    --lk-color-muted: #a3acbd;
+    --lk-font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --lk-font-heading: var(--lk-font);
+
+    --lk-color-page: #ffffff;
+    --lk-color-bg: #ffffff;
+    --lk-color-surface: #f4f6fa;
+    --lk-color-text: #1f2430;
+    --lk-color-muted: #5b6475;
+    --lk-color-border: #d5dae3;
+    --lk-color-divider: #d5dae3;
+    --lk-color-primary: #2f5bea;
+    --lk-color-primary-text: #ffffff;
+    --lk-color-focus: #2f5bea;
+
+    --lk-radius: 8px;
+    --lk-radius-control: 4px;
+    --lk-border-width: 1px;
+    --lk-shadow: none;
+    --lk-space: 1rem;
+    --lk-transition: 120ms ease;
+  }
+
+  /* Dark mode follows the system unless the page sets data-lk-mode="light".
+     Set data-lk-mode="dark" on any element to force dark inside it. */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-lk-mode='light']) {
+      --lk-color-page: #14171f;
+      --lk-color-bg: #14171f;
+      --lk-color-surface: #1d212c;
+      --lk-color-text: #e8ebf2;
+      --lk-color-muted: #a3acbd;
+      --lk-color-border: #333a4a;
+      --lk-color-divider: #333a4a;
+      --lk-color-primary: #7b9bff;
+      --lk-color-primary-text: #0d1020;
+      --lk-color-focus: #7b9bff;
+    }
+  }
+
+  [data-lk-mode='dark'] {
+    --lk-color-page: #14171f;
     --lk-color-bg: #14171f;
     --lk-color-surface: #1d212c;
+    --lk-color-text: #e8ebf2;
+    --lk-color-muted: #a3acbd;
     --lk-color-border: #333a4a;
+    --lk-color-divider: #333a4a;
     --lk-color-primary: #7b9bff;
     --lk-color-primary-text: #0d1020;
     --lk-color-focus: #7b9bff;
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  :root {
-    --lk-transition: 0ms;
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --lk-transition: 0ms;
+    }
   }
 }
 
-/* Shared focus ring for every interactive LearnKit element */
-[class*='lk-']:focus-visible {
-  outline: 3px solid var(--lk-color-focus);
-  outline-offset: 2px;
-}
+/* ---- Components ---- */
 
-/* ---- lk-tabs ---- */
+@layer lk.components {
+  /* Shared focus ring for every interactive LearnKit element */
+  [class*='lk-']:focus-visible {
+    outline: 3px solid var(--lk-color-focus);
+    outline-offset: 2px;
+  }
 
-lk-tabs {
-  display: block;
-  font-family: var(--lk-font);
-  color: var(--lk-color-text);
-  background: var(--lk-color-bg);
-  border: 1px solid var(--lk-color-border);
-  border-radius: var(--lk-radius);
-  overflow: hidden;
-}
+  /* lk-tabs */
 
-.lk-tabs__list {
-  display: flex;
-  gap: 0.25rem;
-  padding: 0.5rem 0.5rem 0;
-  background: var(--lk-color-surface);
-  border-bottom: 1px solid var(--lk-color-border);
-  overflow-x: auto;
-}
+  lk-tabs {
+    display: block;
+    font-family: var(--lk-font);
+    color: var(--lk-color-text);
+    background: var(--lk-color-bg);
+    border: var(--lk-border-width) solid var(--lk-color-border);
+    border-radius: var(--lk-radius);
+    box-shadow: var(--lk-shadow);
+    overflow: hidden;
+  }
 
-.lk-tabs__tab {
-  font: inherit;
-  color: var(--lk-color-muted);
-  background: transparent;
-  border: 0;
-  border-bottom: 3px solid transparent;
-  padding: 0.6rem 1rem;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: color var(--lk-transition), border-color var(--lk-transition);
-}
+  .lk-tabs__list {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.5rem 0.5rem 0;
+    background: var(--lk-color-surface);
+    border-bottom: var(--lk-border-width) solid var(--lk-color-divider);
+    overflow-x: auto;
+  }
 
-.lk-tabs__tab:hover {
-  color: var(--lk-color-text);
-}
+  .lk-tabs__tab {
+    font: inherit;
+    color: var(--lk-color-muted);
+    background: transparent;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    border-radius: var(--lk-radius-control) var(--lk-radius-control) 0 0;
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color var(--lk-transition), border-color var(--lk-transition);
+  }
 
-.lk-tabs__tab[aria-selected='true'] {
-  color: var(--lk-color-primary);
-  border-bottom-color: var(--lk-color-primary);
-  font-weight: 600;
-}
+  .lk-tabs__tab:hover {
+    color: var(--lk-color-text);
+  }
 
-.lk-tabs__panel {
-  padding: var(--lk-space);
-}
+  .lk-tabs__tab[aria-selected='true'] {
+    color: var(--lk-color-primary);
+    border-bottom-color: var(--lk-color-primary);
+    font-weight: 600;
+  }
 
-.lk-tabs__panel[hidden] {
-  display: none;
+  .lk-tabs__panel {
+    padding: var(--lk-space);
+  }
+
+  .lk-tabs__panel[hidden] {
+    display: none;
+  }
 }

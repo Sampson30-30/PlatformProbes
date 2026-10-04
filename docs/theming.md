@@ -1,6 +1,16 @@
 # Theming
 
-LearnKit is themed with CSS custom properties. Override them on `:root` for the whole page, or on any wrapper to theme one section.
+LearnKit separates what a component does from how it looks. Components provide structure and behaviour. Themes provide the look.
+
+There are three ways to change appearance, from lightest to heaviest:
+
+1. **Override tokens.** Change a few `--lk-*` custom properties.
+2. **Use a theme.** Load a ready-made theme stylesheet and set `data-lk-theme`.
+3. **Write a theme.** Set the tokens and add rules for the parts that tokens cannot reach, such as bevels or unusual tab shapes.
+
+## 1. Override tokens
+
+Override them on `:root` for the whole page, or on any wrapper to theme one section.
 
 ```css
 :root {
@@ -14,25 +24,64 @@ LearnKit is themed with CSS custom properties. Override them on `:root` for the 
 }
 ```
 
-## Tokens
+### Token contract
+
+Every theme sets these. Components only ever read these, so a theme that sets them all works with every component.
 
 | Token | Purpose |
 | --- | --- |
-| `--lk-font` | Font stack |
+| `--lk-font` | Body font stack |
+| `--lk-font-heading` | Heading font stack (defaults to `--lk-font`) |
+| `--lk-color-page` | The page behind components |
+| `--lk-color-bg` | Component background |
+| `--lk-color-surface` | Raised or secondary surfaces, such as a tab bar |
 | `--lk-color-text` | Body text |
 | `--lk-color-muted` | Secondary text |
-| `--lk-color-bg` | Component background |
-| `--lk-color-surface` | Raised or secondary surfaces |
-| `--lk-color-border` | Borders and dividers |
+| `--lk-color-border` | Borders that define a control or container |
+| `--lk-color-divider` | Decorative dividers inside a component |
 | `--lk-color-primary` | Accent and selected states |
 | `--lk-color-primary-text` | Text on top of the primary colour |
 | `--lk-color-focus` | Focus ring |
-| `--lk-radius` | Corner radius |
+| `--lk-radius` | Corner radius for containers |
+| `--lk-radius-control` | Corner radius for buttons, tabs and inputs |
+| `--lk-border-width` | Border width |
+| `--lk-shadow` | Box shadow for raised containers (`none` by default) |
 | `--lk-space` | Base spacing |
 | `--lk-transition` | Transition timing (set to `0ms` when the user prefers reduced motion) |
 
-Dark mode follows `prefers-color-scheme` by default. To force a mode, set the tokens yourself on `:root`.
+Dark mode follows `prefers-color-scheme` by default. To force a mode, set `data-lk-mode="light"` or `data-lk-mode="dark"` on `<html>` or on any wrapper.
+
+## 2. Use a theme
+
+Themes live in `src/themes/`. Load `learnkit.css` first, then the theme, then set the attribute.
+
+```html
+<link rel="stylesheet" href="learnkit.css" />
+<link rel="stylesheet" href="themes/homepage.css" />
+
+<html data-lk-theme="homepage">
+```
+
+Put the attribute on a wrapper instead of `<html>` to theme one section, or to show several themes on the same page. Set `data-lk-mode` on the same element as `data-lk-theme`.
+
+Available themes:
+
+| Theme | Look |
+| --- | --- |
+| `homepage` | Mid 1990s document web rebuilt with modern CSS: system fonts, square panels, bevelled controls, hard offset shadow. Light (paper) and dark (night). |
+
+## 3. Write a theme
+
+A theme is one CSS file in `src/themes/<name>.css`. Start from `homepage.css`.
+
+1. Wrap everything in `@layer lk.theme { ... }`. LearnKit declares the layer order `lk.tokens, lk.components, lk.theme`, so a theme beats component styles without needing higher specificity.
+2. Scope every selector to `[data-lk-theme='<name>']`, so the theme only applies where asked and several themes can share a page.
+3. Set every token in the contract above, for light and dark. Dark goes in two places: a `prefers-color-scheme: dark` block guarded with `:not([data-lk-mode='light'])`, and a `[data-lk-mode='dark']` block.
+4. Add rules for anything tokens cannot express. Target the component's classes, which are the public styling API (for example `.lk-tabs__tab` and `.lk-tabs__panel`). State comes from ARIA attributes such as `[aria-selected='true']`.
+5. Prefix any extra tokens your theme invents with `--lk-<name>-` (for example `--lk-hp-bevel-light`), so they cannot clash with the contract.
+
+CSS you write outside any layer always wins over LearnKit and themes, so page-level tweaks never need `!important`.
 
 ## Accessibility note
 
-If you change colours, keep text contrast at WCAG AA (4.5:1 for body text) and keep the focus ring clearly visible.
+If you change colours, keep text contrast at WCAG AA (4.5:1 for body text, 3:1 for large text and control borders) and keep the focus ring clearly visible against every surface it can sit on.

@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>LearnKit examples</title>
     <link rel="stylesheet" href="../src/learnkit.css" />
+    <link rel="stylesheet" href="../src/themes/homepage.css" />
     <style>
-      body { font-family: var(--lk-font); color: var(--lk-color-text); background: var(--lk-color-bg); max-width: 42rem; margin: 2rem auto; padding: 0 1rem; }
+      body { font-family: var(--lk-font); color: var(--lk-color-text); background: var(--lk-color-page); max-width: 42rem; margin: 2rem auto; padding: 0 1rem; }
+      h1, h2 { font-family: var(--lk-font-heading); }
       h2 { margin-top: 2.5rem; }
+      .theme-box { padding: 1rem; margin-top: 1rem; background: var(--lk-color-page); color: var(--lk-color-text); font-family: var(--lk-font); }
     </style>
     <script type="module" src="../src/index.js"></script>
   </head>
@@ -22,6 +25,37 @@
     </lk-tabs>
 
     <p id="log" aria-live="polite"></p>
+
+    <h2>Themes</h2>
+    <p>
+      A theme is a stylesheet plus a <code>data-lk-theme</code> attribute. Put the attribute on a wrapper to theme one section.
+      <label><input type="checkbox" id="dark-toggle" /> Force dark mode</label>
+    </p>
+
+    <div class="theme-box">
+      <strong>Default</strong>
+      <lk-tabs label="Default theme">
+        <div data-lk-tab="Overview"><p>The built-in look.</p></div>
+        <div data-lk-tab="Details"><p>Overridden only by tokens.</p></div>
+      </lk-tabs>
+    </div>
+
+    <div class="theme-box" data-lk-theme="homepage">
+      <strong>Homepage</strong>
+      <lk-tabs label="Homepage theme">
+        <div data-lk-tab="Overview"><p>Same component, same markup, different skin.</p></div>
+        <div data-lk-tab="Details"><p>Square panel, bevelled tabs, hard shadow.</p></div>
+      </lk-tabs>
+    </div>
+
+    <script>
+      document.getElementById('dark-toggle').addEventListener('change', (e) => {
+        document.querySelectorAll('.theme-box').forEach((box) => {
+          if (e.target.checked) box.setAttribute('data-lk-mode', 'dark');
+          else box.removeAttribute('data-lk-mode');
+        });
+      });
+    </script>
     <script type="module">
       document.addEventListener('lk-tabchange', (e) => {
         document.getElementById('log').textContent = `Selected: ${e.detail.title}`;

@@ -1,0 +1,109 @@
+/* LearnKit theme: Homepage.
+
+   The honest, document-first web of the mid 1990s, rebuilt with modern CSS:
+   system fonts, square panels, bevelled controls and a hard offset shadow.
+   Values come from the Homepage design system (light = paper, dark = night).
+
+   Use:  <html data-lk-theme="homepage">
+   Scope it to one section by putting the attribute on a wrapper instead.
+   Force dark with data-lk-mode="dark" on the same element. */
+
+@layer lk.theme {
+  /* ---- Tokens: light (paper) ---- */
+
+  [data-lk-theme='homepage'] {
+    --lk-font: Verdana, Geneva, 'DejaVu Sans', sans-serif;
+    --lk-font-heading: Georgia, 'Times New Roman', Times, serif;
+
+    --lk-color-page: #f3f0e8;
+    --lk-color-bg: #fffefa;
+    --lk-color-surface: #dedacd;
+    --lk-color-text: #14130f;
+    --lk-color-muted: #4d4a40;
+    --lk-color-border: #6a665a;
+    --lk-color-divider: #bdb8a8;
+    --lk-color-primary: #000080;
+    --lk-color-primary-text: #ffffff;
+    --lk-color-focus: #b34700;
+
+    --lk-radius: 0;
+    --lk-radius-control: 2px;
+    --lk-border-width: 1px;
+    --lk-shadow: 3px 3px 0 0 #14130f;
+
+    /* Theme-only tokens, used by the rules below. */
+    --lk-hp-bevel-light: #ffffff;
+    --lk-hp-bevel-dark: #8c8878;
+  }
+
+  /* ---- Tokens: dark (night) ---- */
+
+  @media (prefers-color-scheme: dark) {
+    [data-lk-theme='homepage']:not([data-lk-mode='light']) {
+      --lk-color-page: #121316;
+      --lk-color-bg: #1b1d22;
+      --lk-color-surface: #2a2d34;
+      --lk-color-text: #ecebe6;
+      --lk-color-muted: #b4b2a8;
+      --lk-color-border: #8f929c;
+      --lk-color-divider: #3a3d46;
+      --lk-color-primary: #9db8ff;
+      --lk-color-primary-text: #0a1233;
+      --lk-color-focus: #ffb454;
+      --lk-shadow: 3px 3px 0 0 #07080a;
+      --lk-hp-bevel-light: #4a4e58;
+      --lk-hp-bevel-dark: #07080a;
+    }
+  }
+
+  [data-lk-theme='homepage'][data-lk-mode='dark'] {
+    --lk-color-page: #121316;
+    --lk-color-bg: #1b1d22;
+    --lk-color-surface: #2a2d34;
+    --lk-color-text: #ecebe6;
+    --lk-color-muted: #b4b2a8;
+    --lk-color-border: #8f929c;
+    --lk-color-divider: #3a3d46;
+    --lk-color-primary: #9db8ff;
+    --lk-color-primary-text: #0a1233;
+    --lk-color-focus: #ffb454;
+    --lk-shadow: 3px 3px 0 0 #07080a;
+    --lk-hp-bevel-light: #4a4e58;
+    --lk-hp-bevel-dark: #07080a;
+  }
+
+  /* ---- Components ---- */
+
+  /* lk-tabs: bevelled tabs that join the panel when selected. */
+
+  [data-lk-theme='homepage'] .lk-tabs__list {
+    gap: 2px;
+    padding: 0.5rem 0.5rem 0;
+    border-bottom-color: var(--lk-color-border);
+  }
+
+  [data-lk-theme='homepage'] .lk-tabs__tab {
+    color: var(--lk-color-text);
+    background: var(--lk-color-surface);
+    border: var(--lk-border-width) solid var(--lk-color-border);
+    border-bottom: 0;
+    box-shadow: inset 1px 1px 0 var(--lk-hp-bevel-light),
+      inset -1px 0 0 var(--lk-hp-bevel-dark);
+    margin-bottom: calc(var(--lk-border-width) * -1);
+    padding: 0.5rem 1rem 0.55rem;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  [data-lk-theme='homepage'] .lk-tabs__tab:hover {
+    color: var(--lk-color-text);
+    text-decoration: underline;
+  }
+
+  [data-lk-theme='homepage'] .lk-tabs__tab[aria-selected='true'] {
+    color: var(--lk-color-text);
+    background: var(--lk-color-bg);
+    border-bottom: var(--lk-border-width) solid var(--lk-color-bg);
+    padding-top: 0.65rem;
+  }
+}

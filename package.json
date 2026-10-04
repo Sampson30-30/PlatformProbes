@@ -8,6 +8,7 @@
   "exports": {
     ".": "./src/index.js",
     "./css": "./src/learnkit.css",
+    "./themes/*.css": "./src/themes/*.css",
     "./*.js": "./src/*.js"
   },
   "files": ["src", "docs"],

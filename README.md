@@ -20,13 +20,13 @@ Early foundation (v0.1.0). Currently included:
 | --- | --- |
 | `<lk-tabs>` | Accessible tabbed content with keyboard support |
 
-LearnKit has two layers: general-purpose **core primitives** (tabs, accordion, modal and so on), and **learning components** built on top of them (quiz, reflection journal, comparison spectrum, timeline and more). See the [roadmap](ROADMAP.md) for what is planned.
+LearnKit is a free UI shop with three layers: general-purpose **core primitives** (tabs, accordion, modal and so on), **learning components** built on top of them (quiz, reflection journal, comparison spectrum, timeline and more), and **themes** that give any component a complete look. Available themes: `homepage`. See the [roadmap](ROADMAP.md) for what is planned.
 
 ## Principles
 
 - **No dependencies and no build step.** Plain ES modules and CSS.
 - **Accessible by default.** Keyboard support, ARIA roles, visible focus, reduced motion respected.
-- **Themeable with CSS variables.** Override any `--lk-*` token. See [docs/theming.md](docs/theming.md).
+- **Themeable.** Override any `--lk-*` token, or load a whole theme. See [docs/theming.md](docs/theming.md).
 - **Light DOM.** Style with ordinary CSS. Content stays readable by search engines and assistive technology.
 - **Content as markup or data.** Authors do not need to write JavaScript.
 

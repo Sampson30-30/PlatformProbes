@@ -7,7 +7,7 @@ Thanks for helping. LearnKit aims to stay small, dependency-free and accessible.
 - No runtime dependencies and no build step required to use the library.
 - Components extend `LkElement` (`src/core/base.js`), use the light DOM, and register with the `lk-` prefix.
 - Every component must be fully keyboard operable and expose sensible ARIA roles.
-- Style only through `--lk-*` tokens so theming keeps working.
+- Style only through `--lk-*` tokens so theming keeps working. Component CSS goes in the `lk.components` layer and must not hard-code colours, radii or borders.
 - Emit `lk-<name>` events for meaningful learner actions.
 - Put DOM-free logic in `src/core/utils.js` (or a similar module) and add a Node test for it.
 

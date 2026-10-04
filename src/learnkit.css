@@ -1654,7 +1654,7 @@
   }
 
   .lk-flow__scroll {
-    padding: 1rem;
+    padding: 1rem 0.75rem;
     overflow-x: auto;
     background: var(--lk-color-surface);
     border: var(--lk-border-width) solid var(--lk-color-border);
@@ -1716,9 +1716,9 @@
 
   .lk-flow__node {
     box-sizing: border-box;
-    min-width: 7rem;
-    max-width: 15rem;
-    padding: 0.625rem 1rem;
+    min-width: 6rem;
+    max-width: 12rem;
+    padding: 0.625rem 0.75rem;
     text-align: center;
     overflow-wrap: anywhere;
     color: var(--lk-color-text);
@@ -1740,6 +1740,11 @@
     margin-block-start: 0.25rem;
     font-size: 0.875rem;
     font-weight: 400;
+  }
+
+  .lk-flow__detail[hidden],
+  .lk-flow__detail-text[hidden] {
+    display: none;
   }
 
   .lk-flow__step[data-type='decision'] > .lk-flow__node {

@@ -193,15 +193,15 @@ test('flow detail: shown under the title when there is no walk-through', async (
 
 test('flow detail: with a walk-through it appears in the panel on arrival, not in the chart', async () => {
   const el = await mount(DETAIL('walkthrough'));
-  assert(el.querySelector('.lk-flow__detail').hidden, 'not repeated in the chart');
-  assert(el.querySelector('.lk-flow__detail-text').hidden, 'nothing to say at the question');
+  assert(el.querySelector('.lk-flow__detail').getBoundingClientRect().height === 0, 'not repeated in the chart (rendered, not just marked)');
+  assert(el.querySelector('.lk-flow__detail-text').getBoundingClientRect().height === 0, 'nothing to say at the question');
   press(el, 'Yes');
   equal(el.querySelector('.lk-flow__prompt').textContent, 'Result one');
   equal(el.querySelector('.lk-flow__detail-text').textContent, 'The longer explanation of yes.');
-  assert(!el.querySelector('.lk-flow__detail-text').hidden);
+  assert(el.querySelector('.lk-flow__detail-text').getBoundingClientRect().height > 0, 'shown');
   press(el, 'Back');
   press(el, 'No');
-  assert(el.querySelector('.lk-flow__detail-text').hidden, 'result two has no detail');
+  assert(el.querySelector('.lk-flow__detail-text').getBoundingClientRect().height === 0, 'result two has no detail');
 });
 
 test('flow: a chart wider than its region starts centred on the first step', async () => {

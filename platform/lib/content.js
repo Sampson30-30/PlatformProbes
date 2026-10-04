@@ -3,6 +3,7 @@
 
 import { parseQuiz } from '../../src/core/quiz.js';
 import { parseScenario } from '../../src/core/scenario.js';
+import { prepare } from '../../src/core/flow.js';
 
 /** Required fields for each kind of content block. */
 export const BLOCK_TYPES = {
@@ -22,6 +23,7 @@ export const BLOCK_TYPES = {
   accordion: ['label', 'items'],
   rating: ['label', 'statements'],
   process: ['label', 'steps'],
+  flow: ['label', 'items'],
 };
 
 /** Returns a list of problems with a list of blocks. An empty list means it is fine. */
@@ -60,10 +62,38 @@ export function validateBlocks(blocks, where = 'blocks') {
         problems.push(...validateBlocks(step.blocks, `${at} step ${n + 1}`));
       });
     }
+    if (block.type === 'flow') problems.push(...flowProblems(block, at));
     if (block.type === 'journal') {
       for (const p of block.prompts || []) if (!p.prompt) problems.push(`${at} journal has a prompt with no text`);
     }
   });
+  return problems;
+}
+
+/** Problems with a flow block: empty text, unlabelled answers, or items the layout would ignore. */
+function flowProblems(block, at) {
+  const problems = [];
+  const check = (items, where) => {
+    if (!Array.isArray(items) || items.length === 0) {
+      problems.push(`${at} flow: ${where} has no items`);
+      return;
+    }
+    items.forEach((item, i) => {
+      const here = `${where} item ${i + 1}`;
+      if (!item?.text) problems.push(`${at} flow: ${here} has no text`);
+      const branches = item?.branches ?? [];
+      branches.forEach((branch, n) => {
+        if (!branch.label) problems.push(`${at} flow: ${here} branch ${n + 1} has no label`);
+        check(branch.items, `${here} branch ${n + 1}`);
+      });
+      if (branches.length === 1) problems.push(`${at} flow: ${here} has a single branch, which is not a decision`);
+    });
+  };
+  check(block.items, 'the chart');
+  if (problems.length === 0) {
+    const graph = prepare(structuredClone(block.items), { rejoin: block.layout !== 'tree' });
+    problems.push(...graph.warnings.map((w) => `${at} flow: ${w}`));
+  }
   return problems;
 }
 

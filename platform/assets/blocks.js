@@ -20,6 +20,31 @@ function jsonScript(data) {
 let uid = 0;
 const nextId = (prefix) => `${prefix}-${(uid += 1)}`;
 
+/** Writes flow items as the nested lists that <lk-flow> reads. */
+function flowItem(item, label) {
+  const li = el('li', '', inline(item.text));
+  if (item.type) li.dataset.type = item.type;
+  if (item.detail) li.dataset.detail = item.detail;
+  if (label !== undefined) li.dataset.label = label;
+  if (item.branches) {
+    const ul = el('ul');
+    for (const branch of item.branches) {
+      const [first, ...rest] = branch.items;
+      const bli = flowItem(first, branch.label);
+      if (rest.length) bli.append(flowList(rest));
+      ul.append(bli);
+    }
+    li.append(ul);
+  }
+  return li;
+}
+
+function flowList(items) {
+  const ol = el('ol');
+  for (const item of items) ol.append(flowItem(item));
+  return ol;
+}
+
 const RENDERERS = {
   p: (b) => el('p', 'b-p', inline(b.text)),
 
@@ -193,6 +218,15 @@ const RENDERERS = {
       proc.append(d);
     }
     return proc;
+  },
+
+  flow: (b) => {
+    const flow = el('lk-flow');
+    flow.setAttribute('label', b.label);
+    if (b.layout) flow.setAttribute('layout', b.layout);
+    if (b.walkthrough) flow.setAttribute('walkthrough', '');
+    flow.append(flowList(b.items));
+    return flow;
   },
 
   rating: (b) => {

@@ -53,6 +53,48 @@ export const reachBlocks = [
       'I will share a screenshot. Describe what you see, and point out anything that looks wrong.',
     ],
   },
+  { type: 'h', text: 'What your results mean' },
+  {
+    type: 'p',
+    text: 'Two of the checks matter most for trust: fetching a real source, and running code. Answer for your own Claude and the chart will tell you what to expect from it. The other two, eyes and your files, work the same way: note them in your reflection.',
+  },
+  {
+    type: 'flow',
+    label: 'What can your Claude do for you?',
+    layout: 'tree',
+    walkthrough: true,
+    items: [
+      {
+        text: 'Did it fetch https://example.com and tell you what the page says?',
+        branches: [
+          {
+            label: 'Yes',
+            items: [
+              {
+                text: 'Did it run code and show you the code?',
+                branches: [
+                  { label: 'Yes', items: [{ text: 'Sources and a place to run things', detail: 'This is the strong set-up. It can fetch real data and check its own work, so build with it, and ask it to show how it checked.' }] },
+                  { label: 'No', items: [{ text: 'Sources, but nowhere to run code', detail: 'It can read real material but cannot calculate or test. Give it the facts you need, and check any numbers yourself.' }] },
+                ],
+              },
+            ],
+          },
+          {
+            label: 'No',
+            items: [
+              {
+                text: 'Did it run code and show you the code?',
+                branches: [
+                  { label: 'Yes', items: [{ text: 'A place to run things, but no sources', detail: 'It can calculate and test, but only on what you give it. Paste or upload the data, and it can check that.' }] },
+                  { label: 'No', items: [{ text: 'Recall only', detail: 'Use it to think, plan and draft. Treat every fact and number as unchecked until you have verified it yourself.' }] },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   { type: 'p', text: 'Your results go in the reflection at the end, so you have a record of what you can use.' },
   { type: 'h', text: 'Practice' },
   {

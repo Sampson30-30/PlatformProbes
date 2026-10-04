@@ -175,6 +175,13 @@ export async function exercise(doc) {
     buttonNamed(t, /Show next/)?.click();
     t.querySelector('.lk-timeline__toggle')?.click();
   }
+  for (const flow of doc.querySelectorAll('lk-flow[walkthrough]')) {
+    for (let i = 0; i < 8; i += 1) {
+      const next = flow.querySelector('.lk-flow__actions [data-variant="primary"]:not([data-done])');
+      if (!next || next.textContent === 'Start again') break;
+      next.click();
+    }
+  }
   await settle();
   // Step through each process, answering every question on the way.
   for (const proc of doc.querySelectorAll('lk-process')) {

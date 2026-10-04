@@ -1,6 +1,6 @@
 # LearnKit
 
-Dependency-free Web Components for interactive learning content. No framework, no build step: add a script and a stylesheet, then write HTML.
+Dependency-free Web Components: accessible UI primitives, plus interactive components for learning content. No framework, no build step: add a script and a stylesheet, then write HTML.
 
 ```html
 <link rel="stylesheet" href="learnkit.css" />
@@ -20,7 +20,7 @@ Early foundation (v0.1.0). Currently included:
 | --- | --- |
 | `<lk-tabs>` | Accessible tabbed content with keyboard support |
 
-Planned: quiz, reflection journal, comparison spectrum, timeline, grid explorer, rating tool and step-by-step process.
+LearnKit has two layers: general-purpose **core primitives** (tabs, accordion, modal and so on), and **learning components** built on top of them (quiz, reflection journal, comparison spectrum, timeline and more). See the [roadmap](ROADMAP.md) for what is planned.
 
 ## Principles
 
@@ -40,6 +40,7 @@ npm test         # unit tests for the pure helpers
 
 ## Documentation
 
+- [Roadmap](ROADMAP.md)
 - [Getting started](docs/getting-started.md)
 - [Theming](docs/theming.md)
 - [Contributing](CONTRIBUTING.md)

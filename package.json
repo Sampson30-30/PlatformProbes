@@ -1,7 +1,7 @@
 {
   "name": "learnkit",
   "version": "0.1.0",
-  "description": "Dependency-free Web Components for interactive learning content.",
+  "description": "Dependency-free Web Components: accessible UI primitives and interactive learning components.",
   "type": "module",
   "main": "src/index.js",
   "style": "src/learnkit.css",

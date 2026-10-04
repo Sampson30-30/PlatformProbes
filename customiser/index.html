@@ -50,27 +50,30 @@
       <div class="side">
         <section class="preview-wrap" aria-label="Preview">
           <h2>Preview</h2>
+          <p id="preview-summary" class="summary summary--mini" aria-hidden="true"></p>
           <div id="preview" class="preview"></div>
         </section>
-
-        <section class="checks" aria-labelledby="checks-title">
-          <h2 id="checks-title">Contrast</h2>
-          <p id="check-summary" class="summary" role="status"></p>
-          <div class="table-wrap"><table id="check-table"><caption class="visually-hidden">Contrast checks for the mode being edited</caption>
-            <thead><tr><th scope="col">Pair</th><th scope="col">Ratio</th><th scope="col">Needs</th><th scope="col">Result</th></tr></thead>
-            <tbody></tbody></table></div>
-        </section>
-
-        <section class="export" aria-labelledby="export-title">
-          <h2 id="export-title">Your CSS</h2>
-          <textarea id="css" readonly rows="14" aria-label="Generated CSS"></textarea>
-          <p class="row">
-            <button type="button" id="copy" class="plain-button primary">Copy CSS</button>
-            <button type="button" id="download" class="plain-button">Download customisation.css</button>
-            <span id="export-status" role="status"></span>
-          </p>
-        </section>
       </div>
+    </div>
+
+    <div class="below">
+      <section class="checks" aria-labelledby="checks-title">
+        <h2 id="checks-title">Contrast</h2>
+        <p id="check-summary" class="summary" role="status"></p>
+        <div class="table-wrap"><table id="check-table"><caption class="visually-hidden">Contrast checks for the mode being edited</caption>
+          <thead><tr><th scope="col">Pair</th><th scope="col">Ratio</th><th scope="col">Needs</th><th scope="col">Result</th></tr></thead>
+          <tbody></tbody></table></div>
+      </section>
+
+      <section class="export" aria-labelledby="export-title">
+        <h2 id="export-title">Your CSS</h2>
+        <textarea id="css" readonly rows="14" aria-label="Generated CSS"></textarea>
+        <p class="row">
+          <button type="button" id="copy" class="plain-button primary">Copy CSS</button>
+          <button type="button" id="download" class="plain-button">Download customisation.css</button>
+          <span id="export-status" role="status"></span>
+        </p>
+      </section>
     </div>
   </body>
 </html>

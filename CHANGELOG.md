@@ -5,6 +5,7 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 ## [0.1.0] - Unreleased
 
 ### Fixed
+- Customiser: the sticky preview no longer slides over the contrast checks or traps the scroll wheel. Contrast and export now sit below the whole layout, and a live contrast summary sits beside the preview. A browser test covers it.
 - `lk-stepper` with many steps or long names no longer squashes its labels: it goes compact (current label only, others kept for screen readers) when there are more than five steps.
 
 ### Added

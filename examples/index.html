@@ -187,6 +187,26 @@
       <div data-lk-spot data-x="50" data-y="55" data-title="Stem">Carries water and food around the plant.</div>
     </lk-hotspot>
 
+    <h2>Menu, tree and drawer</h2>
+    <p class="row">
+      <lk-menu label="More actions">
+        <button data-lk-item value="duplicate">Duplicate</button>
+        <a data-lk-item href="#">Export as PDF</a>
+        <hr />
+        <button data-lk-item value="delete">Delete</button>
+      </lk-menu>
+      <button type="button" class="lk-button" data-lk-open="example-drawer">Open a drawer</button>
+    </p>
+    <lk-drawer id="example-drawer" heading="Details"><p>A panel that slides in from the side.</p></lk-drawer>
+    <lk-tree label="Course contents">
+      <ul>
+        <li open>Unit 1
+          <ul><li>Lesson A</li><li>Lesson B<ul><li>Part i</li></ul></li></ul>
+        </li>
+        <li>Unit 2<ul><li>Lesson C</li></ul></li>
+      </ul>
+    </lk-tree>
+
     <h2>Toast notifications</h2>
     <p>
       <button type="button" class="lk-button" id="toast-ok">Show a confirmation</button>

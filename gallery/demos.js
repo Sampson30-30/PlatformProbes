@@ -327,4 +327,47 @@ export const DEMOS = [
         <div data-lk-spot data-x="50" data-y="90" data-title="Roots">Take in water and hold the plant in place.</div>
       </lk-hotspot>`,
   },
+  {
+    id: 'lk-menu',
+    title: 'Menu',
+    html: () => `
+      <lk-menu label="More actions">
+        <button data-lk-item value="duplicate">Duplicate</button>
+        <a data-lk-item href="#export">Export as PDF</a>
+        <hr />
+        <button data-lk-item value="archive" disabled>Archive</button>
+        <button data-lk-item value="delete">Delete</button>
+      </lk-menu>`,
+  },
+  {
+    id: 'lk-tree',
+    title: 'Tree',
+    html: () => `
+      <lk-tree label="Course contents">
+        <ul>
+          <li open>Unit 1: Planning
+            <ul>
+              <li>Setting objectives</li>
+              <li>Choosing activities<ul><li>Group work</li><li>Independent study</li></ul></li>
+            </ul>
+          </li>
+          <li>Unit 2: Assessment<ul><li>Formative methods</li><li>Summative methods</li></ul></li>
+          <li>Unit 3: Review</li>
+        </ul>
+      </lk-tree>`,
+  },
+  {
+    id: 'lk-drawer',
+    title: 'Drawer',
+    html: (u) => `
+      <p class="row">
+        <button type="button" class="lk-button" data-lk-open="drawer-end-${u}">Open from the end</button>
+        <button type="button" class="lk-button" data-lk-open="drawer-start-${u}">Open from the start</button>
+      </p>
+      <lk-drawer id="drawer-end-${u}" heading="Details"><p>A drawer holds supporting content without taking over the page. Escape, the close button or a click outside closes it.</p></lk-drawer>
+      <lk-drawer id="drawer-start-${u}" heading="Filters" side="start">
+        <lk-choices legend="Level"><label><input type="checkbox" /> Level 1</label><label><input type="checkbox" /> Level 2</label></lk-choices>
+        <div class="lk-modal__actions"><button type="button" class="lk-button" data-variant="primary" data-lk-close="apply">Apply</button></div>
+      </lk-drawer>`,
+  },
 ];

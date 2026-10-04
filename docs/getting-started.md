@@ -637,3 +637,56 @@ Numbered points on a picture or diagram. Choosing a point shows its explanation,
 ```
 
 The first child that is not a spot is the picture: an `<img>`, an inline `<svg>` or anything else, with its own alt text. `data-x` and `data-y` are percentages from the top left. Each point is a real button in the order written, named by its title (and "(explored)" once visited), so the picture is never the only way in. Events: `lk-spot` `{ index, title }` and a single `lk-allexplored` `{ total }`. `el.select(index)` chooses a point from code.
+
+## Navigation components
+
+### `<lk-menu>`
+
+A button that opens a list of actions or links.
+
+```html
+<lk-menu label="More actions">
+  <button data-lk-item value="duplicate">Duplicate</button>
+  <a data-lk-item href="/export">Export</a>
+  <hr />
+  <button data-lk-item value="archive" disabled>Archive</button>
+</lk-menu>
+```
+
+| Attribute | Description |
+| --- | --- |
+| `label` | Text on the trigger button. |
+| `variant` | Optional button variant for the trigger: `primary`, `danger` or `link`. |
+
+Enter, Space or Down opens it on the first item; Up opens it on the last. Inside, arrows move and wrap, Home and End jump, typing a letter jumps to a matching item, Escape closes and returns focus to the trigger, and Tab closes. Disabled items are skipped. The panel sits in the top layer, so no parent can clip it, and it flips above the trigger when there is no room below. Choosing a button item fires `lk-select` `{ label, value }`; links follow their `href`. Also `lk-open` and `lk-close`. Use it for actions; for moving between pages a plain list of links is usually clearer.
+
+### `<lk-tree>`
+
+Nested content that opens and closes, such as a course outline. Write nested lists.
+
+```html
+<lk-tree label="Course contents">
+  <ul>
+    <li open>Unit 1
+      <ul>
+        <li><a href="#a">Lesson A</a></li>
+        <li data-value="b">Lesson B</li>
+      </ul>
+    </li>
+    <li>Unit 2<ul><li>Lesson C</li></ul></li>
+  </ul>
+</lk-tree>
+```
+
+On an item, `open` starts a branch expanded and `data-value` is reported with the choice. The whole tree is one tab stop. Up and Down move, Right opens a branch then moves into it, Left closes it then moves to the parent, Home and End jump, `*` opens every branch at that level, Enter or Space chooses, and typing jumps to a match. Choosing an item marks it `aria-selected` and fires `lk-select` `{ label, value, path }`; choosing a branch also toggles it (`lk-toggle` `{ label, open }`); an item that contains a link follows it. Methods: `expandAll()`, `collapseAll()`, `select(index)`, and `selectedLabel`.
+
+### `<lk-drawer>`
+
+A panel that slides in from the side for navigation, filters or details. It is a modal dialog underneath, so focus stays inside, the page behind is inert, and Escape or a click outside closes it.
+
+```html
+<button data-lk-open="filters">Filters</button>
+<lk-drawer id="filters" heading="Filter courses" side="start">...</lk-drawer>
+```
+
+It takes every attribute, method and event of `<lk-modal>` (including `data-lk-open` and `data-lk-close`), plus `side` (`start` or `end`, default `end`; it follows the reading direction). Set `--lk-drawer-width` to change the width (default `24rem`, never wider than the screen). The slide-in is skipped when the user prefers reduced motion.

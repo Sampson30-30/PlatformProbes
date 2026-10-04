@@ -37,6 +37,7 @@ Version 0.1.0. Everything on the [roadmap](ROADMAP.md) is built.
 | `<lk-alert>`, `<lk-chip>`, `<lk-avatar>` | Messages, tags and people |
 | `<lk-switch>` | On/off setting built on a native checkbox |
 | `<lk-breadcrumbs>`, `<lk-pagination>` | Where you are, and moving between pages |
+| `<lk-menu>`, `<lk-tree>`, `<lk-drawer>` | Action menu, collapsible outline, and a side panel |
 | `.lk-card`, `.lk-divider`, `.lk-skeleton` | CSS-only surfaces and loading placeholders |
 
 **Learning components**

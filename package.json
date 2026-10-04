@@ -1,0 +1,21 @@
+{
+  "name": "learnkit",
+  "version": "0.1.0",
+  "description": "Dependency-free Web Components for interactive learning content.",
+  "type": "module",
+  "main": "src/index.js",
+  "style": "src/learnkit.css",
+  "exports": {
+    ".": "./src/index.js",
+    "./css": "./src/learnkit.css",
+    "./*.js": "./src/*.js"
+  },
+  "files": ["src", "docs"],
+  "scripts": {
+    "test": "node --test \"test/*.test.js\"",
+    "start": "python3 -m http.server 8080"
+  },
+  "keywords": ["web-components", "learning", "education", "elearning", "accessibility"],
+  "license": "MIT",
+  "private": true
+}

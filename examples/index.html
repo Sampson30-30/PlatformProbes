@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LearnKit examples</title>
+    <link rel="stylesheet" href="../src/learnkit.css" />
+    <style>
+      body { font-family: var(--lk-font); color: var(--lk-color-text); background: var(--lk-color-bg); max-width: 42rem; margin: 2rem auto; padding: 0 1rem; }
+      h2 { margin-top: 2.5rem; }
+    </style>
+    <script type="module" src="../src/index.js"></script>
+  </head>
+  <body>
+    <h1>LearnKit examples</h1>
+
+    <h2>lk-tabs</h2>
+    <lk-tabs label="Course sections" selected="0">
+      <div data-lk-tab="Overview"><p>Each child marked with <code>data-lk-tab</code> becomes a tab.</p></div>
+      <div data-lk-tab="Details"><p>Use the arrow keys, Home and End to move between tabs.</p></div>
+      <div data-lk-tab="Summary"><p>Listen for the <code>lk-tabchange</code> event to track progress.</p></div>
+    </lk-tabs>
+
+    <p id="log" aria-live="polite"></p>
+    <script type="module">
+      document.addEventListener('lk-tabchange', (e) => {
+        document.getElementById('log').textContent = `Selected: ${e.detail.title}`;
+      });
+    </script>
+  </body>
+</html>

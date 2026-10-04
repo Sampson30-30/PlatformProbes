@@ -1,0 +1,93 @@
+/* LearnKit base styles and design tokens.
+   Override any --lk-* variable on :root, or on any wrapper element, to theme. */
+
+:root {
+  --lk-font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --lk-color-text: #1f2430;
+  --lk-color-muted: #5b6475;
+  --lk-color-bg: #ffffff;
+  --lk-color-surface: #f4f6fa;
+  --lk-color-border: #d5dae3;
+  --lk-color-primary: #2f5bea;
+  --lk-color-primary-text: #ffffff;
+  --lk-color-focus: #2f5bea;
+  --lk-radius: 8px;
+  --lk-space: 1rem;
+  --lk-transition: 120ms ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --lk-color-text: #e8ebf2;
+    --lk-color-muted: #a3acbd;
+    --lk-color-bg: #14171f;
+    --lk-color-surface: #1d212c;
+    --lk-color-border: #333a4a;
+    --lk-color-primary: #7b9bff;
+    --lk-color-primary-text: #0d1020;
+    --lk-color-focus: #7b9bff;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --lk-transition: 0ms;
+  }
+}
+
+/* Shared focus ring for every interactive LearnKit element */
+[class*='lk-']:focus-visible {
+  outline: 3px solid var(--lk-color-focus);
+  outline-offset: 2px;
+}
+
+/* ---- lk-tabs ---- */
+
+lk-tabs {
+  display: block;
+  font-family: var(--lk-font);
+  color: var(--lk-color-text);
+  background: var(--lk-color-bg);
+  border: 1px solid var(--lk-color-border);
+  border-radius: var(--lk-radius);
+  overflow: hidden;
+}
+
+.lk-tabs__list {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.5rem 0.5rem 0;
+  background: var(--lk-color-surface);
+  border-bottom: 1px solid var(--lk-color-border);
+  overflow-x: auto;
+}
+
+.lk-tabs__tab {
+  font: inherit;
+  color: var(--lk-color-muted);
+  background: transparent;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--lk-transition), border-color var(--lk-transition);
+}
+
+.lk-tabs__tab:hover {
+  color: var(--lk-color-text);
+}
+
+.lk-tabs__tab[aria-selected='true'] {
+  color: var(--lk-color-primary);
+  border-bottom-color: var(--lk-color-primary);
+  font-weight: 600;
+}
+
+.lk-tabs__panel {
+  padding: var(--lk-space);
+}
+
+.lk-tabs__panel[hidden] {
+  display: none;
+}

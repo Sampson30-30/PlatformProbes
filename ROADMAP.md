@@ -35,7 +35,7 @@ This is a plan, not a promise. Order and scope may change.
 - [x] Theme structure: cascade layers, `data-lk-theme` and `data-lk-mode`, token contract (see [docs/theming.md](docs/theming.md))
 - [x] Theme: Homepage (mid 1990s document web, light and dark)
 - [x] A second theme that looks very different from Homepage (`clean`). This was the test that components are skin-agnostic. It needed no component changes.
-- [ ] More themes, each documented and contrast-checked in light and dark
+- [x] More themes (`contrast`, `bold`, `soft`), each documented and contrast-checked in light and dark
 - [ ] Theme gallery: a static page showing every component in every theme, side by side
 - [ ] Customiser: pick a theme, change tokens with live preview, warn on failing contrast, export the CSS
 

@@ -70,10 +70,13 @@ Available themes:
 | --- | --- |
 | `homepage` | Mid 1990s document web rebuilt with modern CSS: system fonts, square panels, bevelled controls, hard offset shadow. Light (paper) and dark (night). |
 | `clean` | Quiet and modern: rounded corners, soft layered shadows, pill tabs, plus and minus markers, teal on cool neutrals. Light and dark. |
+| `contrast` | High contrast: black and white with 2px outlines, no shadows, underlined hover states. Text meets WCAG AAA (7:1). Dark mode is yellow and cyan on black. |
+| `bold` | Loud and playful: thick black outlines, flat saturated colour, heavy headings, hard shadows that buttons press into. Yellow page in light, near black in dark. |
+| `soft` | Gentle and friendly: generous rounding and spacing, a rounded font, warm neutrals, berry accent, soft shadows. |
 
 ## 3. Write a theme
 
-A theme is one CSS file in `src/themes/<name>.css`. Start from `homepage.css`.
+A theme is one CSS file in `src/themes/<name>.css`. Start from `clean.css` or `soft.css`, which are mostly tokens, or `homepage.css` if your theme needs extra rules. A theme made only of tokens already works for every component.
 
 1. Wrap everything in `@layer lk.theme { ... }`. LearnKit declares the layer order `lk.tokens, lk.components, lk.theme`, so a theme beats component styles without needing higher specificity.
 2. Scope every selector to `[data-lk-theme='<name>']`, so the theme only applies where asked and several themes can share a page.
@@ -81,6 +84,8 @@ A theme is one CSS file in `src/themes/<name>.css`. Start from `homepage.css`.
 4. Add rules for anything tokens cannot express. Target the component's classes, which are the public styling API (for example `.lk-tabs__tab` and `.lk-tabs__panel`). State comes from ARIA attributes such as `[aria-selected='true']`.
 5. Component rules sometimes assume a shape. For example, tabs round only their top corners by default, so a pill-shaped theme sets `border-radius` on `.lk-tabs__tab` itself. Override in the theme, not in the component.
 6. Prefix any extra tokens your theme invents with `--lk-<name>-` (for example `--lk-hp-bevel-light`), so they cannot clash with the contract.
+
+`npm test` checks every theme file in `src/themes/` automatically, in light and dark: all the tokens must be present, text must reach 4.5:1 on every surface, the accent must reach 4.5:1 on the page and on raised surfaces, the focus ring 3:1, and each status colour 4.5:1 on its tint. A theme called `contrast` is held to 7:1 for text.
 
 CSS you write outside any layer always wins over LearnKit and themes, so page-level tweaks never need `!important`.
 

@@ -1,0 +1,128 @@
+/* LearnKit theme: Contrast.
+
+   A high contrast look for learners who need it: black and white with strong
+   2px outlines, no shadows or soft edges, and underlined hover states so
+   nothing depends on colour. Text meets WCAG AAA (7:1) on every surface. The
+   dark mode uses yellow and cyan on black.
+
+   Use:  <html data-lk-theme="contrast">
+   Scope it to one section by putting the attribute on a wrapper instead.
+   Force dark with data-lk-mode="dark" on the same element. */
+
+@layer lk.theme {
+  /* ---- Tokens: light ---- */
+
+  [data-lk-theme='contrast'] {
+    --lk-font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --lk-font-heading: var(--lk-font);
+    --lk-radius: 0;
+    --lk-radius-control: 0;
+    --lk-border-width: 2px;
+    --lk-shadow: none;
+
+    --lk-color-page: #ffffff;
+    --lk-color-bg: #ffffff;
+    --lk-color-surface: #ebebeb;
+    --lk-color-text: #000000;
+    --lk-color-muted: #333333;
+    --lk-color-border: #000000;
+    --lk-color-divider: #595959;
+    --lk-color-primary: #0033a0;
+    --lk-color-primary-text: #ffffff;
+    --lk-color-focus: #b30000;
+    --lk-color-backdrop: rgb(0 0 0 / 75%);
+    --lk-color-success: #005a1e;
+    --lk-color-success-bg: #e3f6e8;
+    --lk-color-warning: #6b3d00;
+    --lk-color-warning-bg: #fff2cc;
+    --lk-color-danger: #8f0000;
+    --lk-color-danger-bg: #ffe3e3;
+    --lk-color-info: #00338f;
+    --lk-color-info-bg: #e1e9ff;
+
+  }
+
+  /* ---- Tokens: dark ---- */
+
+  @media (prefers-color-scheme: dark) {
+    [data-lk-theme='contrast']:not([data-lk-mode='light']) {
+      --lk-color-page: #000000;
+      --lk-color-bg: #000000;
+      --lk-color-surface: #1c1c1c;
+      --lk-color-text: #ffffff;
+      --lk-color-muted: #d4d4d4;
+      --lk-color-border: #ffffff;
+      --lk-color-divider: #8a8a8a;
+      --lk-color-primary: #ffd400;
+      --lk-color-primary-text: #000000;
+      --lk-color-focus: #00e5ff;
+      --lk-color-backdrop: rgb(0 0 0 / 85%);
+      --lk-color-success: #5dff8c;
+      --lk-color-success-bg: #00290f;
+      --lk-color-warning: #ffd24d;
+      --lk-color-warning-bg: #2b2000;
+      --lk-color-danger: #ff8c8c;
+      --lk-color-danger-bg: #330000;
+      --lk-color-info: #8ab8ff;
+      --lk-color-info-bg: #001a4d;
+    }
+  }
+
+  [data-lk-theme='contrast'][data-lk-mode='dark'] {
+    --lk-color-page: #000000;
+    --lk-color-bg: #000000;
+    --lk-color-surface: #1c1c1c;
+    --lk-color-text: #ffffff;
+    --lk-color-muted: #d4d4d4;
+    --lk-color-border: #ffffff;
+    --lk-color-divider: #8a8a8a;
+    --lk-color-primary: #ffd400;
+    --lk-color-primary-text: #000000;
+    --lk-color-focus: #00e5ff;
+    --lk-color-backdrop: rgb(0 0 0 / 85%);
+    --lk-color-success: #5dff8c;
+    --lk-color-success-bg: #00290f;
+    --lk-color-warning: #ffd24d;
+    --lk-color-warning-bg: #2b2000;
+    --lk-color-danger: #ff8c8c;
+    --lk-color-danger-bg: #330000;
+    --lk-color-info: #8ab8ff;
+    --lk-color-info-bg: #001a4d;
+  }
+
+  /* ---- Components ---- */
+
+  [data-lk-theme='contrast'] [class*='lk-']:focus-visible {
+    outline-width: 4px;
+    outline-offset: 3px;
+  }
+
+  [data-lk-theme='contrast'] .lk-button:hover,
+  [data-lk-theme='contrast'] .lk-tabs__tab:hover,
+  [data-lk-theme='contrast'] .lk-accordion__trigger:hover {
+    text-decoration: underline;
+  }
+
+  [data-lk-theme='contrast'] .lk-button:hover,
+  [data-lk-theme='contrast'] .lk-button:active {
+    background-image: none;
+    color: var(--lk-color-bg);
+    background-color: var(--lk-color-text);
+  }
+
+  [data-lk-theme='contrast'] .lk-button[data-variant='primary']:hover {
+    color: var(--lk-color-primary);
+    background-color: var(--lk-color-primary-text);
+    border-color: var(--lk-color-primary);
+  }
+
+  [data-lk-theme='contrast'] .lk-tabs__tab[aria-selected='true'] {
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 4px;
+  }
+
+  [data-lk-theme='contrast'] .lk-badge {
+    font-weight: 700;
+  }
+}

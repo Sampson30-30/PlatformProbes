@@ -49,6 +49,7 @@ for (const { name, t } of sets) {
     ['color-muted', 'color-surface', 4.5],
     ['color-primary-text', 'color-primary', 4.5],
     ['color-primary', 'color-bg', 4.5],
+    ['color-primary', 'color-surface', 4.5],
     ['color-focus', 'color-bg', 3],
     ['color-focus', 'color-surface', 3],
     ['color-focus', 'color-page', 3],
@@ -57,7 +58,10 @@ for (const { name, t } of sets) {
       ['color-text', `color-${k}-bg`, 4.5],
     ]),
   ];
-  for (const [fg, bg, min] of checks) {
+  // The contrast theme promises WCAG AAA for text.
+  const strict = name.startsWith('contrast');
+  for (const [fg, bg, base] of checks) {
+    const min = strict && base === 4.5 ? 7 : base;
     test(`${name}: ${fg} on ${bg} is at least ${min}:1`, () => {
       if (!t || !t[fg] || !t[bg]) return; // reported by the token test
       const ratio = contrastRatio(t[fg], t[bg]);

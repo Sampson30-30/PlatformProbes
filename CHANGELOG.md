@@ -21,5 +21,6 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 - `<lk-field>` and `<lk-choices>` form controls with labels, hints, errors and validation.
 - `.lk-button` and `.lk-badge` classes, status colour tokens (`success`, `warning`, `danger`, `info`), and `core/contrast.js`.
 - Node tests that check every theme's contrast in light and dark, and an in-browser component test runner (`test/browser/`).
+- `contrast` (AAA), `bold` and `soft` themes.
 - `clean` theme: a modern, rounded look in light and dark, added with no component changes.
 - Examples, documentation and unit tests for core helpers.

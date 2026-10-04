@@ -1,0 +1,139 @@
+/* LearnKit theme: Soft.
+
+   Gentle and friendly: generous rounding and spacing, a rounded system font,
+   warm neutrals and a berry accent, with soft layered shadows. Light and dark.
+
+   Use:  <html data-lk-theme="soft">
+   Scope it to one section by putting the attribute on a wrapper instead.
+   Force dark with data-lk-mode="dark" on the same element. */
+
+@layer lk.theme {
+  /* ---- Tokens: light ---- */
+
+  [data-lk-theme='soft'] {
+    --lk-font: ui-rounded, 'SF Pro Rounded', 'Nunito', 'Segoe UI', system-ui, sans-serif;
+    --lk-font-heading: var(--lk-font);
+    --lk-radius: 22px;
+    --lk-radius-control: 14px;
+    --lk-border-width: 1px;
+    --lk-space: 1.25rem;
+    --lk-shadow: 0 2px 6px rgb(60 30 40 / 8%), 0 14px 36px rgb(60 30 40 / 10%);
+
+    --lk-color-page: #f6f3f2;
+    --lk-color-bg: #fffefe;
+    --lk-color-surface: #f1ebea;
+    --lk-color-text: #2a2326;
+    --lk-color-muted: #5f5357;
+    --lk-color-border: #8c7d82;
+    --lk-color-divider: #e7dede;
+    --lk-color-primary: #9d2a5b;
+    --lk-color-primary-text: #ffffff;
+    --lk-color-focus: #9d2a5b;
+    --lk-color-backdrop: rgb(42 35 38 / 45%);
+    --lk-color-success: #2f6b46;
+    --lk-color-success-bg: #e4f1e8;
+    --lk-color-warning: #8a5a00;
+    --lk-color-warning-bg: #fbefd2;
+    --lk-color-danger: #b3261e;
+    --lk-color-danger-bg: #fbe4e1;
+    --lk-color-info: #3a5a9b;
+    --lk-color-info-bg: #e6ecf8;
+
+  }
+
+  /* ---- Tokens: dark ---- */
+
+  @media (prefers-color-scheme: dark) {
+    [data-lk-theme='soft']:not([data-lk-mode='light']) {
+      --lk-color-page: #19151a;
+      --lk-color-bg: #221c22;
+      --lk-color-surface: #2c242c;
+      --lk-color-text: #f3ecee;
+      --lk-color-muted: #b9adb2;
+      --lk-color-border: #8a7a80;
+      --lk-color-divider: #3a2f3a;
+      --lk-color-primary: #f08cb4;
+      --lk-color-primary-text: #2a0f1c;
+      --lk-color-focus: #f08cb4;
+      --lk-color-backdrop: rgb(0 0 0 / 60%);
+      --lk-color-success: #7ed6a0;
+      --lk-color-success-bg: #12281b;
+      --lk-color-warning: #f2c46d;
+      --lk-color-warning-bg: #2d2110;
+      --lk-color-danger: #ff9a92;
+      --lk-color-danger-bg: #341a18;
+      --lk-color-info: #9db8f0;
+      --lk-color-info-bg: #182238;
+      --lk-shadow: 0 2px 6px rgb(0 0 0 / 40%), 0 14px 36px rgb(0 0 0 / 35%);
+    }
+  }
+
+  [data-lk-theme='soft'][data-lk-mode='dark'] {
+    --lk-color-page: #19151a;
+    --lk-color-bg: #221c22;
+    --lk-color-surface: #2c242c;
+    --lk-color-text: #f3ecee;
+    --lk-color-muted: #b9adb2;
+    --lk-color-border: #8a7a80;
+    --lk-color-divider: #3a2f3a;
+    --lk-color-primary: #f08cb4;
+    --lk-color-primary-text: #2a0f1c;
+    --lk-color-focus: #f08cb4;
+    --lk-color-backdrop: rgb(0 0 0 / 60%);
+    --lk-color-success: #7ed6a0;
+    --lk-color-success-bg: #12281b;
+    --lk-color-warning: #f2c46d;
+    --lk-color-warning-bg: #2d2110;
+    --lk-color-danger: #ff9a92;
+    --lk-color-danger-bg: #341a18;
+    --lk-color-info: #9db8f0;
+    --lk-color-info-bg: #182238;
+    --lk-shadow: 0 2px 6px rgb(0 0 0 / 40%), 0 14px 36px rgb(0 0 0 / 35%);
+  }
+
+  /* ---- Components ---- */
+
+  [data-lk-theme='soft'] lk-tabs,
+  [data-lk-theme='soft'] lk-accordion,
+  [data-lk-theme='soft'] lk-quiz,
+  [data-lk-theme='soft'] lk-journal,
+  [data-lk-theme='soft'] lk-spectrum,
+  [data-lk-theme='soft'] lk-rating,
+  [data-lk-theme='soft'] lk-scenario {
+    border-color: var(--lk-color-divider);
+  }
+
+  [data-lk-theme='soft'] .lk-tabs__tab,
+  [data-lk-theme='soft'] .lk-accordion__trigger {
+    padding-block: 0.8rem;
+  }
+
+  [data-lk-theme='soft'] .lk-tabs__tab {
+    border-radius: var(--lk-radius-control);
+    border-bottom: 0;
+  }
+
+  [data-lk-theme='soft'] .lk-tabs__tab[aria-selected='true'] {
+    color: var(--lk-color-primary-text);
+    background: var(--lk-color-primary);
+  }
+
+  [data-lk-theme='soft'] .lk-progress__bar {
+    height: 0.875rem;
+  }
+
+  [data-lk-theme='soft'] .lk-modal__dialog {
+    border-color: var(--lk-color-divider);
+    border-radius: 26px;
+  }
+
+  [data-lk-theme='soft'] .lk-modal__header {
+    background: transparent;
+    border-bottom: 0;
+    padding: 1.25rem 1rem 0.25rem 1.5rem;
+  }
+
+  [data-lk-theme='soft'] .lk-modal__body {
+    padding: 0.5rem 1.5rem 1.5rem;
+  }
+}

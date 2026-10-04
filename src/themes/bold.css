@@ -1,0 +1,147 @@
+/* LearnKit theme: Bold.
+
+   Loud and playful: thick black outlines, flat saturated colour, heavy
+   headings and hard offset shadows that buttons press into. Light has a
+   yellow page; dark swaps to white outlines on near black.
+
+   Use:  <html data-lk-theme="bold">
+   Scope it to one section by putting the attribute on a wrapper instead.
+   Force dark with data-lk-mode="dark" on the same element. */
+
+@layer lk.theme {
+  /* ---- Tokens: light ---- */
+
+  [data-lk-theme='bold'] {
+    --lk-font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --lk-font-heading: 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
+    --lk-radius: 10px;
+    --lk-radius-control: 8px;
+    --lk-border-width: 3px;
+    --lk-shadow: 5px 5px 0 0 #000000;
+
+    --lk-color-page: #ffd84d;
+    --lk-color-bg: #ffffff;
+    --lk-color-surface: #fff0b8;
+    --lk-color-text: #000000;
+    --lk-color-muted: #3b3b3b;
+    --lk-color-border: #000000;
+    --lk-color-divider: #000000;
+    --lk-color-primary: #1a3fff;
+    --lk-color-primary-text: #ffffff;
+    --lk-color-focus: #000000;
+    --lk-color-backdrop: rgb(0 0 0 / 55%);
+    --lk-color-success: #00692f;
+    --lk-color-success-bg: #d4f7e0;
+    --lk-color-warning: #7a4d00;
+    --lk-color-warning-bg: #ffe9a8;
+    --lk-color-danger: #b3001b;
+    --lk-color-danger-bg: #ffd9de;
+    --lk-color-info: #1a3fff;
+    --lk-color-info-bg: #dfe6ff;
+
+  }
+
+  /* ---- Tokens: dark ---- */
+
+  @media (prefers-color-scheme: dark) {
+    [data-lk-theme='bold']:not([data-lk-mode='light']) {
+      --lk-color-page: #101010;
+      --lk-color-bg: #1b1b1b;
+      --lk-color-surface: #2a2a2a;
+      --lk-color-text: #ffffff;
+      --lk-color-muted: #d0d0d0;
+      --lk-color-border: #ffffff;
+      --lk-color-divider: #6b6b6b;
+      --lk-color-primary: #ffd84d;
+      --lk-color-primary-text: #000000;
+      --lk-color-focus: #ffffff;
+      --lk-color-backdrop: rgb(0 0 0 / 75%);
+      --lk-color-success: #6bff9e;
+      --lk-color-success-bg: #06301a;
+      --lk-color-warning: #ffd84d;
+      --lk-color-warning-bg: #332800;
+      --lk-color-danger: #ff7a8f;
+      --lk-color-danger-bg: #3a0a12;
+      --lk-color-info: #8da6ff;
+      --lk-color-info-bg: #10194d;
+      --lk-shadow: 5px 5px 0 0 #000000;
+    }
+  }
+
+  [data-lk-theme='bold'][data-lk-mode='dark'] {
+    --lk-color-page: #101010;
+    --lk-color-bg: #1b1b1b;
+    --lk-color-surface: #2a2a2a;
+    --lk-color-text: #ffffff;
+    --lk-color-muted: #d0d0d0;
+    --lk-color-border: #ffffff;
+    --lk-color-divider: #6b6b6b;
+    --lk-color-primary: #ffd84d;
+    --lk-color-primary-text: #000000;
+    --lk-color-focus: #ffffff;
+    --lk-color-backdrop: rgb(0 0 0 / 75%);
+    --lk-color-success: #6bff9e;
+    --lk-color-success-bg: #06301a;
+    --lk-color-warning: #ffd84d;
+    --lk-color-warning-bg: #332800;
+    --lk-color-danger: #ff7a8f;
+    --lk-color-danger-bg: #3a0a12;
+    --lk-color-info: #8da6ff;
+    --lk-color-info-bg: #10194d;
+    --lk-shadow: 5px 5px 0 0 #000000;
+  }
+
+  /* ---- Components ---- */
+
+  [data-lk-theme='bold'] .lk-button {
+    box-shadow: 3px 3px 0 0 var(--lk-color-border);
+    transition: transform var(--lk-transition), box-shadow var(--lk-transition);
+  }
+
+  [data-lk-theme='bold'] .lk-button:hover {
+    background-image: none;
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 5px 0 0 var(--lk-color-border);
+  }
+
+  [data-lk-theme='bold'] .lk-button:active {
+    transform: translate(3px, 3px);
+    box-shadow: none;
+  }
+
+  [data-lk-theme='bold'] .lk-button:disabled,
+  [data-lk-theme='bold'] .lk-button[data-variant='link'] {
+    box-shadow: none;
+    transform: none;
+  }
+
+  [data-lk-theme='bold'] .lk-tabs__tab[aria-selected='true'] {
+    color: var(--lk-color-primary-text);
+    background: var(--lk-color-primary);
+    border-bottom-color: transparent;
+  }
+
+  [data-lk-theme='bold'] .lk-tabs__tab:hover:not([aria-selected='true']) {
+    color: var(--lk-color-text);
+    background: var(--lk-color-bg);
+  }
+
+  [data-lk-theme='bold'] .lk-badge {
+    font-weight: 800;
+  }
+
+  [data-lk-theme='bold'] .lk-progress__bar {
+    height: 1.125rem;
+  }
+
+  [data-lk-theme='bold'] .lk-modal__header {
+    background: var(--lk-color-primary);
+    color: var(--lk-color-primary-text);
+  }
+
+  [data-lk-theme='bold'] .lk-modal__close {
+    color: var(--lk-color-text);
+    background: var(--lk-color-bg);
+    border: var(--lk-border-width) solid var(--lk-color-border);
+  }
+}

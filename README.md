@@ -22,7 +22,7 @@ Early foundation (v0.1.0). Currently included:
 | `<lk-accordion>` | Collapsible sections, one open at a time or several |
 | `<lk-modal>` | Modal dialog with focus containment and focus return |
 
-LearnKit is a free UI shop with three layers: general-purpose **core primitives** (tabs, accordion, modal and so on), **learning components** built on top of them (quiz, reflection journal, comparison spectrum, timeline and more), and **themes** that give any component a complete look. Available themes: `homepage` and `clean`. See the [roadmap](ROADMAP.md) for what is planned.
+LearnKit is a free UI shop with three layers: general-purpose **core primitives** (tabs, accordion, modal and so on), **learning components** built on top of them (quiz, reflection journal, comparison spectrum, timeline and more), and **themes** that give any component a complete look. Available themes: `homepage`, `clean`, `contrast`, `bold` and `soft`. See the [roadmap](ROADMAP.md) for what is planned.
 
 ## Principles
 

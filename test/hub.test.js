@@ -30,3 +30,20 @@ test('the other pages link back to the home page', () => {
     assert.match(html, /class="back-link"/, `${file} has no way back`);
   }
 });
+
+test('the Rise test is one self-contained file that a person can paste into a course', async () => {
+  const { Script } = await import('node:vm');
+  const html = readFileSync(new URL('rise-test/index.html', root), 'utf8');
+  assert.doesNotMatch(html, /<link\b/i, 'no stylesheet files');
+  assert.doesNotMatch(html, /<script[^>]*\ssrc=/i, 'no script files');
+  assert.doesNotMatch(html, /<img\b|<iframe\b/i, 'nothing else to fetch');
+  assert.doesNotMatch(html, /\bimport\s+[^(]*from\s/, 'no module imports');
+  const urls = [...html.matchAll(/https?:\/\/[^\s"'<>)]+/g)].map((m) => m[0]);
+  assert.deepEqual([...new Set(urls)], ['https://example.com/'], 'the only address in it is the one network check');
+  // The classic script must be valid JavaScript.
+  const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1]);
+  assert.equal(scripts.length, 1);
+  assert.doesNotThrow(() => new Script(scripts[0]));
+  // It must not set display on dialog or popover elements, which would break them when closed.
+  assert.doesNotMatch(html, /(dialog|#pop)\s*\{[^}]*display\s*:/);
+});

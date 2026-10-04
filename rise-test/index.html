@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Rise compatibility test</title>
+    <!--
+      Rise compatibility test, version 1.
+
+      A single file with no outside files, so it can be pasted into a Rise code
+      block, or hosted and shown in a frame. It checks which browser features work
+      where it is placed, then writes a plain-text report to send back.
+
+      It stores nothing except a throwaway value that it removes straight away,
+      and it only contacts the internet if you press the network button. Add
+      ?post to the address to have it send its report to the page that holds it
+      (used for testing).
+    -->
+    <style>
+      :root {
+        --bg: #ffffff;
+        --text: #1b2230;
+        --muted: #4a5568;
+        --border: #8a94a6;
+        --surface: #f1f4f9;
+        --accent: #1f4fd1;
+        --accent-text: #ffffff;
+        --good: #0b5d33;
+        --bad: #a3231b;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #14171f;
+          --text: #e8ebf2;
+          --muted: #b4bccb;
+          --border: #6c7587;
+          --surface: #1e2330;
+          --accent: #8fb0ff;
+          --accent-text: #0d1020;
+          --good: #7be0a3;
+          --bad: #ff9f98;
+        }
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 1rem; font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; color: var(--text); background: var(--bg); }
+      main { max-width: 52rem; margin: 0 auto; }
+      h1 { margin: 0 0 0.5rem; font-size: 1.5rem; }
+      h2 { margin: 1.5rem 0 0.5rem; font-size: 1.125rem; }
+      p, ol { margin: 0 0 0.75rem; }
+      a { color: var(--accent); }
+      button { font: inherit; padding: 0.5rem 0.875rem; color: var(--accent-text); background: var(--accent); border: 2px solid var(--accent); border-radius: 6px; cursor: pointer; }
+      button.plain { color: var(--text); background: var(--bg); border-color: var(--border); }
+      :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+      .row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.5rem 0; }
+      .summary { padding: 0.75rem 1rem; font-weight: 700; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; }
+      .scroll { overflow-x: auto; }
+      table { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+      th, td { padding: 0.5rem 0.625rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); }
+      thead th { background: var(--surface); }
+      .works { color: var(--good); font-weight: 700; }
+      .fails { color: var(--bad); font-weight: 700; }
+      fieldset { margin: 0 0 0.75rem; padding: 0.5rem 0.75rem; border: 1px solid var(--border); border-radius: 6px; }
+      legend { padding: 0 0.25rem; font-weight: 700; }
+      label { display: block; margin: 0.125rem 0; }
+      textarea { width: 100%; min-height: 12rem; padding: 0.5rem; font: 0.8125rem/1.4 ui-monospace, Menlo, Consolas, monospace; color: var(--text); background: var(--bg); border: 2px solid var(--border); border-radius: 6px; }
+      dialog { max-width: 24rem; padding: 1rem; color: var(--text); background: var(--bg); border: 2px solid var(--border); border-radius: 8px; }
+      #pop { padding: 1rem; margin: auto; color: var(--text); background: var(--bg); border: 2px solid var(--border); border-radius: 8px; }
+      .note { color: var(--muted); font-size: 0.875rem; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="note" id="back" hidden><a href="../">&larr; LearnKit home</a></p>
+      <h1>Rise compatibility test</h1>
+      <p>This page checks which features work where it is placed. It takes about a minute.</p>
+      <ol>
+        <li>Wait for the table below to fill in.</li>
+        <li>Press each button in &ldquo;Try these&rdquo; and answer the questions.</li>
+        <li>Copy the report at the bottom and send it to Alex.</li>
+      </ol>
+      <p class="note" id="source-help" hidden>To put this test in a Rise course, press the button, then paste what it copies into a Rise code block or embed.</p>
+      <div class="row"><button type="button" id="copy-source" class="plain" hidden>Copy this page&rsquo;s code</button></div>
+
+      <h2>What this page found</h2>
+      <p class="summary" id="summary" role="status">Running the checks&hellip;</p>
+      <div class="scroll" role="region" aria-label="Test results" tabindex="0">
+        <table>
+          <thead><tr><th scope="col">Check</th><th scope="col">Result</th><th scope="col">Detail</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+
+      <h2>Try these</h2>
+      <div class="row">
+        <button type="button" id="open-dialog">Open a dialog</button>
+        <button type="button" id="open-pop">Open a pop-up panel</button>
+        <button type="button" id="grow">Test growing the page</button>
+        <button type="button" id="net">Test the internet</button>
+      </div>
+      <p class="note">The network test contacts example.com once, with nothing sent. It only runs if you press the button.</p>
+
+      <fieldset id="q-dialog">
+        <legend>When the dialog opened, what did its grey backdrop cover?</legend>
+        <label><input type="radio" name="dialog" value="Only the box this test is in" /> Only the box this test is in</label>
+        <label><input type="radio" name="dialog" value="The whole Rise page" /> The whole Rise page</label>
+        <label><input type="radio" name="dialog" value="Nothing appeared" /> Nothing appeared</label>
+        <label><input type="radio" name="dialog" value="Not tried" checked /> I have not tried it</label>
+      </fieldset>
+      <fieldset id="q-pop">
+        <legend>When the pop-up panel opened, could you see all of it?</legend>
+        <label><input type="radio" name="pop" value="Fully visible" /> Yes, all of it</label>
+        <label><input type="radio" name="pop" value="Cut off" /> It appeared but part of it was cut off</label>
+        <label><input type="radio" name="pop" value="Nothing appeared" /> Nothing appeared</label>
+        <label><input type="radio" name="pop" value="Not tried" checked /> I have not tried it</label>
+      </fieldset>
+
+      <h2>Report to send back</h2>
+      <p>Press the button to copy it. If that does not work, select all the text below and copy it yourself.</p>
+      <div class="row"><button type="button" id="copy-report">Copy the report</button><span id="copied" role="status" class="note"></span></div>
+      <label for="report" class="note">Report</label>
+      <textarea id="report" readonly></textarea>
+    </main>
+
+    <dialog id="dlg" aria-labelledby="dlg-title">
+      <h2 id="dlg-title">A test dialog</h2>
+      <p>If you can read this, dialogs work. Notice how much of the page behind it has gone grey.</p>
+      <button type="button" id="close-dialog">Close</button>
+    </dialog>
+    <div id="pop" popover="manual">
+      <p>A test pop-up panel. It should sit in front of everything, fully visible.</p>
+      <button type="button" id="close-pop">Close</button>
+    </div>
+
+    <script type="module">
+      // Proves that module scripts run here. The main script reads this flag.
+      window.__lkModuleOk = true;
+    </script>
+    <script>
+      (function () {
+        'use strict';
+        var VERSION = 1;
+        var STATUS = { works: 'Works', fails: 'Does not work', info: 'For information' };
+        var rows = []; // { id, title, status, detail }
+        var answers = { dialog: 'Not tried', pop: 'Not tried' };
+        var framed = false;
+        try { framed = window.self !== window.top; } catch (e) { framed = true; }
+
+        function $(id) { return document.getElementById(id); }
+        function attempt(fn) { try { return fn(); } catch (e) { return { threw: String((e && e.message) || e) }; } }
+        function setRow(id, title, status, detail) {
+          var row = null;
+          for (var i = 0; i < rows.length; i++) if (rows[i].id === id) row = rows[i];
+          if (!row) { row = { id: id }; rows.push(row); }
+          row.title = title; row.status = status; row.detail = detail;
+          render();
+        }
+
+        function render() {
+          var body = $('rows');
+          body.textContent = '';
+          var works = 0, fails = 0;
+          rows.forEach(function (r) {
+            if (r.status === 'works') works++;
+            if (r.status === 'fails') fails++;
+            var tr = document.createElement('tr');
+            var th = document.createElement('th'); th.scope = 'row'; th.textContent = r.title;
+            var st = document.createElement('td'); st.textContent = STATUS[r.status]; st.className = r.status;
+            var de = document.createElement('td'); de.textContent = r.detail || '';
+            tr.append(th, st, de);
+            body.append(tr);
+          });
+          $('summary').textContent = works + ' work, ' + fails + ' do not work. ' + (fails ? 'Those that do not work are what we need to know about.' : 'Nothing has failed so far.');
+          $('report').value = buildReport();
+          if (/[?&]post\b/.test(location.search) && framed) {
+            try { window.parent.postMessage({ type: 'lk-rise-test', text: $('report').value }, '*'); } catch (e) { /* ignore */ }
+          }
+        }
+
+        function originOf(url) { try { return new URL(url).origin; } catch (e) { return 'none'; } }
+
+        function buildReport() {
+          var lines = [];
+          lines.push('Rise compatibility test, version ' + VERSION + ', ' + new Date().toISOString());
+          lines.push('');
+          rows.forEach(function (r) { lines.push('[' + STATUS[r.status] + '] ' + r.title + (r.detail ? ': ' + r.detail : '')); });
+          lines.push('');
+          lines.push('Dialog backdrop covered: ' + answers.dialog);
+          lines.push('Pop-up panel: ' + answers.pop);
+          return lines.join('\n');
+        }
+
+        // ---- Context ----
+        function context() {
+          setRow('frame', 'Where this page is', 'info', framed ? 'Inside a frame, so it is separate from the course page.' : 'Not in a frame: it is part of the page itself, or opened on its own.');
+          var parentRead = attempt(function () { return typeof window.parent.document.title === 'string'; });
+          setRow('parent', 'Can read the course page', 'info', framed ? (parentRead === true ? 'Yes, same site as the course page.' : 'No, which is normal for a frame on another site.') : 'Not applicable.');
+          var origin = String(window.origin);
+          var detail;
+          if (location.protocol === 'about:') detail = 'Written straight into a frame, with no address of its own. It takes the identity of the page that holds it (' + origin + ').';
+          else if (origin === 'null') detail = 'null, which means the frame is sandboxed and has no site identity. Storage will probably fail.';
+          else detail = origin + ' (opened from ' + originOf(document.referrer) + ')';
+          setRow('origin', 'Page origin', 'info', detail);
+          setRow('size', 'Size', 'info', window.innerWidth + ' by ' + window.innerHeight + ' pixels, pixel ratio ' + window.devicePixelRatio);
+          setRow('browser', 'Browser', 'info', navigator.userAgent);
+          setRow('time', 'Language and time zone', 'info', navigator.language + ', ' + Intl.DateTimeFormat().resolvedOptions().timeZone);
+        }
+
+        // ---- Capabilities ----
+        function hiddenAttr() {
+          var tags = ['div', 'p', 'span', 'section', 'button', 'ul', 'li', 'a', 'dialog'];
+          var holder = document.createElement('div');
+          document.body.append(holder);
+          var bad = [];
+          tags.forEach(function (t) {
+            var e = document.createElement(t); e.hidden = true; e.textContent = 'x'; holder.append(e);
+            if (getComputedStyle(e).display !== 'none') bad.push(t);
+          });
+          holder.remove();
+          if (bad.length) setRow('hidden', 'The "hidden" attribute hides things', 'fails', 'These stayed visible: ' + bad.join(', ') + '. LearnKit uses this attribute a lot.');
+          else setRow('hidden', 'The "hidden" attribute hides things', 'works', 'Checked on ' + tags.length + ' kinds of element.');
+        }
+
+        function dialogs() {
+          if (typeof HTMLDialogElement === 'undefined') return setRow('dialog', 'Dialog boxes (modal and drawer)', 'fails', 'The browser has no dialog element.');
+          var d = document.createElement('dialog'); d.textContent = 'x'; document.body.append(d);
+          var out = attempt(function () { d.showModal(); var ok = d.open && d.matches(':modal'); d.close(); return ok; });
+          d.remove();
+          setRow('dialog', 'Dialog boxes (modal and drawer)', out === true ? 'works' : 'fails', out === true ? 'A modal dialog opened and closed.' : 'Could not open a modal dialog' + (out && out.threw ? ': ' + out.threw : '.'));
+        }
+
+        function popovers() {
+          if (!('showPopover' in HTMLElement.prototype)) return setRow('popover', 'Pop-up panels (menu, tooltip)', 'fails', 'The browser has no popover support. LearnKit falls back to a fixed panel, which a frame can clip.');
+          var p = document.createElement('div'); p.setAttribute('popover', 'manual'); p.textContent = 'x'; document.body.append(p);
+          var out = attempt(function () { p.showPopover(); var ok = p.matches(':popover-open'); p.hidePopover(); return ok; });
+          p.remove();
+          setRow('popover', 'Pop-up panels (menu, tooltip)', out === true ? 'works' : 'fails', out === true ? 'A popover opened and closed.' : 'Could not open a popover' + (out && out.threw ? ': ' + out.threw : '.'));
+        }
+
+        function customElementsProbe() {
+          var name = 'lk-probe-' + Math.random().toString(36).slice(2, 8);
+          var out = attempt(function () {
+            customElements.define(name, class extends HTMLElement { connectedCallback() { this.dataset.ready = '1'; } });
+            var holder = document.createElement('div'); document.body.append(holder);
+            holder.innerHTML = '<' + name + '></' + name + '>';
+            var ok = holder.firstChild.dataset.ready === '1';
+            holder.remove();
+            return ok;
+          });
+          setRow('custom', 'Custom elements (how every LearnKit component works)', out === true ? 'works' : 'fails', out === true ? 'A custom element was created and ran its code.' : 'Custom elements did not run' + (out && out.threw ? ': ' + out.threw : '.'));
+        }
+
+        function modules() {
+          setRow('module', 'Module scripts', window.__lkModuleOk ? 'works' : 'fails', window.__lkModuleOk ? 'An inline module script ran.' : 'An inline module script did not run.');
+          var p;
+          try { p = import('data:text/javascript,export default 1'); } catch (e) { return setRow('import', 'Loading code from a data address', 'fails', String(e && e.message || e)); }
+          p.then(function () { setRow('import', 'Loading code with import()', 'works', 'import() worked.'); }, function (e) { setRow('import', 'Loading code with import()', 'fails', String(e && e.message || e)); });
+        }
+
+        function storage() {
+          function one(id, title, get) {
+            var out = attempt(function () { var s = get(); s.setItem('lkprobe', '1'); var ok = s.getItem('lkprobe') === '1'; s.removeItem('lkprobe'); return ok; });
+            setRow(id, title, out === true ? 'works' : 'fails', out === true ? 'Saved and read back a value.' : 'Blocked' + (out && out.threw ? ': ' + out.threw : '.') + ' Journals and ratings save here, so they would not remember anything.');
+          }
+          one('local', 'Saving between visits (localStorage)', function () { return window.localStorage; });
+          one('session', 'Saving during one visit (sessionStorage)', function () { return window.sessionStorage; });
+        }
+
+        function cssFeatures() {
+          var style = document.createElement('style');
+          style.textContent = '@layer one, two; @layer two { .lkp-l { color: rgb(1, 2, 3); } } @layer one { .lkp-l { color: rgb(4, 5, 6); } }';
+          document.head.append(style);
+          var el = document.createElement('div'); el.className = 'lkp-l'; document.body.append(el);
+          var layersOk = getComputedStyle(el).color === 'rgb(1, 2, 3)';
+          el.remove(); style.remove();
+          var checks = [
+            ['cascade layers', layersOk],
+            [':has()', CSS.supports('selector(:has(a))')],
+            ['color-mix()', CSS.supports('color', 'color-mix(in srgb, red, blue)')],
+            [':focus-visible', CSS.supports('selector(:focus-visible)')],
+            ['container queries', CSS.supports('container-type: inline-size')],
+            ['dvh units', CSS.supports('height: 1dvh')],
+            ['overscroll-behavior', CSS.supports('overscroll-behavior: contain')]
+          ];
+          var missing = checks.filter(function (c) { return !c[1]; }).map(function (c) { return c[0]; });
+          setRow('css', 'Modern CSS that LearnKit relies on', missing.length ? 'fails' : 'works', missing.length ? 'Missing: ' + missing.join(', ') + '.' : 'All ' + checks.length + ' features work.');
+        }
+
+        function misc() {
+          var clip = !!(navigator.clipboard && navigator.clipboard.writeText);
+          var policy = attempt(function () { var p = document.permissionsPolicy || document.featurePolicy; return p && p.allowsFeature ? p.allowsFeature('clipboard-write') : null; });
+          var allowed = policy === null || policy === true;
+          setRow('clipboard', 'Copying to the clipboard', clip && allowed ? 'works' : 'fails', clip ? (allowed ? 'Available, when a button is pressed.' : 'The frame does not allow it.') : 'Not available.');
+          setRow('fullscreen', 'Full screen', 'info', document.fullscreenEnabled ? 'Allowed.' : 'Not allowed here.');
+          setRow('touch', 'Touch screen', 'info', ('ontouchstart' in window || navigator.maxTouchPoints > 0) ? 'Yes.' : 'No.');
+        }
+
+        // ---- Buttons ----
+        $('open-dialog').addEventListener('click', function () { var d = $('dlg'); if (!d.open) attempt(function () { d.showModal(); }); });
+        $('close-dialog').addEventListener('click', function () { $('dlg').close(); });
+        $('open-pop').addEventListener('click', function () { var p = $('pop'); if ('showPopover' in p) attempt(function () { p.showPopover(); }); else p.style.display = 'block'; });
+        $('close-pop').addEventListener('click', function () { var p = $('pop'); if ('hidePopover' in p) attempt(function () { p.hidePopover(); }); else p.style.display = 'none'; });
+
+        $('grow').addEventListener('click', function () {
+          var before = window.innerHeight;
+          var spacer = document.createElement('div'); spacer.style.height = '900px'; spacer.setAttribute('aria-hidden', 'true');
+          document.body.append(spacer);
+          setTimeout(function () {
+            var after = window.innerHeight;
+            var detail;
+            if (!framed) detail = 'Not in a frame, so the page simply grew.';
+            else if (after > before + 100) detail = 'The frame grew to fit its content (from ' + before + ' to ' + after + ' pixels).';
+            else detail = 'The frame stayed ' + before + ' pixels tall, so anything taller scrolls inside it.';
+            setRow('grow', 'Growing the page', 'info', detail);
+            spacer.remove();
+          }, 600);
+        });
+
+        $('net').addEventListener('click', function () {
+          setRow('net', 'Reaching the internet', 'info', 'Trying...');
+          var controller = typeof AbortController === 'function' ? new AbortController() : null;
+          var timer = setTimeout(function () { if (controller) controller.abort(); }, 6000);
+          fetch('https://example.com/', { mode: 'no-cors', cache: 'no-store', signal: controller ? controller.signal : undefined }).then(function () {
+            clearTimeout(timer); setRow('net', 'Reaching the internet', 'works', 'A request to example.com went through.');
+          }, function (e) {
+            clearTimeout(timer); setRow('net', 'Reaching the internet', 'fails', 'The request was blocked or timed out: ' + String(e && e.message || e));
+          });
+        });
+
+        document.addEventListener('change', function (event) {
+          var t = event.target;
+          if (t && t.type === 'radio' && (t.name === 'dialog' || t.name === 'pop')) { answers[t.name] = t.value; render(); }
+        });
+
+        function select() { $('report').focus(); $('report').select(); }
+        $('copy-report').addEventListener('click', function () {
+          var text = $('report').value;
+          var done = function () { $('copied').textContent = 'Copied.'; };
+          var fallback = function () { select(); $('copied').textContent = 'Could not copy automatically. The text is selected: copy it yourself.'; };
+          if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+          else fallback();
+        });
+
+        // Outside a frame the page can offer its own source, for pasting into Rise.
+        if (!framed && /^https?:$/.test(location.protocol)) {
+          $('back').hidden = false;
+          $('copy-source').hidden = false;
+          $('source-help').hidden = false;
+          $('copy-source').addEventListener('click', function () {
+            fetch(location.href, { cache: 'no-store' }).then(function (r) { return r.text(); }).then(function (text) {
+              return navigator.clipboard.writeText(text);
+            }).then(function () { $('copied').textContent = 'The code is copied. Paste it into a Rise code block or embed.'; }, function () {
+              $('copied').textContent = 'Could not copy automatically. Open the file and copy its whole contents.';
+            });
+          });
+        }
+
+        // Without popover support the panel would sit in the page, so keep it out of sight.
+        if (!('showPopover' in HTMLElement.prototype)) $('pop').style.display = 'none';
+
+        function run() {
+          context(); hiddenAttr(); dialogs(); popovers(); customElementsProbe(); modules(); storage(); cssFeatures(); misc();
+        }
+        if (document.readyState === 'complete') run(); else window.addEventListener('load', run);
+      })();
+    </script>
+  </body>
+</html>

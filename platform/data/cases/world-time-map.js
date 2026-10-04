@@ -10,7 +10,7 @@ export const WORLD_TIME_MAP = {
     { type: 'h', text: 'What got built' },
     {
       type: 'p',
-      text: 'A live world time map in plain HTML, CSS and JavaScript, with no map or time zone libraries. It started as a question and ended as a learner-facing piece of a course. The finished page has:',
+      text: 'A live world time map in plain [[HTML, CSS and JavaScript]], with no map or time zone [[libraries|Library]]. It started as a question and ended as a learner-facing piece of a course. The finished page has:',
     },
     {
       type: 'list',
@@ -52,7 +52,7 @@ export const WORLD_TIME_MAP = {
         {
           title: 'Can it be done without libraries?',
           blocks: [
-            { type: 'p', text: 'The builder had seen a well-known commercial time zone map and asked whether something like it could be made in plain HTML, JavaScript and CSS, or whether it would need libraries. They shared the link. Claude looked at the real page, said it was possible, and offered to build one rather than describe one.' },
+            { type: 'p', text: 'The builder had seen a well-known commercial time zone map and asked whether something like it could be made in plain [[HTML, JavaScript and CSS|HTML, CSS and JavaScript]], or whether it would need [[libraries|Library]]. They shared the link. Claude looked at the real page, said it was possible, and offered to build one rather than describe one.' },
             {
               type: 'quiz',
               label: 'Where should the coastlines come from?',
@@ -61,7 +61,7 @@ export const WORLD_TIME_MAP = {
                 prompt: 'The map needs the shapes of the continents. Where should they come from?',
                 options: [
                   { text: 'Claude recalls them from memory and draws them', feedback: 'This is where squashed continents come from. Recalled geography is approximate.' },
-                  { text: 'Real open geographic data, converted into a shape by a script', correct: true, feedback: 'Yes. This is what happened.' },
+                  { text: 'Real open geographic data, converted into a shape by a [[script]]', correct: true, feedback: 'Yes. This is what happened.' },
                   { text: 'You trace a map image by hand', feedback: 'Slow, and still not data.' },
                 ],
                 explanation: 'The coastlines came from an open dataset, turned into one shape by a script. The shadow was calculated from the sun’s position, and city times came from the browser’s own time zone support. The decision that mattered most was the first: get shapes and numbers from data and code, not from memory. [Habit 1: Decompose](habit.html?h=decompose) and [Know your reach](habit.html?h=reach) are this turn.',
@@ -283,7 +283,7 @@ export const WORLD_TIME_MAP = {
         ['Dark text unreadable in the standalone page', 'The builder’s screenshot', 'Opening the standalone file as well as the preview'],
         ['Ruler entries landing on top of others', 'A numeric check before shipping', 'Already caught early: this is the right habit'],
         ['Duplicate labels in October', 'The builder, from a screenshot', 'Testing date-dependent logic on several dates, not only today'],
-        ['List showing open inside the course platform', 'The builder testing in the platform', 'A quick test in the real embed before calling it done'],
+        ['List showing open inside the course platform', 'The builder testing in the platform', 'A quick test in the real [[embed]] before calling it done'],
         ['One very long line of map data in the page file', 'Tool errors while editing', 'Keeping large generated data in its own file and adding it at build time'],
       ],
     },

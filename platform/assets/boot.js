@@ -4,6 +4,7 @@
 import '../../src/index.js';
 import { SITE, NAV } from '../data/site.js';
 import { escapeHtml } from '../lib/text.js';
+import { placeGuide } from './guide.js';
 
 function header(currentId) {
   const bar = document.createElement('header');
@@ -28,7 +29,8 @@ function footer() {
 
 /**
  * build(main, params) fills the main element and may return
- * { title, navId } to name the page and mark its place in the navigation.
+ * { title, navId, help } to name the page, mark its place in the navigation,
+ * and say what the page is for. `help` is { what, can: [] }; see data/help.js.
  */
 export function boot(build) {
   const root = document.documentElement;
@@ -41,6 +43,7 @@ export function boot(build) {
   main.className = 'site-main';
   main.tabIndex = -1;
   const result = build(main, new URLSearchParams(location.search)) || {};
+  placeGuide(main, result.help, location.pathname.split('/').pop() + location.search);
 
   const skip = document.createElement('a');
   skip.className = 'skip-link';

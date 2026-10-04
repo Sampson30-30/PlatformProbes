@@ -1,6 +1,7 @@
 import { BRIEF_TEXT, KINDS, ORIGINS, PLACES, CHECKS, EXAMPLE } from '../data/brief.js';
 import { emptyBrief, checkBrief, briefToMarkdown } from '../lib/brief.js';
 import { inline } from '../lib/text.js';
+import { PAGE_HELP } from '../data/help.js';
 
 const KEY = 'hb-brief';
 const MAX_PARTS = 8;
@@ -253,5 +254,5 @@ export function buildBrief(main) {
   article.append(tools, confirmClear, holder);
   main.append(article);
   mount();
-  return { title: 'Brief builder', navId: 'brief' };
+  return { title: 'Brief builder', navId: 'brief', help: PAGE_HELP.brief };
 }

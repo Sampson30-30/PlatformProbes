@@ -2,6 +2,7 @@ import { GALLERY } from '../data/gallery.js';
 import { renderBlocks } from '../assets/blocks.js';
 import { DEMOS } from '../assets/demos.js';
 import { inline } from '../lib/text.js';
+import { PAGE_HELP } from '../data/help.js';
 
 export function buildGallery(main) {
   const article = document.createElement('article');
@@ -51,5 +52,5 @@ export function buildGallery(main) {
   article.append(grid);
   renderBlocks(article, [{ type: 'callout', tone: 'success', title: GALLERY.outro.title, text: GALLERY.outro.text }]);
   main.append(article);
-  return { title: 'What code can do', navId: 'gallery' };
+  return { title: 'What code can do', navId: 'gallery', help: PAGE_HELP.gallery };
 }

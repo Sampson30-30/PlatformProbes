@@ -1,6 +1,7 @@
 import { findCase } from '../data/cases/world-time-map.js';
 import { renderBlocks } from '../assets/blocks.js';
 import { inline } from '../lib/text.js';
+import { PAGE_HELP } from '../data/help.js';
 
 export function buildCase(main, params) {
   const study = findCase(params.get('c') || 'world-time-map');
@@ -19,5 +20,5 @@ export function buildCase(main, params) {
     </header>`;
   renderBlocks(article, study.blocks);
   main.append(article);
-  return { title: study.title, navId: 'case' };
+  return { title: study.title, navId: 'case', help: PAGE_HELP.case(study) };
 }

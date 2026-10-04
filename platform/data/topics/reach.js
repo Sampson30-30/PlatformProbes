@@ -2,7 +2,7 @@ export const reachBlocks = [
   { type: 'h', text: 'The idea' },
   {
     type: 'p',
-    text: 'Ask a chat that cannot fetch anything to draw a world map, and it has to recall the coastlines from memory. The continents come out blocky and the pins overlap. Ask a Claude that can fetch real map data, run a script and look at what it made, and it builds something you can trust. **It can be the same underlying model.** The difference is what it can reach.',
+    text: 'Ask a chat that cannot fetch anything to draw a world map, and it has to recall the coastlines from memory. The continents come out blocky and the pins overlap. Ask a Claude that can fetch real map data, run a [[script]] and look at what it made, and it builds something you can trust. **It can be the same underlying model.** The difference is what it can reach.',
   },
   {
     type: 'p',

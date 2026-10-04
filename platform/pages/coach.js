@@ -1,6 +1,7 @@
 import { COACH } from '../data/coach.js';
 import { renderBlocks } from '../assets/blocks.js';
 import { inline } from '../lib/text.js';
+import { PAGE_HELP } from '../data/help.js';
 
 export function buildCoach(main) {
   const article = document.createElement('article');
@@ -15,5 +16,5 @@ export function buildCoach(main) {
   renderBlocks(article, [{ type: 'callout', tone: 'info', title: 'A note on honesty', text: COACH.honest }]);
   renderBlocks(article, COACH.blocks);
   main.append(article);
-  return { title: 'Coach’s guide', navId: 'coach' };
+  return { title: 'Coach’s guide', navId: 'coach', help: PAGE_HELP.coach };
 }

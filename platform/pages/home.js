@@ -3,6 +3,7 @@ import { HOME } from '../data/home.js';
 import { HABITS } from '../data/habits.js';
 import { renderBlocks } from '../assets/blocks.js';
 import { inline } from '../lib/text.js';
+import { PAGE_HELP } from '../data/help.js';
 
 export function buildHome(main) {
   const hero = document.createElement('section');
@@ -52,5 +53,5 @@ export function buildHome(main) {
   renderBlocks(path, [{ type: 'list', ordered: true, items }]);
   main.append(path);
 
-  return { title: '', navId: 'home' };
+  return { title: '', navId: 'home', help: PAGE_HELP.home };
 }

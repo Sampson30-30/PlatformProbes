@@ -29,7 +29,7 @@ export const verifyBlocks = [
     cells: [
       { title: 'Ticks on top of each other', body: 'Two entries on the ruler landed exactly on top of two others, because of the date line. **Caught by** checking positions as numbers, before anyone saw it. This is the habit working.' },
       { title: 'Unreadable button text', body: 'Dark text on a dark page, but only in the standalone file. **Caught by** a screenshot from the person using it. **Would catch it sooner:** opening the standalone file as well as the preview.' },
-      { title: 'It worked in preview, not in the course platform', body: 'A list showed open when it should have been closed. The cause was inferred (the platform ignores a browser default), and the fix worked. **Would catch it sooner:** a quick test in the real embed. And note the honesty: inferred, not verified.' },
+      { title: 'It worked in preview, not in the course platform', body: 'A list showed open when it should have been closed. The cause was inferred (the platform ignores a browser default), and the fix worked. **Would catch it sooner:** a quick test in the real [[embed]]. And note the honesty: inferred, not verified.' },
       { title: 'A duplicate label in October', body: 'Two ruler entries showed the same number, but only in autumn. **Would catch it sooner:** testing against several dates (January, April, July, October), not only today.' },
       { title: 'An accessibility review', body: 'One critical and three major problems were fixed, and three minor ones written down for before launch. The review was described honestly as a code check, not a test with a screen reader.' },
     ],

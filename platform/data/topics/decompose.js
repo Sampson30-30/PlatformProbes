@@ -27,12 +27,12 @@ export const decomposeBlocks = [
     caption: 'What the world time map is made of',
     head: ['Part', 'What kind of thing', 'Where it came from'],
     rows: [
-      ['The coastlines', 'Data', 'Open geographic data, fetched and converted into one shape by a script'],
+      ['The coastlines', 'Data', 'Open geographic data, fetched and converted into one shape by a [[script]]'],
       ['The time in each city', 'A rule', 'The browser’s own time zone support, which knows about summer time'],
       ['Day and night shading', 'A calculation', 'Worked out from where the sun is, for every point on the map'],
       ['Click a number, a line moves', 'Behaviour', 'Described in plain words, then built'],
       ['The colours', 'A design choice', 'Decided by the builder, and fixed on purpose'],
-      ['Where it will live', 'A limit', 'A Rise embed, which affects several of the choices above'],
+      ['Where it will live', 'A limit', 'A Rise [[embed]], which affects several of the choices above'],
     ],
   },
   {

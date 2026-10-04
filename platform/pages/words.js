@@ -3,6 +3,7 @@ import { ALL_TOPICS, findTopic } from '../data/habits.js';
 import { filterEntries, collectPhrases, slug } from '../lib/words.js';
 import { renderBlocks } from '../assets/blocks.js';
 import { inline } from '../lib/text.js';
+import { PAGE_HELP } from '../data/help.js';
 
 function entryNode(entry) {
   const topic = findTopic(entry.habit);
@@ -79,5 +80,5 @@ export function buildWords(main) {
   // Open the entry named in the address, if any, once the list exists.
   const target = location.hash.slice(1);
   if (target && document.getElementById(target)) requestAnimationFrame(() => document.getElementById(target).scrollIntoView());
-  return { title: 'Words', navId: 'words' };
+  return { title: 'Words', navId: 'words', help: PAGE_HELP.words };
 }

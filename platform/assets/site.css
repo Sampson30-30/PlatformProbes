@@ -164,3 +164,10 @@ lk-quiz, lk-scenario, lk-journal, lk-spectrum, lk-rating, lk-timeline, lk-grid-e
 .word__facts dd { margin: 0; }
 .word__habit { margin-bottom: 0; font-size: 0.9375rem; }
 #phrasebook .b-say { margin-top: 1rem; }
+
+/* A word explained on the Words page: dotted underline, so it looks different from an ordinary link. */
+a.term { text-decoration-style: dotted; text-decoration-thickness: 2px; }
+
+/* A short, plain hint above the first quiz, journal and so on. */
+.b-hint { margin: 1.25rem 0 0.5rem; font-size: 0.9375rem; color: var(--lk-color-muted); }
+.b-hint + * { margin-top: 0; }

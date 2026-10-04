@@ -1,6 +1,7 @@
 import { ALL_TOPICS, findTopic } from '../data/habits.js';
 import { renderBlocks } from '../assets/blocks.js';
 import { inline, escapeHtml } from '../lib/text.js';
+import { PAGE_HELP } from '../data/help.js';
 
 export function buildHabit(main, params) {
   const topic = findTopic(params.get('h') || 'reach');
@@ -38,5 +39,5 @@ export function buildHabit(main, params) {
   article.append(pager);
   main.append(article);
 
-  return { title: topic.title, navId: topic.number === 0 ? 'reach' : 'habits' };
+  return { title: topic.title, navId: topic.number === 0 ? 'reach' : 'habits', help: topic.number === 0 ? PAGE_HELP.reach : PAGE_HELP.habit(topic) };
 }

@@ -15,7 +15,7 @@ export const specifyBlocks = [
     rows: [
       ['Make it better', 'When I click a number on the ruler, a line moves to that column of the map and cuts through every city in that time zone.'],
       ['Add a list of cities', 'A small picker beside the clock that jumps to a city. Keep the full grid, but behind a toggle.'],
-      ['Make it work in our course', 'It will sit in an embed, so the colours must look the same for every learner whatever their device is set to.'],
+      ['Make it work in our course', 'It will sit in an [[embed]], so the colours must look the same for every learner whatever their device is set to.'],
     ],
   },
   { type: 'h', text: 'In the world time map' },
@@ -47,7 +47,7 @@ export const specifyBlocks = [
       nodes: {
         start: {
           title: 'You have a good example to borrow from',
-          text: 'A colleague has shared an HTML file that does something similar to yours. It has a nice idea: a dropdown list of cities, so people do not have to scroll. You want that idea in your page.\n\nYou open a conversation with Claude and attach their file.',
+          text: 'A colleague has shared an [[HTML|HTML, CSS and JavaScript]] file that does something similar to yours. It has a nice idea: a dropdown list of cities, so people do not have to scroll. You want that idea in your page.\n\nYou open a conversation with Claude and attach their file.',
           choices: [
             { text: 'Say: "Use this file’s list idea in mine."', goto: 'vague' },
             { text: 'Say: "Before you do anything, tell me what you understand from this file and what you would change."', goto: 'confirm' },

@@ -1,7 +1,8 @@
 // Turns content blocks into DOM, using LearnKit components where they fit.
 // Content is data; this file is the only place that knows how it looks.
 
-import { inline } from '../lib/text.js';
+import { inline, plain } from '../lib/text.js';
+import { hintFor } from '../data/help.js';
 
 function el(tag, className, html) {
   const node = document.createElement(tag);
@@ -105,10 +106,10 @@ const RENDERERS = {
       copy.type = 'button';
       copy.dataset.size = 'small';
       copy.textContent = 'Copy';
-      copy.setAttribute('aria-label', `Copy: ${phrase}`);
+      copy.setAttribute('aria-label', `Copy: ${plain(phrase)}`);
       copy.addEventListener('click', async () => {
         try {
-          await navigator.clipboard.writeText(phrase.replace(/[`*]/g, ''));
+          await navigator.clipboard.writeText(plain(phrase));
           copy.textContent = 'Copied';
           setTimeout(() => { copy.textContent = 'Copy'; }, 1500);
         } catch {
@@ -246,6 +247,10 @@ const RENDERERS = {
   },
 };
 
+// Kinds of block that have already shown their hint on this page, so a hint
+// appears above the first quiz, the first journal and so on, and not every time.
+const hinted = new Set();
+
 /** Renders a list of blocks into `container`. Unknown block types are skipped, loudly. */
 export function renderBlocks(container, blocks) {
   for (const block of blocks) {
@@ -256,6 +261,8 @@ export function renderBlocks(container, blocks) {
     }
     const node = render(block);
     if (block.id) node.id = block.id;
+    const hint = hintFor(block, hinted);
+    if (hint) container.append(el('p', 'b-hint', `<strong>How this works.</strong> ${inline(hint)}`));
     container.append(node);
   }
 }

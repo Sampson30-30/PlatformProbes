@@ -3,6 +3,7 @@ import { parseRatings, compareRatings, answeredPrompts } from '../lib/progress.j
 import { findTopic } from '../data/habits.js';
 import { renderBlocks } from '../assets/blocks.js';
 import { inline } from '../lib/text.js';
+import { PAGE_HELP } from '../data/help.js';
 
 const stored = (key) => {
   try { return localStorage.getItem(key); } catch { return null; }
@@ -91,5 +92,5 @@ export function buildProgress(main) {
 
   article.append(before, after, compare, journals);
   main.append(article);
-  return { title: 'Progress', navId: 'progress' };
+  return { title: 'Progress', navId: 'progress', help: PAGE_HELP.progress };
 }

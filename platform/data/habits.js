@@ -1,3 +1,11 @@
+import { reachBlocks } from './topics/reach.js';
+import { decomposeBlocks } from './topics/decompose.js';
+import { deriveBlocks } from './topics/derive.js';
+import { separateBlocks } from './topics/separate.js';
+import { specifyBlocks } from './topics/specify.js';
+import { colleagueBlocks } from './topics/colleague.js';
+import { verifyBlocks } from './topics/verify.js';
+
 // The reach check and the six habits. Each page body lives in `blocks`.
 // A habit with no blocks yet is marked `ready: false` and shows a placeholder.
 
@@ -8,8 +16,8 @@ export const REACH = {
   title: 'Know your reach',
   question: 'What can my Claude actually touch?',
   summary: 'Two people can use the same model and get very different results. The difference is often what it can reach.',
-  ready: false,
-  blocks: [],
+  ready: true,
+  blocks: reachBlocks,
 };
 
 export const HABITS = [
@@ -20,8 +28,8 @@ export const HABITS = [
     title: 'Decompose',
     question: 'What is it made of, and where does each part come from?',
     summary: 'Break an idea into its parts and decide where each one comes from before anything is built.',
-    ready: false,
-    blocks: [],
+    ready: true,
+    blocks: decomposeBlocks,
   },
   {
     id: 'derive',
@@ -30,8 +38,8 @@ export const HABITS = [
     title: 'Derive, don’t draw',
     question: 'Can a rule make this, instead of me making each one?',
     summary: 'A picture shows one answer. A rule produces every answer, and stays right when things change.',
-    ready: false,
-    blocks: [],
+    ready: true,
+    blocks: deriveBlocks,
   },
   {
     id: 'separate',
@@ -40,8 +48,8 @@ export const HABITS = [
     title: 'Keep what changes apart',
     question: 'If this changes, how many places do I touch?',
     summary: 'Keep content, behaviour and looks separate, so a change in one is not a hunt through all three.',
-    ready: false,
-    blocks: [],
+    ready: true,
+    blocks: separateBlocks,
   },
   {
     id: 'specify',
@@ -50,8 +58,8 @@ export const HABITS = [
     title: 'Say what it should do, and what it must not break',
     question: 'How would I describe this to a colleague who is going to build it?',
     summary: 'Plain words about behaviour and limits are a specification. Ask it to repeat back what it understood.',
-    ready: false,
-    blocks: [],
+    ready: true,
+    blocks: specifyBlocks,
   },
   {
     id: 'colleague',
@@ -60,8 +68,8 @@ export const HABITS = [
     title: 'Work with it like a colleague',
     question: 'What do I want its opinion on, and what is my decision?',
     summary: 'Ask for a diagnosis before a change, ask what it would pick and why, then decide yourself.',
-    ready: false,
-    blocks: [],
+    ready: true,
+    blocks: colleagueBlocks,
   },
   {
     id: 'verify',
@@ -70,8 +78,8 @@ export const HABITS = [
     title: 'Check it where it lives',
     question: 'How will I know it works for the person who uses it?',
     summary: 'Check with numbers, test in the real destination and across dates, and write down what you left for later.',
-    ready: false,
-    blocks: [],
+    ready: true,
+    blocks: verifyBlocks,
   },
 ];
 

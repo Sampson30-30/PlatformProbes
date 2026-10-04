@@ -16,7 +16,7 @@ This is a plan, not a promise. Order and scope may change.
 - [ ] Tooltip and popover
 - [ ] Toast notifications
 - [x] Buttons and badges
-- [ ] Form controls: text field, select, checkbox and radio groups, slider
+- [x] Form controls: text field, select, checkbox and radio groups, slider
 - [ ] Progress bar and stepper
 
 ## Layer 2: Learning components

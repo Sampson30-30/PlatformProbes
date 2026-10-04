@@ -130,3 +130,42 @@ These are plain CSS classes, so they work on any element and need no JavaScript.
 | `lk-badge` | `data-tone`: `primary`, `success`, `warning`, `danger`, `info`. |
 
 Buttons are at least 40px high. Badges must contain text, so meaning never depends on colour alone. Use one primary button per view, and name buttons with verbs that say what happens.
+
+
+### `<lk-field>`
+
+Adds a label, hint and error to a native `input`, `select` or `textarea`, and wires up the ARIA.
+
+```html
+<lk-field label="Email address" hint="We will only use this to reply to your message">
+  <input name="email" type="email" required />
+</lk-field>
+```
+
+| Attribute | Description |
+| --- | --- |
+| `label` | Visible label. Always provide one: never use a placeholder as a label. |
+| `hint` | Help text under the label. |
+| `error` | Error message from your own validation. Remove the attribute to clear it. |
+
+The control's own rules (`required`, `type="email"`, `pattern`, `min` and so on) are checked when it loses focus, and again while typing once a message is showing. Call `field.validate()` to check on demand, for example on submit; it returns `true` or `false`. A `required` control gets a visible "(required)" marker. Error messages begin with the word "Error:", so they never rely on colour. A `type="range"` control shows its current value.
+
+### `<lk-choices>`
+
+Groups checkboxes or radio buttons into a `fieldset` with a legend.
+
+```html
+<lk-choices legend="Topics of interest" hint="Choose at least two" min="2">
+  <label><input type="checkbox" name="topic" value="a" /> Assessment</label>
+  <label><input type="checkbox" name="topic" value="b" /> Feedback</label>
+</lk-choices>
+```
+
+| Attribute | Description |
+| --- | --- |
+| `legend` | Visible group label. |
+| `hint` | Help text. |
+| `error` | Error message from your own validation. |
+| `min` | Minimum checked boxes in a checkbox group. |
+
+Radio groups use the native `required` attribute on their inputs. Call `group.validate()` to check on demand.

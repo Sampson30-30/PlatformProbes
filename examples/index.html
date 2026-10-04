@@ -82,6 +82,47 @@
       <span class="lk-badge" data-tone="info">Optional</span>
     </p>
 
+    <h2>Form controls</h2>
+    <form novalidate>
+      <lk-field label="Full name" hint="As you want it to appear on your certificate">
+        <input name="name" autocomplete="name" required />
+      </lk-field>
+      <lk-field label="Email address" hint="We will only use this to reply to your message">
+        <input name="email" type="email" autocomplete="email" required />
+      </lk-field>
+      <lk-field label="Course">
+        <select name="course">
+          <option>Introduction to teaching</option>
+          <option>Assessment for learning</option>
+        </select>
+      </lk-field>
+      <lk-field label="Your comments">
+        <textarea name="comments" rows="3"></textarea>
+      </lk-field>
+      <lk-field label="How confident do you feel?" hint="0 is not at all, 10 is completely">
+        <input name="confidence" type="range" min="0" max="10" value="5" />
+      </lk-field>
+      <lk-choices legend="Preferred format" hint="Choose one">
+        <label><input type="radio" name="format" value="online" required /> Online</label>
+        <label><input type="radio" name="format" value="blended" /> Blended</label>
+        <label><input type="radio" name="format" value="face" /> Face to face</label>
+      </lk-choices>
+      <lk-choices legend="Topics of interest" hint="Choose at least two" min="2">
+        <label><input type="checkbox" name="topic" value="assessment" /> Assessment</label>
+        <label><input type="checkbox" name="topic" value="feedback" /> Feedback</label>
+        <label><input type="checkbox" name="topic" value="planning" /> Planning</label>
+      </lk-choices>
+      <p><button type="submit" class="lk-button" data-variant="primary">Send message</button></p>
+    </form>
+    <script type="module">
+      document.querySelector('form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const groups = [...e.target.querySelectorAll('lk-field, lk-choices')];
+        const ok = groups.map((g) => g.validate()).every(Boolean);
+        if (!ok) e.target.querySelector('[data-invalid] :is(input, select, textarea)')?.focus();
+      });
+    </script>
+
     <h2>Themes</h2>
     <p>
       A theme is a stylesheet plus a <code>data-lk-theme</code> attribute. Put the attribute on a wrapper to theme one section.

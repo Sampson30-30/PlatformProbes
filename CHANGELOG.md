@@ -11,6 +11,7 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 - `<lk-modal>` component, built on native `<dialog>`, with Homepage theme styling.
 - Theme structure: cascade layers (`lk.tokens`, `lk.components`, `lk.theme`), `data-lk-theme` and `data-lk-mode` attributes, and a wider token contract.
 - `homepage` theme, based on the Homepage design system.
+- `<lk-field>` and `<lk-choices>` form controls with labels, hints, errors and validation.
 - `.lk-button` and `.lk-badge` classes, status colour tokens (`success`, `warning`, `danger`, `info`), and `core/contrast.js`.
 - Node tests that check every theme's contrast in light and dark, and an in-browser component test runner (`test/browser/`).
 - `clean` theme: a modern, rounded look in light and dark, added with no component changes.

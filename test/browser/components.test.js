@@ -76,3 +76,49 @@ test('button: variants resolve to token colours', async () => {
   assert(getComputedStyle(btn).backgroundColor !== 'rgba(0, 0, 0, 0)', 'primary has fill');
   assert(getComputedStyle(badge).borderTopWidth === '1px');
 });
+
+// ---- lk-field and lk-choices ----
+
+test('field: wires label, hint and error to the control', async () => {
+  const el = await mount(`<lk-field label="Email" hint="We reply here"><input type="email" required></lk-field>`);
+  const input = el.querySelector('input');
+  const label = el.querySelector('label');
+  assert(label.htmlFor === input.id, 'label for');
+  const described = input.getAttribute('aria-describedby').split(' ');
+  equal(described.length, 2);
+  assert(label.textContent.includes('(required)'), 'required marker');
+  el.setAttribute('error', 'Enter an email address');
+  assert(input.getAttribute('aria-invalid') === 'true', 'invalid');
+  assert(el.querySelector('.lk-field__error').textContent.includes('Enter an email address'));
+  el.removeAttribute('error');
+  assert(input.getAttribute('aria-invalid') === 'false', 'cleared');
+});
+
+test('field: validates on blur using native rules', async () => {
+  const el = await mount(`<lk-field label="Name"><input required></lk-field>`);
+  const input = el.querySelector('input');
+  input.dispatchEvent(new FocusEvent('blur'));
+  assert(input.getAttribute('aria-invalid') === 'true', 'invalid after blur');
+  input.value = 'Alex';
+  input.dispatchEvent(new Event('input', { bubbles: true }));
+  assert(input.getAttribute('aria-invalid') === 'false', 'valid after typing');
+});
+
+test('field: range shows its value', async () => {
+  const el = await mount(`<lk-field label="Confidence"><input type="range" min="0" max="10" value="4"></lk-field>`);
+  const out = el.querySelector('output');
+  equal(out.textContent, '4');
+  const input = el.querySelector('input');
+  input.value = '7';
+  input.dispatchEvent(new Event('input', { bubbles: true }));
+  equal(out.textContent, '7');
+});
+
+test('choices: builds fieldset and enforces min', async () => {
+  const el = await mount(`<lk-choices legend="Topics" min="2"><label><input type="checkbox" name="t"> A</label><label><input type="checkbox" name="t"> B</label></lk-choices>`);
+  assert(el.querySelector('fieldset > legend').textContent === 'Topics');
+  assert(el.validate() === false, 'fails with none checked');
+  el.querySelectorAll('input').forEach((i) => (i.checked = true));
+  assert(el.validate() === true, 'passes with two');
+  assert(!el.hasAttribute('data-invalid'));
+});

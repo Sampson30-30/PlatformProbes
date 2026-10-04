@@ -249,4 +249,19 @@
     font-size: 12px;
     font-weight: 700;
   }
+
+  /* Form controls: sunken fields, square choices. */
+
+  [data-lk-theme='homepage'] .lk-control:not([type='range']) {
+    box-shadow: inset 1px 1px 0 var(--lk-hp-bevel-dark),
+      inset -1px -1px 0 var(--lk-hp-bevel-light);
+  }
+
+  [data-lk-theme='homepage'] .lk-control[aria-invalid='true'] {
+    box-shadow: inset 0 0 0 1px var(--lk-color-danger);
+  }
+
+  [data-lk-theme='homepage'] .lk-field__label {
+    font-size: 13px;
+  }
 }

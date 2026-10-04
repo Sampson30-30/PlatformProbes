@@ -3,3 +3,4 @@
 export { LkTabs } from './lk-tabs.js';
 export { LkAccordion } from './lk-accordion.js';
 export { LkModal } from './lk-modal.js';
+export { LkField, LkChoices } from './lk-field.js';

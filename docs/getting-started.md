@@ -77,3 +77,38 @@ Methods: `toggle(index)`, `open(index)`, `close(index)`, and the read-only `open
 Keyboard: Enter and Space open or close the focused section. Up and Down arrows move between headings, Home and End jump to the first and last.
 
 Without JavaScript, every section is simply visible in order.
+
+
+### `<lk-modal>`
+
+```html
+<button type="button" data-lk-open="course-modal">Course details</button>
+
+<lk-modal id="course-modal" heading="Course details">
+  <p>Content goes here.</p>
+  <div class="lk-modal__actions">
+    <button type="button" data-lk-close="ok">Got it</button>
+  </div>
+</lk-modal>
+```
+
+It uses a native `<dialog>` opened with `showModal()`, so the browser handles the top layer, keeps focus inside and makes the page behind inert.
+
+| Attribute | Description |
+| --- | --- |
+| `heading` | Visible title. It is also the dialog's accessible name. |
+| `label` | Accessible name to use when there is no visible heading. |
+| `level` | Heading level for the title, 1 to 6. Default `2`. |
+| `static` | Do not close on a backdrop click. Use it for tasks that must be finished or dismissed. Escape and the close button still work. |
+| `close-label` | Accessible name for the close button. Default `Close`. |
+
+| Event | Detail |
+| --- | --- |
+| `lk-open` | `{}` |
+| `lk-close` | `{ returnValue }`. `"close"` for the close button, `"dismiss"` for a backdrop click, `"cancel"` for Escape, or the value of the `data-lk-close` button used. |
+
+Open it with any element that has `data-lk-open="<id>"`, or in script with `modal.show()`. Close it with `modal.close(value)` or any element inside with `data-lk-close`. Read the state with `modal.isOpen`.
+
+Keyboard: Escape closes. Tab and Shift+Tab stay inside the modal. Focus starts on the close button, or on any element inside that has `autofocus`, and returns to the element that opened the modal when it closes. Put `autofocus` on the safest button of a destructive confirmation.
+
+The modal's content is hidden until the script loads, so the trigger needs JavaScript. For content that must work without it, use a normal link to a page instead.

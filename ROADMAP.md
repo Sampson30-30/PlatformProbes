@@ -12,7 +12,7 @@ This is a plan, not a promise. Order and scope may change.
 
 - [x] Tabs
 - [x] Accordion
-- [ ] Modal dialog (focus trapping, Escape to close, focus return)
+- [x] Modal dialog (focus trapping, Escape to close, focus return)
 - [ ] Tooltip and popover
 - [ ] Toast notifications
 - [ ] Buttons and badges

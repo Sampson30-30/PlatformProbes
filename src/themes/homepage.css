@@ -30,6 +30,7 @@
     --lk-radius-control: 2px;
     --lk-border-width: 1px;
     --lk-shadow: 3px 3px 0 0 #14130f;
+    --lk-color-backdrop: rgb(20 19 15 / 60%);
 
     /* Theme-only tokens, used by the rules below. */
     --lk-hp-bevel-light: #ffffff;
@@ -151,5 +152,38 @@
 
   [data-lk-theme='homepage'] .lk-accordion__trigger[aria-expanded='true'] .lk-accordion__icon::before {
     content: '\25BC';
+  }
+
+  /* lk-modal: primary title bar, bevelled close control, hard shadow. */
+
+  [data-lk-theme='homepage'] .lk-modal__header {
+    background: var(--lk-color-primary);
+    color: var(--lk-color-primary-text);
+    border-bottom-color: var(--lk-color-border);
+  }
+
+  [data-lk-theme='homepage'] .lk-modal__title {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  [data-lk-theme='homepage'] .lk-modal__close {
+    color: var(--lk-color-text);
+    background: var(--lk-color-surface);
+    border: var(--lk-border-width) solid var(--lk-color-border);
+    box-shadow: inset 1px 1px 0 var(--lk-hp-bevel-light),
+      inset -1px -1px 0 var(--lk-hp-bevel-dark);
+  }
+
+  [data-lk-theme='homepage'] .lk-modal__close:active {
+    box-shadow: inset 1px 1px 0 var(--lk-hp-bevel-dark),
+      inset -1px -1px 0 var(--lk-hp-bevel-light);
+  }
+
+  [data-lk-theme='homepage'] .lk-modal__close-icon::before {
+    content: 'x';
+    font-family: var(--lk-font);
+    font-size: 0.8125rem;
+    font-weight: 700;
   }
 }

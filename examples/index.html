@@ -40,6 +40,29 @@
       <div data-lk-item="How do I react to changes?"><p>Listen for <code>lk-toggle</code>.</p></div>
     </lk-accordion>
 
+    <h2>lk-modal</h2>
+    <p>
+      <button type="button" data-lk-open="demo-modal">Open a modal</button>
+      <button type="button" data-lk-open="confirm-modal">Delete the course</button>
+    </p>
+    <p id="modal-log" aria-live="polite"></p>
+
+    <lk-modal id="demo-modal" heading="Course details">
+      <p>Focus stays inside while this is open. Press Escape, use the close button or click outside to dismiss it.</p>
+      <p>Focus returns to the button you used to open it.</p>
+      <div class="lk-modal__actions">
+        <button type="button" data-lk-close="ok">Got it</button>
+      </div>
+    </lk-modal>
+
+    <lk-modal id="confirm-modal" heading="Delete this course?" static>
+      <p>This cannot be undone. Clicking outside does nothing here because the modal has the <code>static</code> attribute.</p>
+      <div class="lk-modal__actions">
+        <button type="button" data-lk-close="cancel" autofocus>Cancel</button>
+        <button type="button" data-lk-close="delete">Delete course</button>
+      </div>
+    </lk-modal>
+
     <h2>Themes</h2>
     <p>
       A theme is a stylesheet plus a <code>data-lk-theme</code> attribute. Put the attribute on a wrapper to theme one section.
@@ -56,6 +79,8 @@
         <div data-lk-item="Section one" open><p>Built-in accordion.</p></div>
         <div data-lk-item="Section two"><p>More content.</p></div>
       </lk-accordion>
+      <p><button type="button" data-lk-open="default-modal">Open a modal</button></p>
+      <lk-modal id="default-modal" heading="Default theme"><p>Built-in modal look.</p></lk-modal>
     </div>
 
     <div class="theme-box" data-lk-theme="homepage">
@@ -68,8 +93,15 @@
         <div data-lk-item="Section one" open><p>Bevelled bars, text triangles.</p></div>
         <div data-lk-item="Section two"><p>More content.</p></div>
       </lk-accordion>
+      <p><button type="button" data-lk-open="homepage-modal">Open a modal</button></p>
+      <lk-modal id="homepage-modal" heading="Homepage theme"><p>Title bar, bevelled close control, hard shadow.</p></lk-modal>
     </div>
 
+    <script>
+      document.addEventListener('lk-close', (e) => {
+        document.getElementById('modal-log').textContent = `Closed with: ${e.detail.returnValue}`;
+      });
+    </script>
     <script>
       document.getElementById('dark-toggle').addEventListener('change', (e) => {
         document.querySelectorAll('.theme-box').forEach((box) => {

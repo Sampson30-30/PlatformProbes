@@ -29,6 +29,7 @@
     --lk-color-primary: #2f5bea;
     --lk-color-primary-text: #ffffff;
     --lk-color-focus: #2f5bea;
+    --lk-color-backdrop: rgb(10 14 24 / 55%);
 
     --lk-radius: 8px;
     --lk-radius-control: 4px;
@@ -204,5 +205,103 @@
 
   .lk-accordion__panel[hidden] {
     display: none;
+  }
+
+  /* lk-modal */
+
+  lk-modal {
+    display: contents;
+  }
+
+  /* Hidden until upgraded, so unstyled content never flashes on the page. */
+  lk-modal:not(.lk-ready) {
+    display: none;
+  }
+
+  :root:has(.lk-modal__dialog[open]) {
+    overflow: hidden;
+  }
+
+  .lk-modal__dialog {
+    box-sizing: border-box;
+    width: min(32rem, calc(100vw - 2rem));
+    max-height: calc(100vh - 2rem);
+    max-height: calc(100dvh - 2rem);
+    margin: auto;
+    padding: 0;
+    font-family: var(--lk-font);
+    color: var(--lk-color-text);
+    background: var(--lk-color-bg);
+    border: var(--lk-border-width) solid var(--lk-color-border);
+    border-radius: var(--lk-radius);
+    box-shadow: var(--lk-shadow);
+    overflow: hidden;
+  }
+
+  .lk-modal__dialog[open] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lk-modal__dialog::backdrop {
+    background: var(--lk-color-backdrop);
+  }
+
+  .lk-modal__header {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--lk-space);
+    padding: 0.5rem 0.5rem 0.5rem var(--lk-space);
+    background: var(--lk-color-surface);
+    border-bottom: var(--lk-border-width) solid var(--lk-color-divider);
+  }
+
+  .lk-modal__title {
+    font-family: var(--lk-font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+
+  /* With no heading the close button still sits at the end. */
+  .lk-modal__close {
+    margin-inline-start: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    min-height: 2rem;
+    font: inherit;
+    color: var(--lk-color-muted);
+    background: transparent;
+    border: 0;
+    border-radius: var(--lk-radius-control);
+    cursor: pointer;
+    transition: color var(--lk-transition);
+  }
+
+  .lk-modal__close:hover {
+    color: var(--lk-color-text);
+  }
+
+  .lk-modal__close-icon::before {
+    content: '\00D7';
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .lk-modal__body {
+    padding: var(--lk-space);
+    overflow-y: auto;
+  }
+
+  /* Convention for buttons at the end of a modal. */
+  .lk-modal__body .lk-modal__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: var(--lk-space);
   }
 }

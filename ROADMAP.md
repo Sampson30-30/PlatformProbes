@@ -36,7 +36,7 @@ This is a plan, not a promise. Order and scope may change.
 - [x] Theme: Homepage (mid 1990s document web, light and dark)
 - [x] A second theme that looks very different from Homepage (`clean`). This was the test that components are skin-agnostic. It needed no component changes.
 - [x] More themes (`contrast`, `bold`, `soft`), each documented and contrast-checked in light and dark
-- [ ] Theme gallery: a static page showing every component in every theme, side by side
+- [x] Theme gallery: a static page showing every component in every theme, side by side (`/gallery/`)
 - [ ] Customiser: pick a theme, change tokens with live preview, warn on failing contrast, export the CSS
 
 ## Suggested build order

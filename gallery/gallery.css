@@ -1,0 +1,93 @@
+/* Chrome for the gallery page itself. It does not use LearnKit themes, so
+   switching a theme never changes the controls. */
+
+:root {
+  color-scheme: light dark;
+  --g-bg: #f5f5f7;
+  --g-fg: #1d1d22;
+  --g-muted: #5a5a64;
+  --g-line: #c9c9d2;
+  --g-card: #ffffff;
+  --g-accent: #1f4fd8;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --g-bg: #131316;
+    --g-fg: #ececf0;
+    --g-muted: #a8a8b4;
+    --g-line: #3a3a44;
+    --g-card: #1c1c21;
+    --g-accent: #8aa8ff;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0 1rem 3rem;
+  font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--g-fg);
+  background: var(--g-bg);
+}
+
+a { color: var(--g-accent); }
+
+.page-header,
+.controls,
+#stage,
+.page-footer {
+  max-width: 88rem;
+  margin-inline: auto;
+}
+
+.page-header h1 { margin: 2rem 0 0.25rem; font-size: 1.75rem; }
+.page-header p { margin: 0 0 1rem; max-width: 46rem; color: var(--g-muted); }
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  align-items: end;
+  padding: 0.75rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--g-card);
+  border: 1px solid var(--g-line);
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.controls fieldset { margin: 0; padding: 0; border: 0; display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; }
+.controls legend { padding: 0; margin-bottom: 0.25rem; font-size: 0.8125rem; font-weight: 600; color: var(--g-muted); }
+.controls label { display: inline-flex; align-items: center; gap: 0.4rem; }
+.controls .field { display: flex; flex-direction: column; align-items: stretch; gap: 0.25rem; }
+.controls .field span { font-size: 0.8125rem; font-weight: 600; color: var(--g-muted); }
+.controls select { font: inherit; padding: 0.4rem 0.6rem; color: var(--g-fg); background: var(--g-bg); border: 1px solid var(--g-line); border-radius: 6px; min-width: 14rem; }
+.controls [hidden] { display: none; }
+
+#stage { display: grid; gap: 1.5rem; }
+#stage.compare { grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr)); align-items: start; }
+#stage.single { max-width: 56rem; }
+
+.pane {
+  min-width: 0;
+  padding: 1rem;
+  color: var(--lk-color-text);
+  background: var(--lk-color-page);
+  border: 1px solid var(--g-line);
+  border-radius: 10px;
+  font-family: var(--lk-font);
+}
+
+.pane-head { margin-bottom: 0.75rem; }
+.pane-head h2 { margin: 0; font-size: 1.0625rem; font-family: var(--lk-font-heading); }
+.pane-head p { margin: 0.125rem 0 0; font-size: 0.8125rem; color: var(--lk-color-muted); }
+.pane .demo + .demo { margin-top: 1.5rem; }
+.pane .demo-title { margin: 0 0 0.5rem; font-size: 0.8125rem; font-weight: 700; color: var(--lk-color-muted); }
+.pane .row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.pane .gap > * + * { margin-top: 0.75rem; }
+
+.page-footer { margin-top: 2rem; color: var(--g-muted); font-size: 0.875rem; }

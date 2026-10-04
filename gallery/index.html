@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LearnKit theme gallery</title>
+    <link rel="stylesheet" href="../src/learnkit.css" />
+    <link rel="stylesheet" href="../src/themes/homepage.css" />
+    <link rel="stylesheet" href="../src/themes/clean.css" />
+    <link rel="stylesheet" href="../src/themes/contrast.css" />
+    <link rel="stylesheet" href="../src/themes/bold.css" />
+    <link rel="stylesheet" href="../src/themes/soft.css" />
+    <link rel="stylesheet" href="gallery.css" />
+    <script type="module" src="gallery.js"></script>
+  </head>
+  <body>
+    <header class="page-header">
+      <h1>LearnKit theme gallery</h1>
+      <p>Every component in every theme, using the same markup. Choose what to compare, flip between light and dark, then copy the theme file you like.</p>
+    </header>
+
+    <form class="controls" aria-label="Gallery options" onsubmit="return false">
+      <fieldset>
+        <legend>View</legend>
+        <label><input type="radio" name="view" value="compare" checked /> One component, all themes</label>
+        <label><input type="radio" name="view" value="theme" /> One theme, all components</label>
+      </fieldset>
+      <label class="field" id="component-field">
+        <span>Component</span>
+        <select id="component"></select>
+      </label>
+      <label class="field" id="theme-field" hidden>
+        <span>Theme</span>
+        <select id="theme"></select>
+      </label>
+      <fieldset>
+        <legend>Mode</legend>
+        <label><input type="radio" name="mode" value="" checked /> System</label>
+        <label><input type="radio" name="mode" value="light" /> Light</label>
+        <label><input type="radio" name="mode" value="dark" /> Dark</label>
+      </fieldset>
+    </form>
+
+    <main id="stage" aria-live="polite"></main>
+
+    <footer class="page-footer">
+      <p>To use a theme, load <code>learnkit.css</code>, then the theme file, then set <code>data-lk-theme="name"</code> on <code>&lt;html&gt;</code> or any wrapper. See <a href="../docs/theming.md">the theming guide</a>.</p>
+    </footer>
+  </body>
+</html>

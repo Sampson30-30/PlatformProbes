@@ -36,7 +36,7 @@ LearnKit is a free UI shop with three layers: general-purpose **core primitives*
 
 ```sh
 npm start        # serves the repo at http://localhost:8080
-# then open /examples/
+# then open /examples/ or /gallery/
 npm test         # unit tests for helpers, plus contrast checks for every theme
 # component tests run in the browser: open /test/browser/
 ```
@@ -46,6 +46,7 @@ npm test         # unit tests for helpers, plus contrast checks for every theme
 - [Roadmap](ROADMAP.md)
 - [Getting started](docs/getting-started.md)
 - [Theming](docs/theming.md)
+- Theme gallery: run `npm start`, then open `/gallery/`
 - [Contributing](CONTRIBUTING.md)
 
 ## Licence

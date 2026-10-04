@@ -51,6 +51,7 @@
      Set data-lk-mode="dark" on any element to force dark inside it. */
   @media (prefers-color-scheme: dark) {
     :root:not([data-lk-mode='light']) {
+      color-scheme: dark;
       --lk-color-page: #14171f;
       --lk-color-bg: #14171f;
       --lk-color-surface: #1d212c;
@@ -73,6 +74,7 @@
   }
 
   [data-lk-mode='dark'] {
+    color-scheme: dark;
     --lk-color-page: #14171f;
     --lk-color-bg: #14171f;
     --lk-color-surface: #1d212c;
@@ -91,6 +93,29 @@
     --lk-color-danger-bg: #3a1512;
     --lk-color-info: #9db8ff;
     --lk-color-info-bg: #16204a;
+  }
+
+  /* Forces light inside a dark system: data-lk-mode="light" on any element. */
+  [data-lk-mode='light'] {
+    color-scheme: light;
+    --lk-color-page: #ffffff;
+    --lk-color-bg: #ffffff;
+    --lk-color-surface: #f4f6fa;
+    --lk-color-text: #1f2430;
+    --lk-color-muted: #5b6475;
+    --lk-color-border: #d5dae3;
+    --lk-color-divider: #d5dae3;
+    --lk-color-primary: #2f5bea;
+    --lk-color-primary-text: #ffffff;
+    --lk-color-focus: #2f5bea;
+    --lk-color-success: #0b6b3a;
+    --lk-color-success-bg: #dff3e6;
+    --lk-color-warning: #7a4a00;
+    --lk-color-warning-bg: #fdf0cc;
+    --lk-color-danger: #b3261e;
+    --lk-color-danger-bg: #fbe3e1;
+    --lk-color-info: #1d4ed8;
+    --lk-color-info-bg: #e3ebff;
   }
 
   @media (prefers-reduced-motion: reduce) {

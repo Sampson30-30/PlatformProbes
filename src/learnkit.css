@@ -1930,6 +1930,85 @@
     display: none;
   }
 
+  /* .lk-guide: a plain-English "About this page" panel. Put it on a native
+     <details open>, so it needs no script, opens and closes with a keyboard,
+     and reads well without any styling. */
+
+  .lk-guide {
+    margin: 1rem 0;
+    font-family: var(--lk-font);
+    color: var(--lk-color-text);
+    background: var(--lk-color-surface);
+    border: var(--lk-border-width) solid var(--lk-color-border);
+    border-inline-start: 4px solid var(--lk-color-primary);
+    border-radius: var(--lk-radius);
+  }
+
+  .lk-guide > summary {
+    display: flex;
+    gap: 0.625rem;
+    align-items: center;
+    padding: 0.625rem 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .lk-guide > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .lk-guide > summary::before {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.875rem;
+    line-height: 1;
+    color: var(--lk-color-primary-text);
+    content: '?';
+    background: var(--lk-color-primary);
+    border-radius: 50%;
+  }
+
+  .lk-guide > summary::after {
+    margin-inline-start: auto;
+    content: '\25BE';
+    transition: transform var(--lk-transition);
+  }
+
+  .lk-guide[open] > summary::after {
+    transform: rotate(180deg);
+  }
+
+  .lk-guide > summary:focus-visible {
+    outline: 3px solid var(--lk-color-focus);
+    outline-offset: -3px;
+  }
+
+  .lk-guide__body {
+    padding: 0 1rem 0.75rem;
+  }
+
+  .lk-guide__body p {
+    margin: 0 0 0.5rem;
+  }
+
+  .lk-guide__title {
+    margin: 0.75rem 0 0.25rem;
+    font-weight: 700;
+  }
+
+  .lk-guide__body ul {
+    margin: 0 0 0.5rem;
+    padding-inline-start: 1.25rem;
+  }
+
+  .lk-guide__body li {
+    margin-block-end: 0.25rem;
+  }
+
   /* lk-table */
 
   lk-table {

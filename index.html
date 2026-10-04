@@ -19,6 +19,7 @@
       .card:focus-visible { outline: 3px solid var(--lk-color-focus); outline-offset: 2px; }
       .card h3 { margin: 0 0 0.25rem; font-size: 1.125rem; color: var(--lk-color-primary); }
       .card p { margin: 0; font-size: 0.9375rem; color: var(--lk-color-muted); }
+      .for-maintainer { font-size: 0.875rem; font-weight: 400; color: var(--lk-color-muted); }
       .run { margin-top: 2.5rem; padding: 1rem 1.25rem; font-size: 0.9375rem; background: var(--lk-color-surface); border-radius: var(--lk-radius); }
       .run code { padding: 0.1em 0.4em; background: var(--lk-color-bg); border-radius: 4px; }
     </style>
@@ -26,16 +27,31 @@
   <body>
     <main class="hub">
       <h1>LearnKit</h1>
-      <p class="tagline">Dependency-free Web Components for learning content, with themes you can swap and customise. No framework and no build step.</p>
+      <p class="tagline">Ready-made pieces for building learning content, such as quizzes, tabs, timelines and reflection journals. You choose how they look, and they work for everyone, including people who use a keyboard or a screen reader.</p>
+
+      <details class="lk-guide" open>
+        <summary>About this page</summary>
+        <div class="lk-guide__body">
+          <p><strong>What this is.</strong> A shop of building blocks. Each block does one job, such as a quiz or a timeline. You do not need to build the blocks yourself: you can ask Claude to use them.</p>
+          <p class="lk-guide__title">What you can do here</p>
+          <ul>
+            <li>See every block working, on the Examples page.</li>
+            <li>Compare looks in the Theme gallery. A theme is a complete look: colours, corners and fonts.</li>
+            <li>Make a look of your own in the Customiser.</li>
+            <li>Find out what works inside a Rise course, with the Rise test.</li>
+          </ul>
+          <p>The cards under Read and Check are for the person who looks after the code. You can skip them.</p>
+        </div>
+      </details>
 
       <h2 class="group">Try it</h2>
       <ul class="cards">
-        <li><a class="card" href="examples/"><h3>Examples</h3><p>Every component on one page, with plain markup you can copy.</p></a></li>
-        <li><a class="card" href="gallery/"><h3>Theme gallery</h3><p>One component in every theme, or one theme with every component. Light, dark or system.</p></a></li>
-        <li><a class="card" href="customiser/"><h3>Customiser</h3><p>Start from a theme, change colours, shape and fonts, check contrast and export the CSS.</p></a></li>
+        <li><a class="card" href="examples/"><h3>Examples</h3><p>Every building block working on one page. Try them all.</p></a></li>
+        <li><a class="card" href="gallery/"><h3>Theme gallery</h3><p>See one block in every look, or one look across every block. Light, dark or your device&rsquo;s setting.</p></a></li>
+        <li><a class="card" href="customiser/"><h3>Customiser</h3><p>Start from a look and change its colours, corners and fonts. It checks that text stays easy to read.</p></a></li>
       </ul>
 
-      <h2 class="group">Read</h2>
+      <h2 class="group">Read <span class="for-maintainer">(for the person who looks after the code)</span></h2>
       <ul class="cards">
         <li><a class="card" href="docs/getting-started.md"><h3>Getting started</h3><p>Every component: its markup, attributes, events and keyboard behaviour.</p></a></li>
         <li><a class="card" href="docs/theming.md"><h3>Theming</h3><p>Tokens, themes, light and dark, and how to write your own theme.</p></a></li>
@@ -44,9 +60,9 @@
         <li><a class="card" href="CONTRIBUTING.md"><h3>Contributing</h3><p>Ground rules and how to add a component.</p></a></li>
       </ul>
 
-      <h2 class="group">Check</h2>
+      <h2 class="group">Check <span class="for-maintainer">(for the person who looks after the code, apart from the Rise test)</span></h2>
       <ul class="cards">
-        <li><a class="card" href="rise-test/"><h3>Rise test</h3><p>One file that checks which browser features work inside a Rise course, and writes a report to send back.</p></a></li>
+        <li><a class="card" href="rise-test/"><h3>Rise test</h3><p>One file that checks what works inside a Rise course, and writes a short report to send back.</p></a></li>
         <li><a class="card" href="test/browser/"><h3>Component tests</h3><p>Runs in your browser and reports pass or fail for each component.</p></a></li>
       </ul>
 

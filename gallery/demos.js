@@ -409,4 +409,17 @@ export const DEMOS = [
         </ul>
       </lk-flow>`,
   },
+  {
+    id: 'lk-guide',
+    title: 'About this page panel',
+    html: () => `
+      <details class="lk-guide" open>
+        <summary>About this page</summary>
+        <div class="lk-guide__body">
+          <p><strong>What this is.</strong> One or two plain sentences about the page.</p>
+          <p class="lk-guide__title">What you can do here</p>
+          <ul><li>A short list of things to try.</li><li>Start each with a verb.</li></ul>
+        </div>
+      </details>`,
+  },
 ];

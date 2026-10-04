@@ -309,3 +309,31 @@ Mark more than one option `correct` to make a "choose all that apply" question. 
 | `lk-complete` | `{ correct, total, percent, points }` when the results show. `points` gives partial credit on multiple-answer questions. |
 
 Methods: `reset()` restarts the quiz, and `quiz.data = {...}` replaces the questions. A question with no prompt, fewer than two options or no correct option is skipped, and the quiz explains that it could not be shown if nothing usable is left. Feedback always uses words ("Correct", "Incorrect", "Correct answer"), never colour alone.
+
+
+### `<lk-journal>`
+
+A reflection journal. Each prompt gets a text box. Notes are saved in this browser as the learner types, and can be copied or downloaded.
+
+```html
+<lk-journal name="week-1" title="Week 1 reflection">
+  <div data-lk-prompt="What went well this week?" data-hint="Think about one lesson."></div>
+  <div data-lk-prompt="What would you change next time?"></div>
+</lk-journal>
+```
+
+| Attribute | Description |
+| --- | --- |
+| `name` | Storage key. Without it, nothing is saved. Use a different name for each journal on your site. |
+| `title` | Visible title, also used in exports. |
+| `level` | Heading level for the title. Default `2`. |
+| `rows` | Height of each box in rows. Default `5`. |
+
+| Event | Detail |
+| --- | --- |
+| `lk-save` | `{ name, entries }` |
+| `lk-export` | `{ format, filename }` where format is `copy`, `text` or `json` |
+
+Methods and properties: `entries` (`[{ prompt, text }]`), `save()`, `export("text" | "json")` which returns `{ filename, mime, content }` without downloading, and `clear()`.
+
+Saving uses `localStorage`, so notes stay on the learner's own device and browser. If storage is blocked (for example in a private window), the journal says so and the Download buttons are the way to keep the notes. The text export is Markdown, which also reads fine as plain text. "Clear all" asks for confirmation first.

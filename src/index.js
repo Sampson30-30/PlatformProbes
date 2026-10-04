@@ -8,3 +8,4 @@ export { LkProgress, LkStepper } from './lk-progress.js';
 export { LkTooltip, LkPopover } from './lk-popover.js';
 export { LkToasts, toast } from './lk-toast.js';
 export { LkQuiz } from './lk-quiz.js';
+export { LkJournal } from './lk-journal.js';

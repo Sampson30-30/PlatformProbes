@@ -273,3 +273,56 @@ test('quiz: reads JSON and reports bad data instead of throwing', async () => {
   const bad = await mount(`<lk-quiz><script type="application/json">{"questions":[{"prompt":"Q?"}]}</script></lk-quiz>`);
   assert(bad.textContent.includes('could not be shown'));
 });
+
+// ---- lk-journal ----
+
+const JOURNAL = (name) => `<lk-journal name="${name}" title="Week 1 reflection">
+  <div data-lk-prompt="What went well?" data-hint="One thing"></div>
+  <div data-lk-prompt="What next?"></div>
+</lk-journal>`;
+
+test('journal: builds labelled text boxes and saves to storage', async () => {
+  const name = `test-${Math.random().toString(36).slice(2)}`;
+  const j = await mount(JOURNAL(name));
+  const areas = j.querySelectorAll('textarea');
+  equal(areas.length, 2);
+  equal(j.querySelector('label').textContent, 'What went well?');
+  areas[0].value = 'The planning';
+  areas[0].dispatchEvent(new Event('input', { bubbles: true }));
+  const saved = listen(j, 'lk-save');
+  assert(j.save(), 'saved');
+  equal(saved.length, 1);
+  const stored = JSON.parse(localStorage.getItem(`lk-journal:${name}`));
+  equal(stored.entries, { 0: 'The planning' });
+  j.clear();
+  assert(localStorage.getItem(`lk-journal:${name}`) === null, 'storage cleared');
+  equal(areas[0].value, '');
+});
+
+test('journal: restores saved notes on load', async () => {
+  const name = `test-${Math.random().toString(36).slice(2)}`;
+  localStorage.setItem(`lk-journal:${name}`, JSON.stringify({ entries: { 1: 'Try pairs' } }));
+  const j = await mount(JOURNAL(name));
+  equal(j.querySelectorAll('textarea')[1].value, 'Try pairs');
+  assert(j.querySelector('[role=status]').textContent.includes('restored'));
+  j.clear();
+});
+
+test('journal: exports text and JSON, and confirms before clearing', async () => {
+  const j = await mount(JOURNAL('export-test'));
+  j.querySelectorAll('textarea')[0].value = 'Group work';
+  const text = j.export('text');
+  equal(text.filename, 'export-test.txt');
+  assert(text.content.startsWith('# Week 1 reflection'), 'title');
+  assert(text.content.includes('## What went well?\n\nGroup work'), 'answer');
+  assert(text.content.includes('_No response._'), 'empty answer marked');
+  const json = JSON.parse(j.export('json').content);
+  equal(json.entries[0], { prompt: 'What went well?', text: 'Group work' });
+  const clear = [...j.querySelectorAll('button')].find((b) => b.textContent === 'Clear all');
+  clear.click();
+  assert(j.querySelector('.lk-journal__confirm'), 'asks first');
+  equal(j.querySelectorAll('textarea')[0].value, 'Group work');
+  [...j.querySelectorAll('button')].find((b) => b.textContent === 'Keep my notes').click();
+  equal(j.querySelectorAll('textarea')[0].value, 'Group work');
+  j.clear();
+});

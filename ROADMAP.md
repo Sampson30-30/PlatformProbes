@@ -22,7 +22,7 @@ This is a plan, not a promise. Order and scope may change.
 ## Layer 2: Learning components
 
 - [x] Quiz and knowledge check
-- [ ] Reflection journal with export
+- [x] Reflection journal with export
 - [ ] Comparison spectrum
 - [ ] Rating or self-assessment tool
 - [ ] Timeline

@@ -1019,4 +1019,58 @@
 
   .lk-quiz__summary [data-result='correct'] strong { color: var(--lk-color-success); }
   .lk-quiz__summary [data-result='incorrect'] strong { color: var(--lk-color-danger); }
+
+  /* lk-journal */
+
+  lk-journal {
+    display: block;
+    box-sizing: border-box;
+    padding: var(--lk-space);
+    font-family: var(--lk-font);
+    color: var(--lk-color-text);
+    background: var(--lk-color-bg);
+    border: var(--lk-border-width) solid var(--lk-color-border);
+    border-radius: var(--lk-radius);
+    box-shadow: var(--lk-shadow);
+  }
+
+  .lk-journal__title {
+    font-family: var(--lk-font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  lk-journal textarea.lk-control {
+    resize: vertical;
+    line-height: 1.5;
+  }
+
+  .lk-journal__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1rem;
+    margin-top: var(--lk-space);
+    padding-top: var(--lk-space);
+    border-top: var(--lk-border-width) solid var(--lk-color-divider);
+  }
+
+  .lk-journal__status {
+    flex: 1 1 12rem;
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--lk-color-muted);
+  }
+
+  .lk-journal__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .lk-journal__confirm {
+    font-weight: 600;
+  }
 }

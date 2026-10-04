@@ -182,6 +182,19 @@ const RENDERERS = {
     return a;
   },
 
+  process: (b) => {
+    const proc = el('lk-process');
+    proc.setAttribute('label', b.label);
+    proc.setAttribute('level', '3');
+    for (const step of b.steps) {
+      const d = el('div');
+      d.setAttribute('data-lk-step', step.title);
+      renderBlocks(d, step.blocks);
+      proc.append(d);
+    }
+    return proc;
+  },
+
   rating: (b) => {
     const r = el('lk-rating');
     r.setAttribute('label', b.label);

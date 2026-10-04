@@ -40,6 +40,7 @@ code { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-si
 .site-main { max-width: 64rem; margin-inline: auto; padding: 1.5rem 1rem 3rem; }
 .site-main:focus { outline: none; }
 .prose { max-width: 44rem; margin-block: 2rem; }
+.prose--wide { max-width: 52rem; }
 .prose > * + * { margin-top: 1rem; }
 .prose > .b-h { margin-top: 2rem; }
 

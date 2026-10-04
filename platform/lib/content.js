@@ -21,6 +21,7 @@ export const BLOCK_TYPES = {
   grid: ['label', 'cells'],
   accordion: ['label', 'items'],
   rating: ['label', 'statements'],
+  process: ['label', 'steps'],
 };
 
 /** Returns a list of problems with a list of blocks. An empty list means it is fine. */
@@ -52,6 +53,12 @@ export function validateBlocks(blocks, where = 'blocks') {
       for (const row of block.rows || []) {
         if (row.length !== block.head.length) problems.push(`${at} compare has a row with the wrong number of cells`);
       }
+    }
+    if (block.type === 'process') {
+      (block.steps || []).forEach((step, n) => {
+        if (!step.title) problems.push(`${at} step ${n + 1} has no title`);
+        problems.push(...validateBlocks(step.blocks, `${at} step ${n + 1}`));
+      });
     }
     if (block.type === 'journal') {
       for (const p of block.prompts || []) if (!p.prompt) problems.push(`${at} journal has a prompt with no text`);

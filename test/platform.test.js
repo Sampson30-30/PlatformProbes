@@ -7,6 +7,7 @@ import { validateBlocks, checkWording, walkStrings } from '../platform/lib/conte
 import { NAV, SITE } from '../platform/data/site.js';
 import { HOME } from '../platform/data/home.js';
 import { ALL_TOPICS, HABITS, REACH } from '../platform/data/habits.js';
+import { CASES } from '../platform/data/cases/world-time-map.js';
 
 const root = new URL('../platform/', import.meta.url);
 const pageFiles = new Set(readdirSync(root).filter((f) => f.endsWith('.html')));
@@ -84,7 +85,7 @@ test('internal links in content point to real pages and topics', () => {
     const h = new URLSearchParams(query).get('h');
     return !h || topicIds.has(h);
   };
-  const all = [SITE, HOME, ALL_TOPICS];
+  const all = [SITE, HOME, ALL_TOPICS, CASES];
   for (const data of all) {
     for (const text of walkStrings(data)) {
       for (const [, , href] of text.matchAll(/\[([^\]]+)\]\(([^)\s]+)\)/g)) {
@@ -99,4 +100,25 @@ test('home, site and topic wording follows the house rules', () => {
   assert.deepEqual(checkWording(SITE, 'site'), []);
   assert.deepEqual(checkWording(ALL_TOPICS, 'topics'), []);
   assert.deepEqual(validateBlocks(HOME.blocks, 'home'), []);
+});
+
+test('case files are well formed, free of names and follow the wording rules', () => {
+  assert.ok(CASES.length >= 1);
+  for (const study of CASES) {
+    assert.deepEqual(validateBlocks(study.blocks, study.id), []);
+    assert.deepEqual(checkWording(study, study.id), []);
+    const text = [...walkStrings(study)].join(' ');
+    // The repository is public, so no real colleague is ever named.
+    for (const name of ['Sam', 'Freeman', 'Kirsty', 'Matt ', 'Emma', 'Alex']) {
+      assert.ok(!new RegExp(`\\b${name.trim()}\\b`).test(text), `case file mentions "${name.trim()}"`);
+    }
+  }
+});
+
+test('the case file has a decision at each step of its process', () => {
+  const process = CASES[0].blocks.find((b) => b.type === 'process');
+  assert.ok(process.steps.length >= 8);
+  for (const step of process.steps) {
+    assert.ok(step.blocks.some((b) => b.type === 'quiz'), `step "${step.title}" has no decision`);
+  }
 });

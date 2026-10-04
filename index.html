@@ -5,29 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>LearnKit</title>
     <link rel="stylesheet" href="src/learnkit.css" />
+    <link rel="stylesheet" href="src/themes/homepage.css" />
     <link rel="stylesheet" href="src/themes/clean.css" />
-    <style>
-      * { box-sizing: border-box; }
-      body { margin: 0; font-family: var(--lk-font); line-height: 1.6; color: var(--lk-color-text); background: var(--lk-color-page); }
-      .hub { max-width: 64rem; margin-inline: auto; padding: 2rem 1rem 3rem; }
-      h1 { margin: 0; font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; }
-      .tagline { margin: 0.5rem 0 0; max-width: 40rem; font-size: 1.1875rem; color: var(--lk-color-muted); }
-      h2.group { margin: 2.5rem 0 0.75rem; font-size: 1.25rem; }
-      .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: 1rem; margin: 0; padding: 0; list-style: none; }
-      .card { display: block; height: 100%; padding: 1.25rem; color: inherit; text-decoration: none; background: var(--lk-color-bg); border: var(--lk-border-width) solid var(--lk-color-divider); border-radius: var(--lk-radius); box-shadow: var(--lk-shadow); }
-      .card:hover { border-color: var(--lk-color-primary); }
-      .card:focus-visible { outline: 3px solid var(--lk-color-focus); outline-offset: 2px; }
-      .card h3 { margin: 0 0 0.25rem; font-size: 1.125rem; color: var(--lk-color-primary); }
-      .card p { margin: 0; font-size: 0.9375rem; color: var(--lk-color-muted); }
-      .for-maintainer { font-size: 0.875rem; font-weight: 400; color: var(--lk-color-muted); }
-      .run { margin-top: 2.5rem; padding: 1rem 1.25rem; font-size: 0.9375rem; background: var(--lk-color-surface); border-radius: var(--lk-radius); }
-      .run code { padding: 0.1em 0.4em; background: var(--lk-color-bg); border-radius: 4px; }
-    </style>
+    <link rel="stylesheet" href="src/themes/contrast.css" />
+    <link rel="stylesheet" href="src/themes/bold.css" />
+    <link rel="stylesheet" href="src/themes/soft.css" />
+    <link rel="stylesheet" href="home/home.css" />
+    <script type="module" src="home/home.js"></script>
   </head>
   <body>
     <main class="hub">
-      <h1>LearnKit</h1>
-      <p class="tagline">Ready-made pieces for building learning content, such as quizzes, tabs, timelines and reflection journals. You choose how they look, and they work for everyone, including people who use a keyboard or a screen reader.</p>
+      <header class="intro">
+        <div>
+          <h1>LearnKit</h1>
+          <p class="lede">A library of ready-made pieces for learning content: quizzes, flashcards, timelines, decision charts and more. Choose a look, then ask Claude to build with them.</p>
+          <p class="intro__actions">
+            <a class="lk-button" data-variant="primary" href="#library">Browse the library</a>
+            <a class="lk-button" href="examples/">See every piece on one page</a>
+          </p>
+        </div>
+        <div class="intro__sample">
+          <p class="eyebrow">Try one now</p>
+          <div id="sample"><noscript><p>This part only works when your browser has scripts turned on. The rest of the page explains what LearnKit is.</p></noscript></div>
+        </div>
+      </header>
 
       <details class="lk-guide" open>
         <summary>About this page</summary>
@@ -35,46 +36,77 @@
           <p><strong>What this is.</strong> A shop of building blocks. Each block does one job, such as a quiz or a timeline. You do not need to build the blocks yourself: you can ask Claude to use them.</p>
           <p class="lk-guide__title">What you can do here</p>
           <ul>
-            <li>See every block working, on the Examples page.</li>
+            <li>Browse the library below. Every piece is working, so you can try it.</li>
             <li>Compare looks in the Theme gallery. A theme is a complete look: colours, corners and fonts.</li>
             <li>Make a look of your own in the Customiser.</li>
             <li>Find out what works inside a Rise course, with the Rise test.</li>
           </ul>
-          <p>The cards under Read and Check are for the person who looks after the code. You can skip them.</p>
+          <p>The area at the bottom is for the person who looks after the code. You can skip it.</p>
         </div>
       </details>
 
-      <h2 class="group">Built with it</h2>
-      <ul class="cards">
-        <li><a class="card" href="platform/"><h3>Build What Rise Can&rsquo;t</h3><p>A site that teaches an engineering way of working. Every part of it is made from these building blocks.</p></a></li>
-      </ul>
+      <section aria-labelledby="does-title">
+        <h2 id="does-title">What LearnKit does</h2>
+        <ul class="does">
+          <li><h3>Ready-made pieces</h3><p>Building blocks for what learning content needs: checking understanding, telling a story, organising information and getting people to reflect.</p></li>
+          <li><h3>Looks you can swap</h3><p>Every piece can wear any of the looks, or one you make yourself. Change the look without touching the content.</p></li>
+          <li><h3>Made for everyone</h3><p>Every piece works with a keyboard and a screen reader, in light and dark. Colours are checked so text stays easy to read.</p></li>
+          <li><h3>Nothing to install</h3><p>Each piece works on its own. There is no extra software to set up, and nothing to keep updating.</p></li>
+        </ul>
+      </section>
 
-      <h2 class="group">Try it</h2>
-      <ul class="cards">
-        <li><a class="card" href="examples/"><h3>Examples</h3><p>Every building block working on one page. Try them all.</p></a></li>
-        <li><a class="card" href="gallery/"><h3>Theme gallery</h3><p>See one block in every look, or one look across every block. Light, dark or your device&rsquo;s setting.</p></a></li>
-        <li><a class="card" href="customiser/"><h3>Customiser</h3><p>Start from a look and change its colours, corners and fonts. It checks that text stays easy to read.</p></a></li>
-      </ul>
+      <section id="library" aria-labelledby="library-title">
+        <h2 id="library-title">The library</h2>
+        <p class="section-intro" id="library-count">Every piece is working: try it.</p>
+        <div id="shelves"><noscript><p>The library only works when your browser has scripts turned on. The <a href="examples/">examples page</a> lists every piece.</p></noscript></div>
+      </section>
 
-      <h2 class="group">Read <span class="for-maintainer">(for the person who looks after the code)</span></h2>
-      <ul class="cards">
-        <li><a class="card" href="docs/getting-started.md"><h3>Getting started</h3><p>Every component: its markup, attributes, events and keyboard behaviour.</p></a></li>
-        <li><a class="card" href="docs/theming.md"><h3>Theming</h3><p>Tokens, themes, light and dark, and how to write your own theme.</p></a></li>
-        <li><a class="card" href="ROADMAP.md"><h3>Roadmap</h3><p>What was planned and what is built.</p></a></li>
-        <li><a class="card" href="platform/ROADMAP.md"><h3>Platform roadmap</h3><p>The plan behind the platform site, and what is not yet verified.</p></a></li>
-        <li><a class="card" href="platform/FINDINGS.md"><h3>Findings</h3><p>What building the platform taught us about LearnKit.</p></a></li>
-        <li><a class="card" href="CHANGELOG.md"><h3>Changelog</h3><p>What changed and when.</p></a></li>
-        <li><a class="card" href="CONTRIBUTING.md"><h3>Contributing</h3><p>Ground rules and how to add a component.</p></a></li>
-      </ul>
+      <section aria-labelledby="looks-title">
+        <h2 id="looks-title">One piece, many looks</h2>
+        <p class="section-intro">The same pieces in each of the looks. You can change from one to another without touching the content, or make a look of your own.</p>
+        <ul class="looks" id="looks"></ul>
+        <p class="look-links"><a href="gallery/">Compare every piece in every look</a> &middot; <a href="customiser/">Make your own look</a></p>
+      </section>
 
-      <h2 class="group">Check <span class="for-maintainer">(for the person who looks after the code, apart from the Rise test)</span></h2>
-      <ul class="cards">
-        <li><a class="card" href="rise-test/"><h3>Rise test</h3><p>One file that checks what works inside a Rise course, and writes a short report to send back.</p></a></li>
-        <li><a class="card" href="test/browser/"><h3>Component tests</h3><p>Runs in your browser and reports pass or fail for each component.</p></a></li>
-        <li><a class="card" href="test/browser/platform.html"><h3>Platform checks</h3><p>Opens every platform page at desktop and phone width and checks structure, headings, names and contrast. Run it in light and again in dark.</p></a></li>
-      </ul>
+      <section aria-labelledby="use-title">
+        <h2 id="use-title">See it in use</h2>
+        <p class="section-intro">A whole site, made from these pieces and nothing else.</p>
+        <ul class="cards">
+          <li><a class="card" href="platform/"><h3>Build What Rise Can&rsquo;t</h3><p>A site that teaches an engineering way of working. Every part of it is made from these building blocks.</p></a></li>
+        </ul>
+      </section>
 
-      <p class="run">Running locally? Start the server with <code>npm start</code> and this page is at <code>http://localhost:8080/</code>. The Node tests run with <code>npm test</code>.</p>
+      <section aria-labelledby="further-title">
+        <h2 id="further-title">Go further</h2>
+        <ul class="cards">
+          <li><a class="card" href="examples/"><h3>Examples</h3><p>Every building block working on one page. Try them all.</p></a></li>
+          <li><a class="card" href="gallery/"><h3>Theme gallery</h3><p>See one block in every look, or one look across every block. Light, dark or your device&rsquo;s setting.</p></a></li>
+          <li><a class="card" href="customiser/"><h3>Customiser</h3><p>Start from a look and change its colours, corners and fonts. It checks that text stays easy to read.</p></a></li>
+          <li><a class="card" href="rise-test/"><h3>Rise test</h3><p>One file that checks what works inside a Rise course, and writes a short report to send back.</p></a></li>
+        </ul>
+      </section>
+
+      <details class="lk-guide maintainers">
+        <summary>For the person who looks after the code</summary>
+        <div class="lk-guide__body">
+          <h3 class="group">Read</h3>
+          <ul class="cards">
+            <li><a class="card" href="docs/getting-started.md"><h3>Getting started</h3><p>Every component: its markup, attributes, events and keyboard behaviour.</p></a></li>
+            <li><a class="card" href="docs/theming.md"><h3>Theming</h3><p>Tokens, themes, light and dark, and how to write your own theme.</p></a></li>
+            <li><a class="card" href="ROADMAP.md"><h3>Roadmap</h3><p>What was planned and what is built.</p></a></li>
+            <li><a class="card" href="platform/ROADMAP.md"><h3>Platform roadmap</h3><p>The plan behind the platform site, and what is not yet verified.</p></a></li>
+            <li><a class="card" href="platform/FINDINGS.md"><h3>Findings</h3><p>What building the platform taught us about LearnKit.</p></a></li>
+            <li><a class="card" href="CHANGELOG.md"><h3>Changelog</h3><p>What changed and when.</p></a></li>
+            <li><a class="card" href="CONTRIBUTING.md"><h3>Contributing</h3><p>Ground rules and how to add a component.</p></a></li>
+          </ul>
+          <h3 class="group">Check</h3>
+          <ul class="cards">
+            <li><a class="card" href="test/browser/"><h3>Component tests</h3><p>Runs in your browser and reports pass or fail for each component.</p></a></li>
+            <li><a class="card" href="test/browser/platform.html"><h3>Platform checks</h3><p>Opens every platform page at desktop and phone width and checks structure, headings, names and contrast. Run it in light and again in dark.</p></a></li>
+          </ul>
+          <p class="run">Running locally? Start the server with <code>npm start</code> and this page is at <code>http://localhost:8080/</code>. The Node tests run with <code>npm test</code>.</p>
+        </div>
+      </details>
     </main>
   </body>
 </html>

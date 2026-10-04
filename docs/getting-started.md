@@ -202,6 +202,7 @@ Shows where the learner is in a sequence. It does not hold the step content. For
 | --- | --- |
 | `current` | Zero-based index of the current step. Steps before it show as complete. Also settable as `stepper.current = 2`. |
 | `label` | Accessible name for the list. |
+| `compact` | Show only the current step’s label. Added automatically when there are more than five steps. |
 
 The current step has `aria-current="step"`, and each step carries a hidden "(completed)" or "(current step)" note for screen readers. On narrow screens the steps stack vertically.
 

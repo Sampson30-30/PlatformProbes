@@ -734,7 +734,25 @@
   }
 
   .lk-stepper__label {
-    overflow-wrap: anywhere;
+    min-width: 3rem;
+    overflow-wrap: break-word;
+  }
+
+  /* Many steps: only the current label is shown. The rest stay readable by
+     screen readers, and each step keeps its number. */
+  lk-stepper[compact] .lk-stepper__step:not([data-state='current']) .lk-stepper__label {
+    position: absolute;
+    width: 1px;
+    min-width: 0;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  lk-stepper[compact] .lk-stepper__step:not([data-state='current']) {
+    flex: none;
   }
 
   @media (max-width: 40rem) {

@@ -4,6 +4,9 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ## [0.1.0] - Unreleased
 
+### Fixed
+- `lk-stepper` with many steps or long names no longer squashes its labels: it goes compact (current label only, others kept for screen readers) when there are more than five steps.
+
 ### Added
 - Project foundation: `LkElement` base class, utilities, design tokens and base stylesheet.
 - `<lk-tabs>` component.

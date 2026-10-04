@@ -72,7 +72,7 @@ Each stage ends with working, tested pages, a commit and a push.
 - [x] **5. Brief builder.** Guided worksheet with a quality check and an export.
 - [x] **6. Words.** Searchable plain-English vocabulary and phrasebook.
 - [x] **7. Progress and coach's guide.** Before and after self-assessment, a progress view, and the guide for whoever runs sessions.
-- [ ] **8. Review.** Accessibility pass, responsive check, content read-through against the principles, and a list of what is unverified.
+- [x] **8. Review.** Accessibility pass, responsive check, content read-through against the principles, and a list of what is unverified.
 
 ## Decisions I have made, for you to overturn
 
@@ -88,3 +88,26 @@ Each stage ends with working, tested pages, a commit and a push.
 - Where this will be hosted. It is static files, so any web server will do, including the .NET estate's.
 - Whether LearnKit components work inside a Rise code block. Not needed here, and untested.
 - Whether to mirror this plan into ClickUp. I have not touched ClickUp.
+
+## Where things stand
+
+All eight stages are built. Stage 8 also added repeatable checks (`test/browser/platform.html`) that open every page at desktop and phone width, before and after using the interactive parts, and check structure, headings, names, sideways scrolling and text contrast. Open it in a browser set to light, then again set to dark.
+
+### Known gaps and things I have not verified
+
+- **No screen reader testing.** The checks are heuristics run by code. They catch common mistakes. They do not replace VoiceOver or NVDA.
+- **Not tried with real learners or a real group.** The session timings and exercises in the coach's guide are suggestions.
+- **Not tested inside a Rise code block.** The platform is a website, not a Rise embed, so this does not matter yet. It will matter if any of it is placed in a course.
+- **The reach checks depend on each person's Claude set-up**, which varies and changes.
+- **Content accuracy.** The case file is built from the builder's own written account. Some early turns are paraphrased there, and I have not seen the original conversation.
+- **The navigation takes three rows on a phone.** It works, but it is heavy. A menu button would be tidier.
+- **The title** "Build What Rise Can't" sets the platform against a tool the college uses. It may suit you; it may not.
+- **No HoW-branded theme.** See the decisions above.
+- **No hosting.** It runs locally. Static files, so any web server will do.
+
+### Questions for you
+
+1. Does the six-habits framing match how you think about it, or have I flattened something?
+2. Which brief do you want as the transfer test?
+3. Would you rather the platform live in its own repository? It currently sits on a branch beside LearnKit, which suits a prototype and not a product.
+4. Whether to mirror this plan into ClickUp.

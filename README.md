@@ -70,6 +70,10 @@ npm test         # unit tests for helpers, plus contrast checks for every theme
 - Customiser: run `npm start`, then open `/customiser/`
 - [Contributing](CONTRIBUTING.md)
 
+## Platform
+
+The `platform` branch also holds a site built with LearnKit that teaches an engineering way of working to people who build learning content. See [platform/README.md](platform/README.md) and [platform/ROADMAP.md](platform/ROADMAP.md).
+
 ## Licence
 
 [MIT](LICENSE)

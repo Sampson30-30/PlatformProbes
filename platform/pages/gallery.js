@@ -17,7 +17,7 @@ export function buildGallery(main) {
   const grid = document.createElement('lk-grid-explorer');
   grid.setAttribute('label', 'Things code can do');
   grid.setAttribute('columns', '3');
-  grid.setAttribute('level', '3');
+  grid.setAttribute('level', '2');
 
   for (const ex of GALLERY.exhibits) {
     const cell = document.createElement('div');
@@ -25,9 +25,9 @@ export function buildGallery(main) {
     cell.className = 'exhibit';
     renderBlocks(cell, [
       { type: 'p', text: ex.idea },
-      { type: 'h', level: 4, text: 'What it is made of' },
+      { type: 'h', level: 3, text: 'What it is made of' },
       { type: 'list', items: ex.madeOf },
-      { type: 'h', level: 4, text: 'The rule behind it' },
+      { type: 'h', level: 3, text: 'The rule behind it' },
       { type: 'p', text: ex.rule },
     ]);
     if (ex.demo) {
@@ -41,7 +41,7 @@ export function buildGallery(main) {
       cell.append(demoWrap);
     }
     renderBlocks(cell, [
-      { type: 'h', level: 4, text: 'In your teaching' },
+      { type: 'h', level: 3, text: 'In your teaching' },
       { type: 'p', text: ex.inTeaching },
       { type: 'say', title: 'How to ask for it', phrases: ex.ask },
       { type: 'callout', tone: 'warning', title: 'Be careful', text: ex.careful },

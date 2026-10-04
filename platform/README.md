@@ -16,6 +16,10 @@ npm test         # checks the content as well as the code
 - `lib/text.js` turns the small inline markup (`**bold**`, `` `code` ``, `[link](page.html)`) into safe HTML. Content can never inject markup.
 - `lib/content.js` describes the content blocks and checks them. The tests use it so that a mistake in a data file fails loudly.
 
+## Checks you run in a browser
+
+Open `http://localhost:8080/test/browser/platform.html` once with your browser set to light and once to dark. It opens every page at desktop and phone width, before and after using the interactive parts, and checks structure, headings, names, sideways scrolling and text contrast. `FINDINGS.md` records what building this taught us about LearnKit.
+
 ## Content rules, enforced by `npm test`
 
 - British English, and no em dashes.

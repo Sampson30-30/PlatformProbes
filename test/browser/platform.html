@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <title>Platform checks</title>
+    <style>body { font-family: system-ui, sans-serif; margin: 1rem; } #results { font: 13px/1.6 ui-monospace, monospace; }</style>
+  </head>
+  <body>
+    <script type="module">
+      import { run } from './harness.js';
+      import './platform.test.js';
+      await run();
+    </script>
+  </body>
+</html>

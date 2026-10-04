@@ -33,6 +33,9 @@ function position(i, n) {
  *   <ul> in an <li>   branches: the item is a decision and each branch <li> is
  *               one answer. Put the answer in data-label. A branch can hold
  *               its own decision, or <ol> for more steps in that branch.
+ *   data-detail Longer wording for an item, kept out of the chart. Plain text. With
+ *               a walk-through it is shown in the panel when the learner arrives;
+ *               without one it appears under the item's title.
  *   data-type   start, end, step or decision (decision is the default for an
  *               item with branches). A branch ending in an "end" stops there;
  *               other branches rejoin whatever follows the decision.
@@ -82,11 +85,13 @@ export class LkFlow extends LkElement {
       this.prompt = document.createElement('p');
       this.prompt.className = 'lk-flow__prompt';
       this.prompt.setAttribute('aria-live', 'polite');
+      this.detailEl = document.createElement('p');
+      this.detailEl.className = 'lk-flow__detail-text';
       this.actions = document.createElement('div');
       this.actions.className = 'lk-flow__actions';
       this.routeEl = document.createElement('p');
       this.routeEl.className = 'lk-flow__route';
-      this.panel.append(this.kicker, this.prompt, this.actions, this.routeEl);
+      this.panel.append(this.kicker, this.prompt, this.detailEl, this.actions, this.routeEl);
       this.append(this.panel);
       this.state = walkStart(this.graph);
       this.#showWalk(false);
@@ -124,6 +129,7 @@ export class LkFlow extends LkElement {
         text: content.map((n) => n.textContent).join('').replace(/\s+/g, ' ').trim(),
         content: content.map((n) => n.cloneNode(true)),
         type: li.dataset.type,
+        detail: li.dataset.detail || '',
       };
       if (ul) {
         item.branches = [...ul.children]
@@ -155,6 +161,14 @@ export class LkFlow extends LkElement {
         node.append(word);
       }
       node.append(...item.content);
+      if (item.detail) {
+        // With a walk-through the detail is read out in the panel instead, so it is not repeated here.
+        const detail = document.createElement('span');
+        detail.className = 'lk-flow__detail';
+        detail.textContent = item.detail;
+        detail.hidden = this.hasAttribute('walkthrough');
+        node.append(detail);
+      }
       li.append(node);
       if (item.branches) li.append(this.#renderBranches(item));
       else if (this._tree && i === items.length - 1) li.dataset.leaf = '';
@@ -197,6 +211,11 @@ export class LkFlow extends LkElement {
 
   /** Draws the bar that brings rejoining branches back to the line below the decision. */
   #drawJoins() {
+    // A chart wider than its region starts centred, so the first step is in view.
+    if (!this._centred && this.scroll.scrollWidth > this.scroll.clientWidth) {
+      this._centred = true;
+      this.scroll.scrollLeft = (this.scroll.scrollWidth - this.scroll.clientWidth) / 2;
+    }
     for (const ul of this.querySelectorAll('.lk-flow__branches[data-joins]')) {
       const box = ul.getBoundingClientRect();
       if (box.width === 0) continue;
@@ -234,6 +253,8 @@ export class LkFlow extends LkElement {
 
     this.kicker.textContent = finished ? (node.type === 'end' ? 'End' : 'Result') : node.edges.length > 1 ? 'Question' : 'Step';
     this.prompt.textContent = node.text;
+    this.detailEl.textContent = node.detail;
+    this.detailEl.hidden = !node.detail;
     this.actions.replaceChildren();
     if (state.path.length > 1) this.actions.append(this.#button('Back', '', () => this.back()));
     if (finished) {

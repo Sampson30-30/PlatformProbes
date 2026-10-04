@@ -128,3 +128,10 @@ test('a decision-free flow joins one step to the next and the last one finishes'
   assert.equal(walkCurrent(g, s).text, 'Two');
   assert.equal(walkFinished(g, s), true);
 });
+
+test('detail is kept on items and nodes, and defaults to empty', () => {
+  const g = prepare([{ text: 'Title', detail: '  More words.  ' }, { text: 'Plain' }]);
+  assert.equal(g.nodes.n1.detail, 'More words.');
+  assert.equal(g.nodes.n2.detail, '');
+  assert.equal(g.items[0].detail, 'More words.');
+});

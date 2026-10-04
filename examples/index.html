@@ -82,6 +82,20 @@
       <span class="lk-badge" data-tone="info">Optional</span>
     </p>
 
+    <h2>Toast notifications</h2>
+    <p>
+      <button type="button" class="lk-button" id="toast-ok">Show a confirmation</button>
+      <button type="button" class="lk-button" id="toast-undo">Delete with undo</button>
+      <button type="button" class="lk-button" id="toast-error">Show an error</button>
+    </p>
+    <script type="module">
+      import { toast } from '../src/index.js';
+      document.getElementById('toast-ok').addEventListener('click', () => toast('Progress saved', { tone: 'success' }));
+      document.getElementById('toast-undo').addEventListener('click', () =>
+        toast('Course deleted', { tone: 'warning', action: { label: 'Undo', onClick: () => toast('Course restored', { tone: 'success' }) } }));
+      document.getElementById('toast-error').addEventListener('click', () => toast('We could not save your changes. Check your connection and try again.', { tone: 'danger' }));
+    </script>
+
     <h2>Tooltip and popover</h2>
     <p>
       <button type="button" class="lk-button" id="tt-help">Hover or focus me</button>

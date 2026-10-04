@@ -1,4 +1,4 @@
-import { test, assert, equal, mount, click, press, listen, tick } from './harness.js';
+import { test, assert, equal, mount, click, press, listen, tick, waitFor } from './harness.js';
 
 // ---- lk-tabs ----
 
@@ -60,7 +60,7 @@ test('modal: opens from trigger, closes with Escape-equivalent, returns focus', 
   assert(modal.isOpen, 'open');
   assert(modal.dialog.getAttribute('aria-labelledby'), 'labelled');
   modal.close('ok');
-  await tick(20);
+  await waitFor(() => seen.length > 0);
   assert(!modal.isOpen, 'closed');
   equal(seen[0], { returnValue: 'ok' });
   assert(document.activeElement === opener, 'focus returned');
@@ -181,4 +181,35 @@ test('popover: toggles from trigger with ARIA state and restores focus', async (
   btn.click();
   btn.click();
   assert(!pop.isOpen, 'second click closes');
+});
+
+// ---- lk-toasts ----
+
+test('toast: announces, auto-dismisses and reports why', async () => {
+  const { toast } = await import('../../src/lk-toast.js');
+  const t = toast('Progress saved', { tone: 'success', duration: 50 });
+  const region = document.querySelector('lk-toasts');
+  const seen = listen(region, 'lk-dismiss');
+  equal(region.getAttribute('role'), 'region');
+  equal(region.querySelector('[aria-live]') !== null, true);
+  equal(t.element.getAttribute('role'), 'status');
+  assert(t.element.textContent.startsWith('Done: Progress saved'), 'tone word first');
+  await tick(120);
+  assert(!t.element.isConnected, 'removed after timeout');
+  equal(seen[0].reason, 'timeout');
+});
+
+test('toast: errors use alert role, stay until dismissed, support actions', async () => {
+  const { toast } = await import('../../src/lk-toast.js');
+  let undone = false;
+  const t = toast('Course deleted', { tone: 'danger', action: { label: 'Undo', onClick: () => (undone = true) } });
+  equal(t.element.getAttribute('role'), 'alert');
+  await tick(50);
+  assert(t.element.isConnected, 'still shown');
+  t.element.querySelector('.lk-toast__action').click();
+  assert(undone, 'action ran');
+  assert(!t.element.isConnected, 'dismissed by action');
+  const t2 = toast('Another', { duration: 0 });
+  t2.element.querySelector('.lk-toast__close').click();
+  assert(!t2.element.isConnected, 'dismissed by user');
 });

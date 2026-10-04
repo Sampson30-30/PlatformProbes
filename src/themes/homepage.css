@@ -277,4 +277,16 @@
     box-shadow: inset 1px 1px 0 var(--lk-hp-bevel-light),
       inset -1px -1px 0 var(--lk-hp-bevel-dark);
   }
+
+  /* lk-toasts: square, hard shadow, text close control. */
+
+  [data-lk-theme='homepage'] .lk-toast {
+    font-size: 13px;
+  }
+
+  [data-lk-theme='homepage'] .lk-toast__close-icon::before {
+    content: '[x]';
+    font-size: 12px;
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  }
 }

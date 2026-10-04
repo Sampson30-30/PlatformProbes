@@ -48,3 +48,14 @@ export function stepState(index, current) {
   if (index === current) return 'current';
   return 'upcoming';
 }
+
+/**
+ * How long a notification should stay up, in milliseconds. Longer messages
+ * get more time so they can be read. Returns 0 (stay until dismissed) for
+ * the tones that should not disappear on their own.
+ */
+export function toastDuration(message, tone = 'info') {
+  if (tone === 'danger') return 0;
+  const length = String(message).length;
+  return Math.min(4000 + length * 60, 15000);
+}

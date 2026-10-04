@@ -33,6 +33,16 @@ export function tick(ms = 0) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+/** Waits until fn() is truthy, checking every 10ms, for up to `ms`. */
+export async function waitFor(fn, ms = 1000) {
+  const end = Date.now() + ms;
+  while (Date.now() < end) {
+    if (fn()) return true;
+    await tick(10);
+  }
+  return Boolean(fn());
+}
+
 export function click(el) {
   el.click();
 }

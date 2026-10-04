@@ -14,7 +14,7 @@ This is a plan, not a promise. Order and scope may change.
 - [x] Accordion
 - [x] Modal dialog (focus trapping, Escape to close, focus return)
 - [x] Tooltip and popover
-- [ ] Toast notifications
+- [x] Toast notifications
 - [x] Buttons and badges
 - [x] Form controls: text field, select, checkbox and radio groups, slider
 - [x] Progress bar and stepper

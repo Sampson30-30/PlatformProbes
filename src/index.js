@@ -6,3 +6,4 @@ export { LkModal } from './lk-modal.js';
 export { LkField, LkChoices } from './lk-field.js';
 export { LkProgress, LkStepper } from './lk-progress.js';
 export { LkTooltip, LkPopover } from './lk-popover.js';
+export { LkToasts, toast } from './lk-toast.js';

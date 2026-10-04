@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { uid, clamp, wrap, toggleOpen, normaliseOpen, percent, stepState } from '../src/core/utils.js';
+import { uid, clamp, wrap, toggleOpen, normaliseOpen, percent, stepState, toastDuration } from '../src/core/utils.js';
 
 test('uid returns unique prefixed ids', () => {
   const a = uid('lk-demo');
@@ -50,4 +50,11 @@ test('stepState labels steps relative to the current one', () => {
   assert.equal(stepState(0, 1), 'complete');
   assert.equal(stepState(1, 1), 'current');
   assert.equal(stepState(2, 1), 'upcoming');
+});
+
+test('toastDuration scales with length and keeps errors until dismissed', () => {
+  assert.equal(toastDuration('Saved', 'success'), 4300);
+  assert.ok(toastDuration('x'.repeat(100), 'info') > toastDuration('Saved', 'info'));
+  assert.equal(toastDuration('x'.repeat(1000), 'info'), 15000);
+  assert.equal(toastDuration('Failed', 'danger'), 0);
 });

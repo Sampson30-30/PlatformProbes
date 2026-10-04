@@ -84,12 +84,18 @@ export class LkModal extends LkElement {
       dialog.returnValue = 'cancel';
     });
 
-    dialog.addEventListener('close', () => {
-      const opener = this._opener;
-      this._opener = null;
-      if (opener?.isConnected) opener.focus();
-      this.emit('close', { returnValue: dialog.returnValue });
-    });
+    // Native closes (Escape, a form with method="dialog") arrive here. Closes
+    // made through close() are finished straight away, so this is a no-op then.
+    dialog.addEventListener('close', () => this.#finish());
+  }
+
+  #finish() {
+    if (!this._wasOpen) return;
+    this._wasOpen = false;
+    const opener = this._opener;
+    this._opener = null;
+    if (opener?.isConnected) opener.focus();
+    this.emit('close', { returnValue: this.dialog.returnValue });
   }
 
   /** True while the dialog is showing. */
@@ -103,12 +109,15 @@ export class LkModal extends LkElement {
     this._opener = opener instanceof HTMLElement ? opener : null;
     this.dialog.returnValue = '';
     this.dialog.showModal();
+    this._wasOpen = true;
     this.emit('open');
   }
 
   /** Closes the dialog. The value is reported as `returnValue` on lk-close. */
   close(returnValue = 'close') {
-    if (this.dialog?.open) this.dialog.close(returnValue);
+    if (!this.dialog?.open) return;
+    this.dialog.close(returnValue);
+    this.#finish();
   }
 }
 

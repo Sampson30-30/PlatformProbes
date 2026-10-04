@@ -245,3 +245,23 @@ A small panel next to a trigger that can hold links, buttons and form controls.
 Opens and closes from the trigger. Escape closes it and returns focus to the trigger. A click outside, or moving focus out, also closes it. Focus moves to the first focusable element inside when it opens. Methods: `show(trigger)`, `hide()`, `toggle(trigger)`. Use `<lk-modal>` instead when the learner must deal with the content before going on.
 
 Both use the browser's top layer (the Popover API), so they are never clipped by a scrolling parent, and fall back to fixed positioning in older browsers.
+
+
+### Toast notifications
+
+```js
+import { toast } from 'learnkit';
+
+toast('Progress saved', { tone: 'success' });
+toast('Course deleted', { tone: 'danger', action: { label: 'Undo', onClick: restore } });
+```
+
+`toast(message, options)` shows a notification and returns `{ id, element, dismiss() }`. The `<lk-toasts>` region is created for you. Add `<lk-toasts placement="top-end">` yourself to choose the corner (`top-start`, `top-end`, `bottom-start`, `bottom-end`; default `bottom-end`), or to place it inside a themed wrapper.
+
+| Option | Description |
+| --- | --- |
+| `tone` | `info` (default), `success`, `warning` or `danger`. Each starts with a word: Note, Done, Warning, Error. |
+| `duration` | Milliseconds before it goes away. Default scales with the message length (about 4 seconds plus 60ms a character, up to 15). `0` keeps it until dismissed. `danger` toasts stay until dismissed. |
+| `action` | `{ label, onClick }` adds a button, such as Undo. It dismisses the toast. |
+
+Messages are plain text. Warnings and errors are announced immediately to screen readers; others politely. A toast pauses while the pointer or focus is on it, and every toast has a dismiss button. Use toasts for confirmations, never for information the learner must act on. The region fires `lk-dismiss` with `{ id, reason }`, where reason is `timeout`, `user`, `action` or `api`.

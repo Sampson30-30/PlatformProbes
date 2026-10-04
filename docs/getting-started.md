@@ -727,6 +727,7 @@ A process chart or a decision tree, drawn from nested lists, with an optional wa
 | `data-label` on a branch | The answer, shown on the connector ("Yes"). |
 | `<ol>` inside a branch `<li>` | More steps in that branch, after the first. |
 | `data-type` | `start`, `end`, `step` or `decision`. A decision is the default for an item with branches. |
+| `data-detail` | Longer wording for an item, kept out of the chart so the boxes stay small. Plain text. With a walk-through it appears in the panel when the learner arrives; without one it appears under the item's title. |
 
 Branches rejoin whatever follows the decision, however deeply they are nested. A branch that finishes in an `end` stops there instead.
 

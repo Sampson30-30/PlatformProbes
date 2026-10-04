@@ -1724,14 +1724,22 @@
     color: var(--lk-color-text);
     background: var(--lk-color-bg);
     border: var(--lk-border-width) solid var(--lk-color-border);
-    border-radius: var(--lk-radius-control);
+    /* Pill-shaped themes would clip long text, so the rounding stops at 1rem. */
+    border-radius: min(var(--lk-radius-control), 1rem);
   }
 
   /* Start and end are pills; a decision is a boxed question with a double rule. */
   .lk-flow__step[data-type='start'] > .lk-flow__node,
   .lk-flow__step[data-type='end'] > .lk-flow__node {
     font-weight: 700;
-    border-radius: 999px;
+    border-radius: 1.5rem;
+  }
+
+  .lk-flow__detail {
+    display: block;
+    margin-block-start: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 400;
   }
 
   .lk-flow__step[data-type='decision'] > .lk-flow__node {
@@ -1894,6 +1902,10 @@
     font-family: var(--lk-font-heading);
     font-size: 1.1875rem;
     font-weight: 700;
+  }
+
+  .lk-flow__detail-text {
+    margin: 0.5rem 0 0;
   }
 
   .lk-flow__actions {

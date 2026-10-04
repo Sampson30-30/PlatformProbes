@@ -1,4 +1,4 @@
-import { test, assert, equal, mount, click, listen, tick } from './harness.js';
+import { test, assert, equal, mount, click, listen, tick, waitFor } from './harness.js';
 
 const PROCESS = `<lk-flow label="Late work" walkthrough>
   <ol>
@@ -69,7 +69,8 @@ test('flow: branches that flow on get a join; branches that end do not', async (
 
 test('flow: the joins line up at the bottom of the branches and the bar reaches the centre', async () => {
   const el = await mount(PROCESS);
-  await tick(100); // the bar is placed after layout
+  // The bar is placed after layout, by a resize observer.
+  await waitFor(() => el.querySelectorAll('.lk-flow__joinbar').length === el.querySelectorAll('.lk-flow__branches[data-joins]').length, 2000);
   for (const ul of el.querySelectorAll('.lk-flow__branches[data-joins]')) {
     const box = ul.getBoundingClientRect();
     const joins = [...ul.querySelectorAll(':scope > .lk-flow__branch > .lk-flow__join')];
@@ -173,4 +174,40 @@ test('flow walkthrough: a tree ends on a result', async () => {
   equal(el.querySelector('.lk-flow__kicker').textContent, 'Result');
   equal(el.querySelector('.lk-flow__prompt').textContent, 'Build it with code');
   equal(buttons(el), ['Back', 'Start again']);
+});
+
+// ---- detail ----
+
+const DETAIL = (extra) => `<lk-flow label="D" layout="tree" ${extra}><ul><li>Q?<ul>
+  <li data-label="Yes" data-detail="The longer explanation of yes.">Result one</li>
+  <li data-label="No">Result two</li>
+</ul></li></ul></lk-flow>`;
+
+test('flow detail: shown under the title when there is no walk-through', async () => {
+  const el = await mount(DETAIL(''));
+  const detail = el.querySelector('.lk-flow__detail');
+  equal(detail.textContent, 'The longer explanation of yes.');
+  assert(!detail.hidden && detail.getBoundingClientRect().height > 0, 'visible');
+  equal(el.querySelectorAll('.lk-flow__detail').length, 1, 'only items that have detail get it');
+});
+
+test('flow detail: with a walk-through it appears in the panel on arrival, not in the chart', async () => {
+  const el = await mount(DETAIL('walkthrough'));
+  assert(el.querySelector('.lk-flow__detail').hidden, 'not repeated in the chart');
+  assert(el.querySelector('.lk-flow__detail-text').hidden, 'nothing to say at the question');
+  press(el, 'Yes');
+  equal(el.querySelector('.lk-flow__prompt').textContent, 'Result one');
+  equal(el.querySelector('.lk-flow__detail-text').textContent, 'The longer explanation of yes.');
+  assert(!el.querySelector('.lk-flow__detail-text').hidden);
+  press(el, 'Back');
+  press(el, 'No');
+  assert(el.querySelector('.lk-flow__detail-text').hidden, 'result two has no detail');
+});
+
+test('flow: a chart wider than its region starts centred on the first step', async () => {
+  const el = await mount(`<div style="width:300px">${TREE}</div>`);
+  await waitFor(() => el.querySelector('.lk-flow__scroll').scrollLeft > 0, 2000);
+  const region = el.querySelector('.lk-flow__scroll').getBoundingClientRect();
+  const first = el.querySelector('.lk-flow__step .lk-flow__node').getBoundingClientRect();
+  assert(first.left >= region.left && first.right <= region.right, 'the first step is inside the visible area');
 });

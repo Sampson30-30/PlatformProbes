@@ -1,5 +1,7 @@
 // DOM-free logic for <lk-flow>. Input is a plain model:
-//   items: [{ text, type?, branches?: [{ label, items: [...] }] }]
+//   items: [{ text, detail?, type?, branches?: [{ label, items: [...] }] }]
+// `text` is the short title shown in the chart. `detail` is optional longer
+// wording, shown when the learner arrives at that step.
 // A sequence runs in order. An item with branches is a decision: each branch
 // is its own sequence, and when the branches end they rejoin whatever follows
 // the decision (unless a branch ends with an item of type "end", or the flow
@@ -12,7 +14,7 @@ const TYPES = new Set(['start', 'end', 'step', 'decision']);
  * walk-through follows.
  * Returns { items, nodes, start, warnings }:
  *   items     the model, with `id`, `type`, `hasNext` and, for branches, `joins`
- *   nodes     { [id]: { id, text, type, edges: [{ to, label }] } }
+ *   nodes     { [id]: { id, text, detail, type, edges: [{ to, label }] } }
  *   start     id of the first node, or null when there are no items
  *   warnings  things in the source that were ignored
  */
@@ -25,6 +27,7 @@ export function prepare(items, { rejoin = true } = {}) {
       const item = list[i];
       item.id = `n${++counter}`;
       item.text = String(item.text ?? '').trim();
+      item.detail = String(item.detail ?? '').trim();
       const branches = (item.branches ?? []).filter((b) => b && Array.isArray(b.items));
       item.branches = branches.length ? branches : null;
       item.type = TYPES.has(item.type) ? item.type : item.branches ? 'decision' : 'step';
@@ -70,7 +73,7 @@ export function prepare(items, { rejoin = true } = {}) {
     let next = after;
     for (let i = list.length - 1; i >= 0; i--) {
       const item = list[i];
-      const node = { id: item.id, text: item.text, type: item.type, edges: [] };
+      const node = { id: item.id, text: item.text, detail: item.detail, type: item.type, edges: [] };
       if (item.type !== 'end') {
         if (item.branches) {
           node.edges = item.branches.map((b) => ({ to: build(b.items, rejoin ? next : null), label: b.label }));

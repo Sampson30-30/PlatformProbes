@@ -4,7 +4,7 @@ export const GALLERY = {
   intro: 'These are things an authoring tool cannot do, or can only imitate. For each one you will see what it is, what it is made of, the rule behind it, and how to ask for it. Open one tile at a time. The demos are real and run on your own device.',
   outro: {
     title: 'Notice the pattern',
-    text: 'Every exhibit is some data, a rule, and a way of showing the result. That is how to take apart any idea you have. Try the same on one of your own ideas.',
+    text: 'Every exhibit is some data, a rule, and a way of showing the result. That is how to take apart any idea you have. Try the same on one of your own ideas in the [brief builder](brief.html).',
   },
   exhibits: [
     {

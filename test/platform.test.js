@@ -10,6 +10,7 @@ import { ALL_TOPICS, HABITS, REACH } from '../platform/data/habits.js';
 import { CASES } from '../platform/data/cases/world-time-map.js';
 import { GALLERY } from '../platform/data/gallery.js';
 import { WORDS, WORDS_TEXT } from '../platform/data/words.js';
+import { COACH } from '../platform/data/coach.js';
 import { slug, filterEntries, collectPhrases } from '../platform/lib/words.js';
 
 const root = new URL('../platform/', import.meta.url);
@@ -173,4 +174,14 @@ test('the phrasebook gathers every say block exactly once', () => {
   const expected = ALL_TOPICS.flatMap((t) => t.blocks.filter((b) => b.type === 'say').flatMap((b) => b.phrases)).length;
   assert.equal(total, expected);
   assert.ok(total >= 25);
+});
+
+test('the coach guide is valid, honest about its limits and well worded', () => {
+  assert.deepEqual(validateBlocks(COACH.blocks, 'coach'), []);
+  assert.deepEqual(checkWording(COACH, 'coach'), []);
+  const accordion = COACH.blocks.find((b) => b.type === 'accordion');
+  assert.equal(accordion.items.length, ALL_TOPICS.length, 'coaching notes for the reach check and every habit');
+  assert.ok(COACH.honest.includes('not yet been tried'));
+  const text = [...walkStrings(COACH)].join(' ');
+  for (const name of ['Sam', 'Freeman', 'Kirsty', 'Emma', 'Alex']) assert.ok(!new RegExp(`\\b${name}\\b`).test(text), name);
 });

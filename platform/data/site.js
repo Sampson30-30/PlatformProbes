@@ -18,6 +18,6 @@ export const NAV = [
   { id: 'gallery', label: 'What code can do', href: 'gallery.html', ready: true },
   { id: 'brief', label: 'Brief builder', href: 'brief.html', ready: true },
   { id: 'words', label: 'Words', href: 'words.html', ready: true },
-  { id: 'progress', label: 'Progress', href: 'progress.html', ready: false },
-  { id: 'coach', label: 'Coach’s guide', href: 'coach.html', ready: false },
+  { id: 'progress', label: 'Progress', href: 'progress.html', ready: true },
+  { id: 'coach', label: 'Coach’s guide', href: 'coach.html', ready: true },
 ];

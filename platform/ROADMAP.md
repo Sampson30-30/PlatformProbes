@@ -71,7 +71,7 @@ Each stage ends with working, tested pages, a commit and a push.
 - [x] **4. Gallery.** Eight things code can do, each decomposed, with two small live demos built for the purpose.
 - [x] **5. Brief builder.** Guided worksheet with a quality check and an export.
 - [x] **6. Words.** Searchable plain-English vocabulary and phrasebook.
-- [ ] **7. Progress and coach's guide.** Before and after self-assessment, a progress view, and the guide for whoever runs sessions.
+- [x] **7. Progress and coach's guide.** Before and after self-assessment, a progress view, and the guide for whoever runs sessions.
 - [ ] **8. Review.** Accessibility pass, responsive check, content read-through against the principles, and a list of what is unverified.
 
 ## Decisions I have made, for you to overturn

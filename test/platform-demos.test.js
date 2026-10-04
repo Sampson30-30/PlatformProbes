@@ -70,3 +70,51 @@ test('longitudes and hours are described for people', () => {
   assert.equal(formatHour(13.5), '13:30');
   assert.equal(formatHour(0), '00:00');
 });
+
+import { parseRatings, describeChange, compareRatings, answeredPrompts } from '../platform/lib/progress.js';
+import { PROGRESS } from '../platform/data/progress.js';
+import { ALL_TOPICS } from '../platform/data/habits.js';
+import { checkWording } from '../platform/lib/content.js';
+
+test('ratings parse safely', () => {
+  assert.deepEqual(parseRatings('[3,4,null,5]', 4), [3, 4, null, 5]);
+  assert.deepEqual(parseRatings('nope', 3), [null, null, null]);
+  assert.deepEqual(parseRatings(null, 2), [null, null]);
+  assert.deepEqual(parseRatings('[1]', 3), [1, null, null]);
+});
+
+test('changes are described in words', () => {
+  assert.equal(describeChange(2, 4), 'up 2');
+  assert.equal(describeChange(4, 3), 'down 1');
+  assert.equal(describeChange(3, 3), 'no change');
+  assert.equal(describeChange(null, 3), '');
+});
+
+test('two assessments are compared row by row, with averages only when complete', () => {
+  const done = compareRatings([2, 3], [4, 3], ['A', 'B']);
+  assert.equal(done.complete, true);
+  assert.deepEqual(done.rows.map((r) => r.change), ['up 2', 'no change']);
+  assert.equal(done.averageBefore, 2.5);
+  assert.equal(done.averageAfter, 3.5);
+  const part = compareRatings([2, null], [4, 3], ['A', 'B']);
+  assert.equal(part.complete, false);
+  assert.equal(part.averageBefore, null);
+  assert.equal(compareRatings([], [], []).complete, false);
+});
+
+test('journal progress counts real answers only', () => {
+  assert.equal(answeredPrompts(JSON.stringify({ entries: { 0: 'a', 1: '   ', 2: 'c' } })), 2);
+  assert.equal(answeredPrompts('nonsense'), 0);
+  assert.equal(answeredPrompts(null), 0);
+});
+
+test('the self-assessment covers the reach check and every habit, and its journals exist', () => {
+  assert.deepEqual(PROGRESS.statements.map((s) => s.habit), ALL_TOPICS.map((t) => t.id));
+  assert.deepEqual(checkWording(PROGRESS, 'progress'), []);
+  for (const j of PROGRESS.journals.filter((x) => x.name !== 'hb-case-world-time-map')) {
+    const topic = ALL_TOPICS.find((t) => `hb-${t.id}` === j.name);
+    const journal = topic.blocks.find((b) => b.type === 'journal');
+    assert.equal(journal.name, j.name);
+    assert.equal(journal.prompts.length, j.prompts, `${j.name} prompt count`);
+  }
+});

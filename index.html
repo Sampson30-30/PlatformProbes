@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en-GB" data-lk-theme="clean">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LearnKit</title>
+    <link rel="stylesheet" href="src/learnkit.css" />
+    <link rel="stylesheet" href="src/themes/clean.css" />
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: var(--lk-font); line-height: 1.6; color: var(--lk-color-text); background: var(--lk-color-page); }
+      .hub { max-width: 64rem; margin-inline: auto; padding: 2rem 1rem 3rem; }
+      h1 { margin: 0; font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; }
+      .tagline { margin: 0.5rem 0 0; max-width: 40rem; font-size: 1.1875rem; color: var(--lk-color-muted); }
+      h2.group { margin: 2.5rem 0 0.75rem; font-size: 1.25rem; }
+      .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: 1rem; margin: 0; padding: 0; list-style: none; }
+      .card { display: block; height: 100%; padding: 1.25rem; color: inherit; text-decoration: none; background: var(--lk-color-bg); border: var(--lk-border-width) solid var(--lk-color-divider); border-radius: var(--lk-radius); box-shadow: var(--lk-shadow); }
+      .card:hover { border-color: var(--lk-color-primary); }
+      .card:focus-visible { outline: 3px solid var(--lk-color-focus); outline-offset: 2px; }
+      .card h3 { margin: 0 0 0.25rem; font-size: 1.125rem; color: var(--lk-color-primary); }
+      .card p { margin: 0; font-size: 0.9375rem; color: var(--lk-color-muted); }
+      .run { margin-top: 2.5rem; padding: 1rem 1.25rem; font-size: 0.9375rem; background: var(--lk-color-surface); border-radius: var(--lk-radius); }
+      .run code { padding: 0.1em 0.4em; background: var(--lk-color-bg); border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <main class="hub">
+      <h1>LearnKit</h1>
+      <p class="tagline">Dependency-free Web Components for learning content, with themes you can swap and customise. No framework and no build step.</p>
+
+      <h2 class="group">Try it</h2>
+      <ul class="cards">
+        <li><a class="card" href="examples/"><h3>Examples</h3><p>Every component on one page, with plain markup you can copy.</p></a></li>
+        <li><a class="card" href="gallery/"><h3>Theme gallery</h3><p>One component in every theme, or one theme with every component. Light, dark or system.</p></a></li>
+        <li><a class="card" href="customiser/"><h3>Customiser</h3><p>Start from a theme, change colours, shape and fonts, check contrast and export the CSS.</p></a></li>
+      </ul>
+
+      <h2 class="group">Read</h2>
+      <ul class="cards">
+        <li><a class="card" href="docs/getting-started.md"><h3>Getting started</h3><p>Every component: its markup, attributes, events and keyboard behaviour.</p></a></li>
+        <li><a class="card" href="docs/theming.md"><h3>Theming</h3><p>Tokens, themes, light and dark, and how to write your own theme.</p></a></li>
+        <li><a class="card" href="ROADMAP.md"><h3>Roadmap</h3><p>What was planned and what is built.</p></a></li>
+        <li><a class="card" href="CHANGELOG.md"><h3>Changelog</h3><p>What changed and when.</p></a></li>
+        <li><a class="card" href="CONTRIBUTING.md"><h3>Contributing</h3><p>Ground rules and how to add a component.</p></a></li>
+      </ul>
+
+      <h2 class="group">Check</h2>
+      <ul class="cards">
+        <li><a class="card" href="test/browser/"><h3>Component tests</h3><p>Runs in your browser and reports pass or fail for each component.</p></a></li>
+      </ul>
+
+      <p class="run">Running locally? Start the server with <code>npm start</code> and this page is at <code>http://localhost:8080/</code>. The Node tests run with <code>npm test</code>.</p>
+    </main>
+  </body>
+</html>

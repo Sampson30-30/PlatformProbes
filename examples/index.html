@@ -6,6 +6,7 @@
     <title>LearnKit examples</title>
     <link rel="stylesheet" href="../src/learnkit.css" />
     <link rel="stylesheet" href="../src/themes/homepage.css" />
+    <link rel="stylesheet" href="../src/themes/clean.css" />
     <style>
       body { font-family: var(--lk-font); color: var(--lk-color-text); background: var(--lk-color-page); max-width: 42rem; margin: 2rem auto; padding: 0 1rem; }
       h1, h2 { font-family: var(--lk-font-heading); }
@@ -95,6 +96,20 @@
       </lk-accordion>
       <p><button type="button" data-lk-open="homepage-modal">Open a modal</button></p>
       <lk-modal id="homepage-modal" heading="Homepage theme"><p>Title bar, bevelled close control, hard shadow.</p></lk-modal>
+    </div>
+
+    <div class="theme-box" data-lk-theme="clean">
+      <strong>Clean</strong>
+      <lk-tabs label="Clean theme">
+        <div data-lk-tab="Overview"><p>Same markup again. No component code changed.</p></div>
+        <div data-lk-tab="Details"><p>Pill tabs, soft shadows, rounded corners.</p></div>
+      </lk-tabs>
+      <lk-accordion label="Clean accordion" style="margin-top: 1rem">
+        <div data-lk-item="Section one" open><p>Plus and minus markers.</p></div>
+        <div data-lk-item="Section two"><p>More content.</p></div>
+      </lk-accordion>
+      <p><button type="button" data-lk-open="clean-modal">Open a modal</button></p>
+      <lk-modal id="clean-modal" heading="Clean theme"><p>Roomy spacing and a round close button.</p></lk-modal>
     </div>
 
     <script>

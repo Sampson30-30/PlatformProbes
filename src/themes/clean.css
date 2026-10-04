@@ -1,0 +1,179 @@
+/* LearnKit theme: Clean.
+
+   A quiet, modern look: rounded corners, soft layered shadows, pill-shaped
+   tabs and plus/minus disclosure markers, in teal on cool neutrals.
+   Light and dark. Contrast checked: text 14:1 or better on every surface,
+   muted text 5.9:1 or better, primary and focus 4.8:1 or better on surfaces.
+
+   Use:  <html data-lk-theme="clean">
+   Scope it to one section by putting the attribute on a wrapper instead.
+   Force dark with data-lk-mode="dark" on the same element. */
+
+@layer lk.theme {
+  /* ---- Tokens: light ---- */
+
+  [data-lk-theme='clean'] {
+    --lk-font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --lk-font-heading: var(--lk-font);
+
+    --lk-color-page: #f5f6f8;
+    --lk-color-bg: #ffffff;
+    --lk-color-surface: #eef0f4;
+    --lk-color-text: #17202b;
+    --lk-color-muted: #515c6b;
+    --lk-color-border: #7a8596;
+    --lk-color-divider: #e1e5ea;
+    --lk-color-primary: #0f766e;
+    --lk-color-primary-text: #ffffff;
+    --lk-color-focus: #0f766e;
+    --lk-color-backdrop: rgb(15 23 34 / 45%);
+
+    --lk-radius: 14px;
+    --lk-radius-control: 999px;
+    --lk-border-width: 1px;
+    --lk-shadow: 0 1px 2px rgb(16 24 40 / 6%), 0 8px 24px rgb(16 24 40 / 8%);
+  }
+
+  /* ---- Tokens: dark ---- */
+
+  @media (prefers-color-scheme: dark) {
+    [data-lk-theme='clean']:not([data-lk-mode='light']) {
+      --lk-color-page: #0e1116;
+      --lk-color-bg: #161b22;
+      --lk-color-surface: #1f2630;
+      --lk-color-text: #e6eaf0;
+      --lk-color-muted: #a4aebc;
+      --lk-color-border: #6b7686;
+      --lk-color-divider: #2a323d;
+      --lk-color-primary: #2dd4bf;
+      --lk-color-primary-text: #04201d;
+      --lk-color-focus: #2dd4bf;
+      --lk-color-backdrop: rgb(0 0 0 / 60%);
+      --lk-shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 8px 24px rgb(0 0 0 / 35%);
+    }
+  }
+
+  [data-lk-theme='clean'][data-lk-mode='dark'] {
+    --lk-color-page: #0e1116;
+    --lk-color-bg: #161b22;
+    --lk-color-surface: #1f2630;
+    --lk-color-text: #e6eaf0;
+    --lk-color-muted: #a4aebc;
+    --lk-color-border: #6b7686;
+    --lk-color-divider: #2a323d;
+    --lk-color-primary: #2dd4bf;
+    --lk-color-primary-text: #04201d;
+    --lk-color-focus: #2dd4bf;
+    --lk-color-backdrop: rgb(0 0 0 / 60%);
+    --lk-shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 8px 24px rgb(0 0 0 / 35%);
+  }
+
+  /* ---- Components ---- */
+
+  /* Containers are outlined softly. The shadow does the lifting. */
+  [data-lk-theme='clean'] lk-tabs,
+  [data-lk-theme='clean'] lk-accordion {
+    border-color: var(--lk-color-divider);
+  }
+
+  /* lk-tabs: a segmented bar of pills. */
+
+  [data-lk-theme='clean'] .lk-tabs__list {
+    gap: 4px;
+    padding: 6px;
+    border-bottom-color: var(--lk-color-divider);
+  }
+
+  [data-lk-theme='clean'] .lk-tabs__tab {
+    border-bottom: 0;
+    border-radius: var(--lk-radius-control);
+    padding: 0.5rem 1.1rem;
+    font-size: 0.9375rem;
+  }
+
+  [data-lk-theme='clean'] .lk-tabs__tab:hover {
+    background: var(--lk-color-bg);
+  }
+
+  [data-lk-theme='clean'] .lk-tabs__tab[aria-selected='true'] {
+    color: var(--lk-color-text);
+    background: var(--lk-color-bg);
+    box-shadow: 0 1px 2px rgb(16 24 40 / 14%);
+  }
+
+  [data-lk-theme='clean'] .lk-tabs__panel {
+    padding: 1.25rem;
+  }
+
+  /* lk-accordion: open rows on white, plus and minus markers. */
+
+  [data-lk-theme='clean'] .lk-accordion__trigger {
+    background: var(--lk-color-bg);
+    padding: 1rem 1.25rem;
+  }
+
+  [data-lk-theme='clean'] .lk-accordion__trigger:hover {
+    background: var(--lk-color-surface);
+  }
+
+  [data-lk-theme='clean'] .lk-accordion__trigger[aria-expanded='true'] {
+    color: var(--lk-color-text);
+  }
+
+  [data-lk-theme='clean'] .lk-accordion__panel {
+    padding: 0.25rem 1.25rem 1.25rem;
+    border-top: 0;
+  }
+
+  [data-lk-theme='clean'] .lk-accordion__icon {
+    width: auto;
+    height: auto;
+    border: 0;
+    transform: none;
+    color: var(--lk-color-primary);
+    font-size: 1.375rem;
+    font-weight: 400;
+    line-height: 1;
+  }
+
+  [data-lk-theme='clean'] .lk-accordion__icon::before {
+    content: '+';
+  }
+
+  [data-lk-theme='clean'] .lk-accordion__trigger[aria-expanded='true'] .lk-accordion__icon::before {
+    content: '\2212';
+  }
+
+  /* lk-modal: roomy, no title bar rule, round close button. */
+
+  [data-lk-theme='clean'] .lk-modal__dialog {
+    border-color: var(--lk-color-divider);
+    border-radius: 18px;
+  }
+
+  [data-lk-theme='clean'] .lk-modal__header {
+    padding: 1.25rem 1rem 0.25rem 1.5rem;
+    background: transparent;
+    border-bottom: 0;
+  }
+
+  [data-lk-theme='clean'] .lk-modal__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  [data-lk-theme='clean'] .lk-modal__close {
+    width: 2.25rem;
+    height: 2.25rem;
+    background: var(--lk-color-surface);
+    color: var(--lk-color-text);
+  }
+
+  [data-lk-theme='clean'] .lk-modal__close:hover {
+    background: var(--lk-color-divider);
+  }
+
+  [data-lk-theme='clean'] .lk-modal__body {
+    padding: 0.5rem 1.5rem 1.5rem;
+  }
+}

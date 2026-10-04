@@ -69,6 +69,7 @@ Available themes:
 | Theme | Look |
 | --- | --- |
 | `homepage` | Mid 1990s document web rebuilt with modern CSS: system fonts, square panels, bevelled controls, hard offset shadow. Light (paper) and dark (night). |
+| `clean` | Quiet and modern: rounded corners, soft layered shadows, pill tabs, plus and minus markers, teal on cool neutrals. Light and dark. |
 
 ## 3. Write a theme
 
@@ -78,7 +79,8 @@ A theme is one CSS file in `src/themes/<name>.css`. Start from `homepage.css`.
 2. Scope every selector to `[data-lk-theme='<name>']`, so the theme only applies where asked and several themes can share a page.
 3. Set every token in the contract above, for light and dark. Dark goes in two places: a `prefers-color-scheme: dark` block guarded with `:not([data-lk-mode='light'])`, and a `[data-lk-mode='dark']` block.
 4. Add rules for anything tokens cannot express. Target the component's classes, which are the public styling API (for example `.lk-tabs__tab` and `.lk-tabs__panel`). State comes from ARIA attributes such as `[aria-selected='true']`.
-5. Prefix any extra tokens your theme invents with `--lk-<name>-` (for example `--lk-hp-bevel-light`), so they cannot clash with the contract.
+5. Component rules sometimes assume a shape. For example, tabs round only their top corners by default, so a pill-shaped theme sets `border-radius` on `.lk-tabs__tab` itself. Override in the theme, not in the component.
+6. Prefix any extra tokens your theme invents with `--lk-<name>-` (for example `--lk-hp-bevel-light`), so they cannot clash with the contract.
 
 CSS you write outside any layer always wins over LearnKit and themes, so page-level tweaks never need `!important`.
 

@@ -148,6 +148,19 @@ test('stepper: marks states and aria-current', async () => {
   assert(!steps[1].hasAttribute('aria-current'));
 });
 
+test('stepper: many steps become compact and keep every label for screen readers', async () => {
+  const items = Array.from({ length: 8 }, (_, i) => `<li>A fairly long step name number ${i + 1}</li>`).join('');
+  const el = await mount(`<lk-stepper current="3" label="Many"><ol>${items}</ol></lk-stepper>`);
+  assert(el.hasAttribute('compact'), 'compact is added automatically');
+  const labels = [...el.querySelectorAll('.lk-stepper__label')];
+  const visible = labels.filter((l) => l.getBoundingClientRect().width > 4);
+  equal(visible.length, 1);
+  assert(visible[0].textContent.includes('number 4'), 'the current step is the one shown');
+  assert(labels.every((l) => l.textContent.length > 10), 'hidden labels still have their text');
+  const few = await mount(`<lk-stepper current="0" label="Few"><ol><li>One</li><li>Two</li><li>Three</li></ol></lk-stepper>`);
+  assert(!few.hasAttribute('compact'), 'short lists are left alone');
+});
+
 // ---- lk-tooltip and lk-popover ----
 
 test('tooltip: describes its target, opens on focus, closes on Escape', async () => {

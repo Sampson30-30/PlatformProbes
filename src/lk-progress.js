@@ -67,6 +67,9 @@ export class LkProgress extends LkElement {
  *   current  Zero-based index of the current step (default 0). Change it at
  *            any time. Steps before it are complete.
  *   label    Accessible name for the list.
+ *   compact  Show only the current step’s label. Added for you when there
+ *            are more than five steps. The other labels stay available to
+ *            screen readers.
  */
 export class LkStepper extends LkElement {
   static observedAttributes = ['current', 'label'];
@@ -79,6 +82,7 @@ export class LkStepper extends LkElement {
     this.list = this.querySelector(':scope > ol');
     if (!this.list) return;
     this.steps = [...this.list.children].filter((c) => c.localName === 'li');
+    if (this.steps.length > 5) this.setAttribute('compact', '');
     for (const step of this.steps) {
       step.classList.add('lk-stepper__step');
       const text = document.createElement('span');

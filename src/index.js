@@ -21,3 +21,6 @@ export { LkChip } from './lk-chip.js';
 export { LkAvatar } from './lk-avatar.js';
 export { LkSwitch } from './lk-switch.js';
 export { LkBreadcrumbs, LkPagination } from './lk-nav.js';
+export { LkFlashcards } from './lk-flashcards.js';
+export { LkOrder } from './lk-order.js';
+export { LkHotspot } from './lk-hotspot.js';

@@ -295,4 +295,36 @@ export const DEMOS = [
         <span class="lk-skeleton" aria-hidden="true" style="width: 80%"></span>
       </div>`,
   },
+  {
+    id: 'lk-flashcards',
+    title: 'Flashcards',
+    html: () => `
+      <lk-flashcards label="Assessment terms" shuffle>
+        <div data-lk-card="Formative assessment">Assessment <strong>during</strong> learning, used to shape what happens next.</div>
+        <div data-lk-card="Summative assessment">Assessment at the <strong>end</strong>, used to judge what was learned.</div>
+        <div data-lk-card="Feedback">Information that helps the learner close the gap between where they are and where they need to be.</div>
+      </lk-flashcards>`,
+  },
+  {
+    id: 'lk-order',
+    title: 'Put in order',
+    html: () => `
+      <lk-order label="Put the writing process in order">
+        <ol><li>Plan</li><li>Draft</li><li>Revise</li><li>Publish</li></ol>
+      </lk-order>`,
+  },
+  {
+    id: 'lk-hotspot',
+    title: 'Hotspot picture',
+    html: () => `
+      <lk-hotspot label="Parts of a plant">
+        <svg viewBox="0 0 200 120" role="img" aria-label="A simple plant with a flower, a stem and roots" style="background: #e8f1e4">
+          <circle cx="100" cy="22" r="14" fill="#d9467a" /><rect x="97" y="36" width="6" height="52" fill="#2f7d3a" />
+          <ellipse cx="82" cy="62" rx="14" ry="6" fill="#3f9a4d" /><path d="M100 88 L70 112 M100 88 L100 114 M100 88 L130 112" stroke="#7a5230" stroke-width="3" fill="none" />
+        </svg>
+        <div data-lk-spot data-x="50" data-y="18" data-title="Flower">Makes the seeds for the next plant.</div>
+        <div data-lk-spot data-x="41" data-y="52" data-title="Leaf">Catches light to make food.</div>
+        <div data-lk-spot data-x="50" data-y="90" data-title="Roots">Take in water and hold the plant in place.</div>
+      </lk-hotspot>`,
+  },
 ];

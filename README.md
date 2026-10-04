@@ -51,6 +51,9 @@ Version 0.1.0. Everything on the [roadmap](ROADMAP.md) is built.
 | `<lk-grid-explorer>` | A grid of tiles that tracks what has been explored |
 | `<lk-process>` | Step-by-step walkthrough with a stepper |
 | `<lk-scenario>` | Branching story from markup or JSON |
+| `<lk-flashcards>` | Recall practice where missed cards come round again |
+| `<lk-order>` | Put items in sequence with buttons or drag, marked in words |
+| `<lk-hotspot>` | Numbered points on a picture or diagram, tracking what is explored |
 
 LearnKit is a free UI shop with three layers: **components**, **themes** that give any component a complete look, and a **customiser** to make a theme your own. Available themes: `homepage`, `clean`, `contrast`, `bold` and `soft`.
 

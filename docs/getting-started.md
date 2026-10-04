@@ -596,3 +596,44 @@ CSS only, no script.
 ```
 
 Skeleton variants are the default text line, `circle` and `block`. Hide skeletons from screen readers and set `aria-busy` on the region that is loading.
+
+## More learning components
+
+### `<lk-flashcards>`
+
+Recall practice. The learner reads the front, tries to remember, reveals the back, then says whether they knew it. Cards they did not know come round again until every card is known, then a summary offers to practise only the ones they missed.
+
+```html
+<lk-flashcards label="Key terms" shuffle>
+  <div data-lk-card="Formative assessment">Assessment <strong>during</strong> learning.</div>
+  <div data-lk-card="Summative assessment">Assessment at the <strong>end</strong>.</div>
+</lk-flashcards>
+```
+
+The value of `data-lk-card` is the front (plain text); the element's content is the back and may contain markup. `shuffle` randomises the order. Focus moves to the next action after each step, and answers are announced. Events: `lk-reveal` `{ index }`, `lk-cardanswer` `{ index, known }`, `lk-deckcomplete` `{ total, firstTime }`. Methods: `restart()` and `practiseMissed()`.
+
+### `<lk-order>`
+
+The learner puts items in sequence. **Write the items in the correct order**; they are shuffled for the learner (and never start solved).
+
+```html
+<lk-order label="Put the writing process in order">
+  <ol><li>Plan</li><li>Draft</li><li>Revise</li><li>Publish</li></ol>
+</lk-order>
+```
+
+Every item has named Move up and Move down buttons, so it works by keyboard, screen reader and touch; each move is announced ("Plan moved to position 2 of 4") and focus follows the item. Pointer users can also drag. "Check order" marks each item right or wrong **in words as well as symbols**, and moving anything clears the marks. Events: `lk-orderchange` `{ order, labels }`, `lk-check` `{ score, total, complete }`. `el.sequence` reads the current order as text.
+
+### `<lk-hotspot>`
+
+Numbered points on a picture or diagram. Choosing a point shows its explanation, and the component tracks what has been explored.
+
+```html
+<lk-hotspot label="Parts of a plant">
+  <img src="plant.png" alt="A plant with a flower, stem and roots" />
+  <div data-lk-spot data-x="50" data-y="15" data-title="Flower">Makes seeds.</div>
+  <div data-lk-spot data-x="48" data-y="60" data-title="Stem">Carries water.</div>
+</lk-hotspot>
+```
+
+The first child that is not a spot is the picture: an `<img>`, an inline `<svg>` or anything else, with its own alt text. `data-x` and `data-y` are percentages from the top left. Each point is a real button in the order written, named by its title (and "(explored)" once visited), so the picture is never the only way in. Events: `lk-spot` `{ index, title }` and a single `lk-allexplored` `{ total }`. `el.select(index)` chooses a point from code.

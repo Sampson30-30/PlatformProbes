@@ -29,6 +29,16 @@ Version 0.1.0. Everything on the [roadmap](ROADMAP.md) is built.
 | `<lk-field>`, `<lk-choices>` | Labelled inputs, selects, sliders, checkbox and radio groups with validation |
 | `<lk-progress>`, `<lk-stepper>` | Progress bar and step indicator |
 
+**Display components**
+
+| Component | Description |
+| --- | --- |
+| `<lk-table>` | Native table made sortable and filterable, announced to screen readers |
+| `<lk-alert>`, `<lk-chip>`, `<lk-avatar>` | Messages, tags and people |
+| `<lk-switch>` | On/off setting built on a native checkbox |
+| `<lk-breadcrumbs>`, `<lk-pagination>` | Where you are, and moving between pages |
+| `.lk-card`, `.lk-divider`, `.lk-skeleton` | CSS-only surfaces and loading placeholders |
+
 **Learning components**
 
 | Component | Description |
@@ -41,6 +51,9 @@ Version 0.1.0. Everything on the [roadmap](ROADMAP.md) is built.
 | `<lk-grid-explorer>` | A grid of tiles that tracks what has been explored |
 | `<lk-process>` | Step-by-step walkthrough with a stepper |
 | `<lk-scenario>` | Branching story from markup or JSON |
+| `<lk-flashcards>` | Recall practice where missed cards come round again |
+| `<lk-order>` | Put items in sequence with buttons or drag, marked in words |
+| `<lk-hotspot>` | Numbered points on a picture or diagram, tracking what is explored |
 
 LearnKit is a free UI shop with three layers: **components**, **themes** that give any component a complete look, and a **customiser** to make a theme your own. Available themes: `homepage`, `clean`, `contrast`, `bold` and `soft`.
 

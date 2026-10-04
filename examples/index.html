@@ -167,6 +167,26 @@
       <div data-lk-prompt="What would you change next time?"></div>
     </lk-journal>
 
+    <h2>lk-flashcards</h2>
+    <lk-flashcards label="Assessment terms">
+      <div data-lk-card="Formative assessment">Assessment during learning, used to shape what happens next.</div>
+      <div data-lk-card="Summative assessment">Assessment at the end, used to judge what was learned.</div>
+    </lk-flashcards>
+
+    <h2>lk-order</h2>
+    <lk-order label="Put the writing process in order">
+      <ol><li>Plan</li><li>Draft</li><li>Revise</li><li>Publish</li></ol>
+    </lk-order>
+
+    <h2>lk-hotspot</h2>
+    <lk-hotspot label="Parts of a plant">
+      <svg viewBox="0 0 200 120" role="img" aria-label="A simple plant" style="background: #e8f1e4">
+        <circle cx="100" cy="22" r="14" fill="#d9467a" /><rect x="97" y="36" width="6" height="52" fill="#2f7d3a" />
+      </svg>
+      <div data-lk-spot data-x="50" data-y="18" data-title="Flower">Makes the seeds for the next plant.</div>
+      <div data-lk-spot data-x="50" data-y="55" data-title="Stem">Carries water and food around the plant.</div>
+    </lk-hotspot>
+
     <h2>Toast notifications</h2>
     <p>
       <button type="button" class="lk-button" id="toast-ok">Show a confirmation</button>
@@ -199,6 +219,47 @@
     <lk-stepper current="1" label="Enrolment steps">
       <ol><li>Your details</li><li>Choose a course</li><li>Confirm</li></ol>
     </lk-stepper>
+
+    <h2>Table</h2>
+    <lk-table label="Courses this term" sortable filter striped>
+      <table>
+        <caption>Courses this term</caption>
+        <thead><tr><th>Course</th><th>Hours</th><th>Level</th></tr></thead>
+        <tbody>
+          <tr><td>Mathematics</td><td>30</td><td>Level 2</td></tr>
+          <tr><td>Art and design</td><td>9</td><td>Level 1</td></tr>
+          <tr><td>English</td><td>100</td><td>Level 2</td></tr>
+        </tbody>
+      </table>
+    </lk-table>
+
+    <h2>Alerts, chips, avatars and switches</h2>
+    <lk-alert tone="warning" heading="Deadline moved" dismissible>Submit by Friday instead.</lk-alert>
+    <p>
+      <lk-chip>Level 2</lk-chip>
+      <lk-chip selectable selected>Maths</lk-chip>
+      <lk-chip removable>Evening</lk-chip>
+    </p>
+    <p>
+      <lk-avatar name="Ada Lovelace"></lk-avatar>
+      <lk-avatar name="Grace Hopper" size="lg"></lk-avatar>
+    </p>
+    <lk-switch label="Email reminders" hint="One a week, on Mondays" checked></lk-switch>
+
+    <h2>Breadcrumbs and pagination</h2>
+    <lk-breadcrumbs label="You are here">
+      <ol><li><a href="#">Home</a></li><li><a href="#">Courses</a></li><li>Mathematics</li></ol>
+    </lk-breadcrumbs>
+    <p></p>
+    <lk-pagination label="Results" total="8" page="3"></lk-pagination>
+
+    <h2>Cards, dividers and skeletons</h2>
+    <div class="lk-card"><h3>A card</h3><p>A bordered, padded surface.</p></div>
+    <hr class="lk-divider" />
+    <div aria-busy="true">
+      <span class="lk-skeleton" aria-hidden="true" style="width: 60%"></span>
+      <span class="lk-skeleton" aria-hidden="true"></span>
+    </div>
 
     <h2>Form controls</h2>
     <form novalidate>

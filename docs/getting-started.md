@@ -496,3 +496,144 @@ A node with no choices is an ending. `data-outcome` can be `good`, `mixed` or `p
 | `lk-end` | `{ node, outcome, path }` where `path` lists the choices made |
 
 Choices that point to a missing node are dropped and unreachable nodes are reported by the parser, so a mistake in a long scenario does not break it. "Go back one step" and "Start again" are always available after the first choice, and the ending lists the learner's choices. Methods: `restart()`; `path` reads the choices so far.
+
+## Display components
+
+### `<lk-table>`
+
+Makes a native table sortable and filterable. The table stays ordinary HTML, so it still reads well without JavaScript.
+
+```html
+<lk-table label="Courses this term" sortable filter striped>
+  <table>
+    <caption>Courses this term</caption>
+    <thead><tr><th>Course</th><th>Hours</th></tr></thead>
+    <tbody>
+      <tr><td>Mathematics</td><td>30</td></tr>
+      <tr><td>English</td><td>100</td></tr>
+    </tbody>
+  </table>
+</lk-table>
+```
+
+| Attribute | Description |
+| --- | --- |
+| `label` | Accessible name for the scrolling region. Always provide one. |
+| `sortable` | Headers become sort buttons with `aria-sort`. Put `data-nosort` on a `<th>` to skip it. |
+| `filter` | Adds a search box. A row shows when it contains every typed word. |
+| `striped` | Shades alternate rows. |
+
+A column sorts as numbers when every value is a number (including `£`, `%` and commas), otherwise as text with natural ordering (`b2` before `b10`). Add `data-type="number"` or `"text"` to a `<th>` to force it, and `data-value` to a cell to sort by something other than its text, such as an ISO date. Clicking a header again reverses the order, and a third click restores the original. A status line (`Showing 2 of 5 rows, sorted by Hours, ascending`) is announced to screen readers. Events: `lk-sort` `{ column, direction }` and `lk-filter` `{ query, shown, total }`. Call `table.sortBy(columnIndex)` to sort from code.
+
+### `<lk-alert>`
+
+```html
+<lk-alert tone="warning" heading="Deadline moved" dismissible>Submit by Friday instead.</lk-alert>
+```
+
+`tone` is `info` (default), `success`, `warning` or `danger`. A visually hidden word ("Warning:") is added so meaning never relies on colour. Alerts are silent by default; add `live` to one you insert after the page has loaded and it is announced (`alert` for warning and danger, `status` otherwise). `dismissible` adds a close button, fires `lk-dismiss` and removes the alert.
+
+### `<lk-chip>`
+
+```html
+<lk-chip>Level 2</lk-chip>
+<lk-chip selectable selected>Maths</lk-chip>
+<lk-chip removable tone="info">Evening</lk-chip>
+```
+
+A selectable chip is a toggle button (`aria-pressed`) and fires `lk-select` `{ selected }`. A removable chip has a button named "Remove Evening", fires `lk-remove` `{ label }`, then removes itself. Tones are `primary`, `success`, `warning`, `danger` and `info`.
+
+### `<lk-avatar>`
+
+```html
+<lk-avatar name="Ada Lovelace"></lk-avatar>
+<lk-avatar name="Grace Hopper" src="grace.jpg" size="lg"></lk-avatar>
+```
+
+Shows a picture, or the person's initials if there is none or it fails to load. The colour comes from the name, so it is stable; set `tone` to fix it. `size` is `sm`, `md` or `lg`. Add `decorative` when the name is written next to it. Wrap several in `<span class="lk-avatar-group">` to overlap them.
+
+### `<lk-switch>`
+
+```html
+<lk-switch label="Email reminders" hint="One a week" name="reminders" checked></lk-switch>
+```
+
+A native checkbox with `role="switch"`, so it works in forms. Read or set `.checked`; `lk-change` `{ checked }` fires on change.
+
+### `<lk-breadcrumbs>`
+
+```html
+<lk-breadcrumbs label="You are here" max="4">
+  <ol>
+    <li><a href="/">Home</a></li>
+    <li><a href="/courses">Courses</a></li>
+    <li>Mathematics</li>
+  </ol>
+</lk-breadcrumbs>
+```
+
+The last item is marked `aria-current="page"`. With `max`, the middle of a long trail collapses behind a button that reveals it.
+
+### `<lk-pagination>`
+
+```html
+<lk-pagination label="Results" total="12" page="1"></lk-pagination>
+```
+
+Shows the first, last and current pages with one either side (`siblings` changes that). Fires `lk-pagechange` `{ page }`; it does not load content, so listen for the event and show the right page. Focus stays on the button used, and the new page is announced.
+
+### Cards, dividers and skeletons
+
+CSS only, no script.
+
+```html
+<div class="lk-card"><h3>Title</h3><p>Content</p><div class="lk-card__footer">Actions</div></div>
+<hr class="lk-divider" />
+<div aria-busy="true">
+  <span class="lk-skeleton" aria-hidden="true" style="width: 60%"></span>
+  <span class="lk-skeleton" data-variant="circle" aria-hidden="true"></span>
+</div>
+```
+
+Skeleton variants are the default text line, `circle` and `block`. Hide skeletons from screen readers and set `aria-busy` on the region that is loading.
+
+## More learning components
+
+### `<lk-flashcards>`
+
+Recall practice. The learner reads the front, tries to remember, reveals the back, then says whether they knew it. Cards they did not know come round again until every card is known, then a summary offers to practise only the ones they missed.
+
+```html
+<lk-flashcards label="Key terms" shuffle>
+  <div data-lk-card="Formative assessment">Assessment <strong>during</strong> learning.</div>
+  <div data-lk-card="Summative assessment">Assessment at the <strong>end</strong>.</div>
+</lk-flashcards>
+```
+
+The value of `data-lk-card` is the front (plain text); the element's content is the back and may contain markup. `shuffle` randomises the order. Focus moves to the next action after each step, and answers are announced. Events: `lk-reveal` `{ index }`, `lk-cardanswer` `{ index, known }`, `lk-deckcomplete` `{ total, firstTime }`. Methods: `restart()` and `practiseMissed()`.
+
+### `<lk-order>`
+
+The learner puts items in sequence. **Write the items in the correct order**; they are shuffled for the learner (and never start solved).
+
+```html
+<lk-order label="Put the writing process in order">
+  <ol><li>Plan</li><li>Draft</li><li>Revise</li><li>Publish</li></ol>
+</lk-order>
+```
+
+Every item has named Move up and Move down buttons, so it works by keyboard, screen reader and touch; each move is announced ("Plan moved to position 2 of 4") and focus follows the item. Pointer users can also drag. "Check order" marks each item right or wrong **in words as well as symbols**, and moving anything clears the marks. Events: `lk-orderchange` `{ order, labels }`, `lk-check` `{ score, total, complete }`. `el.sequence` reads the current order as text.
+
+### `<lk-hotspot>`
+
+Numbered points on a picture or diagram. Choosing a point shows its explanation, and the component tracks what has been explored.
+
+```html
+<lk-hotspot label="Parts of a plant">
+  <img src="plant.png" alt="A plant with a flower, stem and roots" />
+  <div data-lk-spot data-x="50" data-y="15" data-title="Flower">Makes seeds.</div>
+  <div data-lk-spot data-x="48" data-y="60" data-title="Stem">Carries water.</div>
+</lk-hotspot>
+```
+
+The first child that is not a spot is the picture: an `<img>`, an inline `<svg>` or anything else, with its own alt text. `data-x` and `data-y` are percentages from the top left. Each point is a real button in the order written, named by its title (and "(explored)" once visited), so the picture is never the only way in. Events: `lk-spot` `{ index, title }` and a single `lk-allexplored` `{ total }`. `el.select(index)` chooses a point from code.

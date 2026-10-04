@@ -198,4 +198,133 @@ export const DEMOS = [
         <div data-lk-node="ext" data-end data-outcome="good" data-title="The learner catches up"><p>They submit on the new date.</p></div>
       </lk-scenario>`,
   },
+  {
+    id: 'lk-table',
+    title: 'Table',
+    html: () => `
+      <lk-table label="Courses this term" sortable filter striped>
+        <table>
+          <caption>Courses this term</caption>
+          <thead><tr><th>Course</th><th data-type="number">Hours</th><th>Level</th></tr></thead>
+          <tbody>
+            <tr><td>Mathematics</td><td>30</td><td>Level 2</td></tr>
+            <tr><td>Art and design</td><td>9</td><td>Level 1</td></tr>
+            <tr><td>English</td><td>100</td><td>Level 2</td></tr>
+            <tr><td>Digital skills</td><td>45</td><td>Level 3</td></tr>
+          </tbody>
+        </table>
+      </lk-table>`,
+  },
+  {
+    id: 'lk-alert',
+    title: 'Alert',
+    html: () => `
+      <lk-alert tone="info" heading="Good to know">Your progress is saved on this device.</lk-alert>
+      <p></p>
+      <lk-alert tone="success" heading="Saved">Your answers were recorded.</lk-alert>
+      <p></p>
+      <lk-alert tone="warning" heading="Deadline moved" dismissible>Submit by Friday instead.</lk-alert>
+      <p></p>
+      <lk-alert tone="danger">That did not work. Try again.</lk-alert>`,
+  },
+  {
+    id: 'lk-chip',
+    title: 'Chips',
+    html: () => `
+      <p class="row">
+        <lk-chip>Level 2</lk-chip>
+        <lk-chip tone="success">Complete</lk-chip>
+        <lk-chip selectable selected>Maths</lk-chip>
+        <lk-chip selectable>English</lk-chip>
+        <lk-chip removable>Evening</lk-chip>
+      </p>`,
+  },
+  {
+    id: 'lk-avatar',
+    title: 'Avatars',
+    html: () => `
+      <p class="row">
+        <lk-avatar name="Ada Lovelace" size="sm"></lk-avatar>
+        <lk-avatar name="Grace Hopper"></lk-avatar>
+        <lk-avatar name="Alan Turing" size="lg"></lk-avatar>
+        <lk-avatar name="Katherine Johnson" tone="info"></lk-avatar>
+        <span class="lk-avatar-group">
+          <lk-avatar name="Margaret Hamilton"></lk-avatar>
+          <lk-avatar name="Tim Berners-Lee"></lk-avatar>
+          <lk-avatar name="Hedy Lamarr"></lk-avatar>
+        </span>
+      </p>`,
+  },
+  {
+    id: 'lk-switch',
+    title: 'Switch',
+    html: () => `
+      <lk-switch label="Email reminders" hint="One a week, on Mondays" checked></lk-switch>
+      <p></p>
+      <lk-switch label="Show answers as I go"></lk-switch>
+      <p></p>
+      <lk-switch label="Unavailable setting" disabled></lk-switch>`,
+  },
+  {
+    id: 'lk-nav',
+    title: 'Breadcrumbs and pagination',
+    html: () => `
+      <lk-breadcrumbs label="You are here" max="4">
+        <ol>
+          <li><a href="#">Home</a></li><li><a href="#">Courses</a></li><li><a href="#">Level 2</a></li>
+          <li><a href="#">Mathematics</a></li><li>Unit 1</li>
+        </ol>
+      </lk-breadcrumbs>
+      <p></p>
+      <lk-pagination label="Results" total="12" page="5"></lk-pagination>`,
+  },
+  {
+    id: 'cards',
+    title: 'Cards, dividers and skeletons',
+    html: () => `
+      <div class="lk-card">
+        <h3>A card</h3>
+        <p>A bordered, padded surface for a self-contained piece of content.</p>
+        <div class="lk-card__footer"><button type="button" class="lk-button" data-variant="primary">Open</button></div>
+      </div>
+      <hr class="lk-divider" />
+      <div aria-busy="true">
+        <span class="lk-skeleton" data-variant="circle" aria-hidden="true"></span>
+        <span class="lk-skeleton" aria-hidden="true" style="width: 60%"></span>
+        <span class="lk-skeleton" aria-hidden="true"></span>
+        <span class="lk-skeleton" aria-hidden="true" style="width: 80%"></span>
+      </div>`,
+  },
+  {
+    id: 'lk-flashcards',
+    title: 'Flashcards',
+    html: () => `
+      <lk-flashcards label="Assessment terms" shuffle>
+        <div data-lk-card="Formative assessment">Assessment <strong>during</strong> learning, used to shape what happens next.</div>
+        <div data-lk-card="Summative assessment">Assessment at the <strong>end</strong>, used to judge what was learned.</div>
+        <div data-lk-card="Feedback">Information that helps the learner close the gap between where they are and where they need to be.</div>
+      </lk-flashcards>`,
+  },
+  {
+    id: 'lk-order',
+    title: 'Put in order',
+    html: () => `
+      <lk-order label="Put the writing process in order">
+        <ol><li>Plan</li><li>Draft</li><li>Revise</li><li>Publish</li></ol>
+      </lk-order>`,
+  },
+  {
+    id: 'lk-hotspot',
+    title: 'Hotspot picture',
+    html: () => `
+      <lk-hotspot label="Parts of a plant">
+        <svg viewBox="0 0 200 120" role="img" aria-label="A simple plant with a flower, a stem and roots" style="background: #e8f1e4">
+          <circle cx="100" cy="22" r="14" fill="#d9467a" /><rect x="97" y="36" width="6" height="52" fill="#2f7d3a" />
+          <ellipse cx="82" cy="62" rx="14" ry="6" fill="#3f9a4d" /><path d="M100 88 L70 112 M100 88 L100 114 M100 88 L130 112" stroke="#7a5230" stroke-width="3" fill="none" />
+        </svg>
+        <div data-lk-spot data-x="50" data-y="18" data-title="Flower">Makes the seeds for the next plant.</div>
+        <div data-lk-spot data-x="41" data-y="52" data-title="Leaf">Catches light to make food.</div>
+        <div data-lk-spot data-x="50" data-y="90" data-title="Roots">Take in water and hold the plant in place.</div>
+      </lk-hotspot>`,
+  },
 ];

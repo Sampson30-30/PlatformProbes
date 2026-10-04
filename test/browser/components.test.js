@@ -500,3 +500,35 @@ test('scenario: reads JSON and survives bad data', async () => {
   const bad = await mount(`<lk-scenario label="B"><script type="application/json">{"nodes":{}}</script></lk-scenario>`);
   assert(bad.textContent.includes('could not be shown'));
 });
+
+// ---- customiser layout ----
+
+test('customiser: the sticky preview stays in view and never slides over the contrast checks', async () => {
+  const frame = document.createElement('iframe');
+  frame.style.cssText = 'position:absolute;left:-9999px;top:0;width:1300px;height:900px;border:0';
+  frame.src = '../../customiser/';
+  document.body.append(frame);
+  await new Promise((resolve) => { frame.onload = resolve; });
+  const doc = frame.contentDocument;
+  const win = frame.contentWindow;
+  try {
+    await waitFor(() => doc.querySelectorAll('#colours .token-row').length > 0, 3000);
+    const preview = doc.querySelector('.preview-wrap');
+    const below = doc.querySelector('.checks');
+    let stuck = 0;
+    const overlaps = [];
+    for (let y = 0; y <= doc.documentElement.scrollHeight; y += 150) {
+      win.scrollTo(0, y);
+      await tick(20);
+      const a = preview.getBoundingClientRect();
+      const b = below.getBoundingClientRect();
+      if (Math.abs(a.top - 12) < 2) stuck += 1;
+      if (a.bottom > b.top + 1 && a.top < b.bottom) overlaps.push(y);
+    }
+    equal(overlaps, []);
+    assert(stuck > 0, 'the preview should stay in view while the settings scroll');
+    equal(win.getComputedStyle(doc.querySelector('#preview')).overscrollBehaviorY, 'contain');
+  } finally {
+    frame.remove();
+  }
+});

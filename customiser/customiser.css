@@ -49,8 +49,12 @@
 .plain-button.primary { color: #fff; background: var(--g-accent); border-color: var(--g-accent); }
 @media (prefers-color-scheme: dark) { .plain-button.primary { color: #0b1020; } }
 
-.side { display: grid; gap: 1.5rem; min-width: 0; }
-.side h2 { margin: 0 0 0.5rem; font-size: 1.125rem; }
+.side { min-width: 0; align-self: stretch; } /* as tall as the settings, so the preview has room to stay in view */
+.side h2, .below h2 { margin: 0 0 0.5rem; font-size: 1.125rem; }
+
+/* Contrast and export sit below the whole layout, so the sticky preview can never slide over them. */
+.below { max-width: 88rem; margin: 2rem auto 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr)); gap: 1.5rem; align-items: start; }
+.below > section { min-width: 0; }
 
 .preview-wrap { min-width: 0; }
 .preview { padding: 1rem; color: var(--lk-color-text); background: var(--lk-color-page); border: 1px solid var(--g-line); border-radius: 10px; font-family: var(--lk-font); }
@@ -60,6 +64,7 @@
 .preview .gap > * + * { margin-top: 0.75rem; }
 
 .summary { margin: 0 0 0.5rem; font-weight: 600; }
+.summary--mini { font-size: 0.8125rem; font-weight: 500; color: var(--g-muted); }
 .table-wrap { overflow-x: auto; }
 #check-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; background: var(--g-card); }
 #check-table th, #check-table td { padding: 0.35rem 0.6rem; text-align: left; border-bottom: 1px solid var(--g-line); white-space: nowrap; }
@@ -77,10 +82,9 @@
 
 .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 
+/* Wide screens: the preview stays in view while you edit, and scrolls on its
+   own without passing the scroll on to the page. */
 @media (min-width: 62.01rem) {
-  .side .preview-wrap { position: sticky; top: 0.75rem; z-index: 4; }
-}
-
-@media (min-width: 62.01rem) {
-  .preview { max-height: 70vh; overflow: auto; }
+  .preview-wrap { position: sticky; top: 0.75rem; display: flex; flex-direction: column; max-height: calc(100vh - 1.5rem); }
+  .preview { min-height: 0; overflow: auto; overscroll-behavior: contain; }
 }

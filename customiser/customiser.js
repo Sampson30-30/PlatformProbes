@@ -260,6 +260,9 @@ function renderChecks() {
     summary.push(`${mode === 'light' ? 'Light' : 'Dark'}: ${failing === 0 ? `all ${results.length} checks pass` : `${failing} of ${results.length} checks fail`}`);
   }
   $('check-summary').textContent = summary.join('. ') + '.';
+  // A copy beside the preview, so contrast is visible while you edit. It is hidden from
+  // screen readers because the live summary under the preview already announces it.
+  $('preview-summary').textContent = $('check-summary').textContent;
   const tbody = $('check-table').querySelector('tbody');
   tbody.replaceChildren();
   for (const r of checkTokens(effective(state.editing), { strictText })) {

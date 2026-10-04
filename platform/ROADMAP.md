@@ -68,7 +68,7 @@ Each stage ends with working, tested pages, a commit and a push.
 - [x] **1. Foundations.** Shell (navigation, layout, theme), a small renderer that turns content data into pages, the content format, content tests (structure, links, British English, no em dashes, valid quiz and scenario data), README.
 - [x] **2. Reach and the six habits.** All seven pages, each with idea, example, practice, "say this to Claude" and a reflection prompt.
 - [x] **3. Case file: the world time map.** A stepped story of the build with decision points, written from the build account and free of colleague details and internal references.
-- [ ] **4. Gallery.** Eight things code can do, each decomposed, with two small live demos built for the purpose.
+- [x] **4. Gallery.** Eight things code can do, each decomposed, with two small live demos built for the purpose.
 - [ ] **5. Brief builder.** Guided worksheet with a quality check and an export.
 - [ ] **6. Words.** Searchable plain-English vocabulary and phrasebook.
 - [ ] **7. Progress and coach's guide.** Before and after self-assessment, a progress view, and the guide for whoever runs sessions.

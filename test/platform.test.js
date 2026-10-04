@@ -8,6 +8,7 @@ import { NAV, SITE } from '../platform/data/site.js';
 import { HOME } from '../platform/data/home.js';
 import { ALL_TOPICS, HABITS, REACH } from '../platform/data/habits.js';
 import { CASES } from '../platform/data/cases/world-time-map.js';
+import { GALLERY } from '../platform/data/gallery.js';
 
 const root = new URL('../platform/', import.meta.url);
 const pageFiles = new Set(readdirSync(root).filter((f) => f.endsWith('.html')));
@@ -85,7 +86,7 @@ test('internal links in content point to real pages and topics', () => {
     const h = new URLSearchParams(query).get('h');
     return !h || topicIds.has(h);
   };
-  const all = [SITE, HOME, ALL_TOPICS, CASES];
+  const all = [SITE, HOME, ALL_TOPICS, CASES, GALLERY];
   for (const data of all) {
     for (const text of walkStrings(data)) {
       for (const [, , href] of text.matchAll(/\[([^\]]+)\]\(([^)\s]+)\)/g)) {
@@ -121,4 +122,17 @@ test('the case file has a decision at each step of its process', () => {
   for (const step of process.steps) {
     assert.ok(step.blocks.some((b) => b.type === 'quiz'), `step "${step.title}" has no decision`);
   }
+});
+
+test('gallery exhibits are complete, honest about their limits and well worded', () => {
+  assert.equal(GALLERY.exhibits.length, 8);
+  assert.equal(new Set(GALLERY.exhibits.map((e) => e.id)).size, 8);
+  const demos = new Set(['sun', 'zones', 'memory', 'paths', 'views', 'whatif', 'marking']);
+  for (const ex of GALLERY.exhibits) {
+    for (const field of ['title', 'idea', 'rule', 'inTeaching', 'careful']) assert.ok(ex[field], `${ex.id} needs ${field}`);
+    assert.ok(ex.madeOf.length >= 2, `${ex.id} should say what it is made of`);
+    assert.ok(ex.ask.length >= 1, `${ex.id} should say how to ask for it`);
+    assert.ok(ex.demo === null || demos.has(ex.demo), `${ex.id} has an unknown demo`);
+  }
+  assert.deepEqual(checkWording(GALLERY, 'gallery'), []);
 });

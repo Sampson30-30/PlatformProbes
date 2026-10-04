@@ -15,7 +15,7 @@ export const NAV = [
   { id: 'reach', label: 'Know your reach', href: 'habit.html?h=reach', ready: true },
   { id: 'habits', label: 'Six habits', href: 'index.html#habits', ready: true },
   { id: 'case', label: 'Case file', href: 'case.html?c=world-time-map', ready: true },
-  { id: 'gallery', label: 'What code can do', href: 'gallery.html', ready: false },
+  { id: 'gallery', label: 'What code can do', href: 'gallery.html', ready: true },
   { id: 'brief', label: 'Brief builder', href: 'brief.html', ready: false },
   { id: 'words', label: 'Words', href: 'words.html', ready: false },
   { id: 'progress', label: 'Progress', href: 'progress.html', ready: false },

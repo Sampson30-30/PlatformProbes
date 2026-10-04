@@ -106,3 +106,26 @@ lk-quiz, lk-scenario, lk-journal, lk-spectrum, lk-rating, lk-timeline, lk-grid-e
   .pager { flex-direction: column; }
   .pager__next { margin-inline-start: 0; text-align: start; }
 }
+
+/* Gallery demos */
+
+.demo-box { margin-block: 1rem; padding: 1rem 1.25rem; background: var(--lk-color-surface); border: var(--lk-border-width) solid var(--lk-color-divider); border-radius: min(var(--lk-radius), 1rem); }
+.demo-box__label { margin: 0 0 0.25rem; font-size: 0.875rem; font-weight: 700; color: var(--lk-color-muted); }
+.demo-readout { margin: 0.5rem 0 0; font-size: 0.9375rem; }
+.exhibit > * + * { margin-top: 0.75rem; }
+.exhibit .b-h { margin-top: 1.25rem; font-size: 1.0625rem; }
+
+.sun-strip { display: grid; grid-template-columns: repeat(24, 1fr); height: 3rem; margin-top: 0.5rem; border: var(--lk-border-width) solid var(--lk-color-border); border-radius: 6px; overflow: hidden; }
+.sun-strip__cell { background: var(--lk-color-text); transition: background-color var(--lk-transition); }
+.sun-strip__cell[data-day] { background: var(--lk-color-warning-bg); }
+.sun-scale { display: flex; justify-content: space-between; margin-top: 0.25rem; font-size: 0.75rem; color: var(--lk-color-muted); }
+
+.zone-clock { margin: 0.5rem 0 0; font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 2rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.whatif-result { margin: 0.75rem 0 0; font-size: 1.125rem; font-weight: 700; }
+
+.demo-toggle { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-block: 0.5rem; }
+.demo-toggle [aria-pressed='true'] { color: var(--lk-color-primary-text); background-color: var(--lk-color-primary); border-color: var(--lk-color-primary); }
+.views-list { margin: 0; padding-inline-start: 1.25rem; }
+.views-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.views-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; background: var(--lk-color-bg); }
+.views-table th, .views-table td { padding: 0.4rem 0.6rem; text-align: start; vertical-align: top; border-bottom: var(--lk-border-width) solid var(--lk-color-divider); }

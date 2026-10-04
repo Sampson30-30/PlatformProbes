@@ -9,3 +9,5 @@ export { LkTooltip, LkPopover } from './lk-popover.js';
 export { LkToasts, toast } from './lk-toast.js';
 export { LkQuiz } from './lk-quiz.js';
 export { LkJournal } from './lk-journal.js';
+export { LkSpectrum } from './lk-spectrum.js';
+export { LkRating } from './lk-rating.js';

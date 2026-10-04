@@ -326,3 +326,50 @@ test('journal: exports text and JSON, and confirms before clearing', async () =>
   equal(j.querySelectorAll('textarea')[0].value, 'Group work');
   j.clear();
 });
+
+// ---- lk-spectrum ----
+
+test('spectrum: needs a position before comparing, then compares', async () => {
+  const el = await mount(`<lk-spectrum statement="Feedback style" left="Written" right="Spoken" expert="70" explanation="Talk, then write it down."></lk-spectrum>`);
+  const input = el.querySelector('input[type=range]');
+  const revealed = listen(el, 'lk-reveal');
+  equal(input.getAttribute('aria-label'), 'Feedback style');
+  el.querySelector('button').click();
+  assert(el.querySelector('.lk-spectrum__result').textContent.includes('Place your position first'));
+  assert(el.querySelector('.lk-spectrum__marker').hidden, 'expert marker stays hidden');
+  input.value = '62';
+  input.dispatchEvent(new Event('input', { bubbles: true }));
+  assert(input.getAttribute('aria-valuetext').includes('Spoken'), 'position described in words');
+  el.querySelector('button').click();
+  assert(!el.querySelector('.lk-spectrum__marker').hidden, 'marker shown');
+  assert(input.disabled, 'locked');
+  assert(el.querySelector('.lk-spectrum__result').textContent.includes('8 points apart'));
+  equal(revealed[0], { value: 62, expert: 70, difference: 8 });
+  el.querySelector('button').click();
+  assert(!input.disabled && el.querySelector('.lk-spectrum__marker').hidden, 'can change position');
+});
+
+// ---- lk-rating ----
+
+test('rating: builds radio groups, remembers and summarises', async () => {
+  const name = `rate-${Math.random().toString(36).slice(2)}`;
+  const el = await mount(`<lk-rating label="Confidence" scale="5" low="Not at all" high="Completely" summary name="${name}">
+    <div data-lk-statement="Planning"></div><div data-lk-statement="Feedback"></div></lk-rating>`);
+  equal(el.querySelectorAll('fieldset').length, 2);
+  equal(el.querySelectorAll('input[type=radio]').length, 10);
+  assert(el.querySelector('.lk-rating__option').textContent.includes('Not at all'), 'low end is described to screen readers');
+  const rated = listen(el, 'lk-rate');
+  const summary = listen(el, 'lk-summary');
+  const radios = (n) => [...el.querySelectorAll(`fieldset:nth-of-type(${n}) input`)];
+  radios(1)[3].click();
+  equal(rated[0], { index: 0, statement: 'Planning', value: 4 });
+  assert(el.querySelector('.lk-rating__summary').hidden, 'no summary until complete');
+  radios(2)[0].click();
+  assert(!el.querySelector('.lk-rating__summary').hidden, 'summary shown');
+  assert(el.querySelector('.lk-rating__summary').textContent.includes('2.5 out of 5'));
+  assert(el.querySelector('.lk-rating__summary').textContent.includes('Feedback'), 'focus area named');
+  equal(summary[0].focus, ['Feedback']);
+  equal(JSON.parse(localStorage.getItem(`lk-rating:${name}`)), [4, 1]);
+  el.reset();
+  assert(localStorage.getItem(`lk-rating:${name}`) === null, 'storage cleared');
+});

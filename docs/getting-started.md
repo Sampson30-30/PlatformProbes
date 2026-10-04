@@ -337,3 +337,56 @@ A reflection journal. Each prompt gets a text box. Notes are saved in this brows
 Methods and properties: `entries` (`[{ prompt, text }]`), `save()`, `export("text" | "json")` which returns `{ filename, mime, content }` without downloading, and `clear()`.
 
 Saving uses `localStorage`, so notes stay on the learner's own device and browser. If storage is blocked (for example in a private window), the journal says so and the Download buttons are the way to keep the notes. The text export is Markdown, which also reads fine as plain text. "Clear all" asks for confirmation first.
+
+
+### `<lk-spectrum>`
+
+Asks the learner to place their view between two poles, then compares it with an expert position.
+
+```html
+<lk-spectrum statement="How should feedback be given?"
+             left="Written" right="Spoken" expert="70"
+             explanation="Spoken feedback allows a conversation, but write down the key points.">
+</lk-spectrum>
+```
+
+| Attribute | Description |
+| --- | --- |
+| `statement` | The question or statement. |
+| `left`, `right` | Labels for the two ends. |
+| `expert` | Expert position from 0 (left) to 100 (right). Without it there is no comparison step. |
+| `explanation` | Why the expert holds that position. |
+
+| Event | Detail |
+| --- | --- |
+| `lk-change` | `{ value }` as the learner moves the slider |
+| `lk-reveal` | `{ value, expert, difference }` when compared |
+
+It is a native range input, so arrow keys, Home and End work, and the position is also announced in words ("Towards Spoken"). Comparing needs the learner to have moved the slider first. After comparing, the slider locks, and "Change my position" unlocks it. Read the position with `spectrum.value`; call `spectrum.reveal()` from your own code if you prefer.
+
+### `<lk-rating>`
+
+A self-assessment. The learner rates themselves on a scale for each statement.
+
+```html
+<lk-rating label="How confident are you with these skills?" scale="5"
+           low="Not at all" high="Completely" summary name="skills-check">
+  <div data-lk-statement="Planning a lesson"></div>
+  <div data-lk-statement="Giving feedback"></div>
+</lk-rating>
+```
+
+| Attribute | Description |
+| --- | --- |
+| `label` | Group name. With no statements inside, the label itself is rated. |
+| `scale` | Number of points, 2 to 10. Default `5`. |
+| `low`, `high` | Describe the lowest and highest points. Screen readers hear them on those options. |
+| `summary` | Once every statement is rated, show the average and the statements rated in the lower half, as "You might focus on". |
+| `name` | Storage key. If set, ratings are remembered in this browser. |
+
+| Event | Detail |
+| --- | --- |
+| `lk-rate` | `{ index, statement, value }` |
+| `lk-summary` | `{ total, answered, complete, average, focus }` when every statement is rated (`focus` lists statements) |
+
+Each statement is a radio group, so arrow keys move between points. `ratings` returns the current values and `reset()` clears them.

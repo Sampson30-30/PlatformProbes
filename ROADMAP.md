@@ -23,8 +23,8 @@ This is a plan, not a promise. Order and scope may change.
 
 - [x] Quiz and knowledge check
 - [x] Reflection journal with export
-- [ ] Comparison spectrum
-- [ ] Rating or self-assessment tool
+- [x] Comparison spectrum
+- [x] Rating or self-assessment tool
 - [ ] Timeline
 - [ ] Grid explorer
 - [ ] Step-by-step process

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { uid, clamp, wrap, toggleOpen, normaliseOpen } from '../src/core/utils.js';
+import { uid, clamp, wrap, toggleOpen, normaliseOpen, percent, stepState } from '../src/core/utils.js';
 
 test('uid returns unique prefixed ids', () => {
   const a = uid('lk-demo');
@@ -35,4 +35,19 @@ test('normaliseOpen keeps one item in single mode', () => {
   assert.deepEqual(normaliseOpen([1, 2], false), [1]);
   assert.deepEqual(normaliseOpen([1, 2], true), [1, 2]);
   assert.deepEqual(normaliseOpen([], false), []);
+});
+
+test('percent clamps and rounds', () => {
+  assert.equal(percent(40, 100), 40);
+  assert.equal(percent(1, 3), 33);
+  assert.equal(percent(5, 0), 0);
+  assert.equal(percent(150, 100), 100);
+  assert.equal(percent(-5, 100), 0);
+  assert.equal(percent('x', 100), 0);
+});
+
+test('stepState labels steps relative to the current one', () => {
+  assert.equal(stepState(0, 1), 'complete');
+  assert.equal(stepState(1, 1), 'current');
+  assert.equal(stepState(2, 1), 'upcoming');
 });

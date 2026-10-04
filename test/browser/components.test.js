@@ -122,3 +122,28 @@ test('choices: builds fieldset and enforces min', async () => {
   assert(el.validate() === true, 'passes with two');
   assert(!el.hasAttribute('data-invalid'));
 });
+
+// ---- lk-progress and lk-stepper ----
+
+test('progress: exposes progressbar semantics and updates', async () => {
+  const el = await mount(`<lk-progress label="Course" value="25" show-value></lk-progress>`);
+  const bar = el.querySelector('[role=progressbar]');
+  equal(bar.getAttribute('aria-valuenow'), '25');
+  equal(bar.getAttribute('aria-label'), 'Course');
+  equal(el.querySelector('.lk-progress__text').textContent, '25%');
+  el.setAttribute('value', '80');
+  equal(bar.getAttribute('aria-valuenow'), '80');
+  el.removeAttribute('value');
+  assert(!bar.hasAttribute('aria-valuenow'), 'indeterminate has no value');
+});
+
+test('stepper: marks states and aria-current', async () => {
+  const el = await mount(`<lk-stepper current="1" label="Steps"><ol><li>One</li><li>Two</li><li>Three</li></ol></lk-stepper>`);
+  const steps = [...el.querySelectorAll('li')];
+  equal(steps.map((s) => s.dataset.state), ['complete', 'current', 'upcoming']);
+  assert(steps[1].getAttribute('aria-current') === 'step');
+  assert(steps[0].textContent.includes('completed'));
+  el.current = 2;
+  equal(steps.map((s) => s.dataset.state), ['complete', 'complete', 'current']);
+  assert(!steps[1].hasAttribute('aria-current'));
+});

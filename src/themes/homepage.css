@@ -264,4 +264,17 @@
   [data-lk-theme='homepage'] .lk-field__label {
     font-size: 13px;
   }
+
+  /* lk-progress and lk-stepper: sunken track, square markers. */
+
+  [data-lk-theme='homepage'] .lk-progress__bar {
+    box-shadow: inset 1px 1px 0 var(--lk-hp-bevel-dark),
+      inset -1px -1px 0 var(--lk-hp-bevel-light);
+  }
+
+  [data-lk-theme='homepage'] .lk-stepper__marker {
+    border-radius: 0;
+    box-shadow: inset 1px 1px 0 var(--lk-hp-bevel-light),
+      inset -1px -1px 0 var(--lk-hp-bevel-dark);
+  }
 }

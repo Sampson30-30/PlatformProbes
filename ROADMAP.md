@@ -17,7 +17,7 @@ This is a plan, not a promise. Order and scope may change.
 - [ ] Toast notifications
 - [x] Buttons and badges
 - [x] Form controls: text field, select, checkbox and radio groups, slider
-- [ ] Progress bar and stepper
+- [x] Progress bar and stepper
 
 ## Layer 2: Learning components
 

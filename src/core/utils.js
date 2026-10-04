@@ -34,3 +34,17 @@ export function toggleOpen(open, index, multiple = false) {
 export function normaliseOpen(open, multiple = false) {
   return multiple ? open : open.slice(0, 1);
 }
+
+/** Returns value as a percentage of max, clamped to 0 to 100 and rounded. */
+export function percent(value, max = 100) {
+  const m = Number(max);
+  if (!(m > 0)) return 0;
+  return Math.round(clamp((Number(value) / m) * 100, 0, 100));
+}
+
+/** State of step `index` when the current step is `current`. */
+export function stepState(index, current) {
+  if (index < current) return 'complete';
+  if (index === current) return 'current';
+  return 'upcoming';
+}

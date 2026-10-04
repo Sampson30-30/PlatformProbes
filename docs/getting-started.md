@@ -169,3 +169,38 @@ Groups checkboxes or radio buttons into a `fieldset` with a legend.
 | `min` | Minimum checked boxes in a checkbox group. |
 
 Radio groups use the native `required` attribute on their inputs. Call `group.validate()` to check on demand.
+
+
+### `<lk-progress>`
+
+```html
+<lk-progress label="Course progress" value="40" show-value></lk-progress>
+```
+
+| Attribute | Description |
+| --- | --- |
+| `value` | Current value. Leave it out for an indeterminate bar. Change it at any time. |
+| `max` | Maximum value. Default `100`. |
+| `label` | Accessible name. Always provide one. |
+| `show-value` | Also show the percentage as text. |
+
+### `<lk-stepper>`
+
+Shows where the learner is in a sequence. It does not hold the step content. For content that changes step by step, use `<lk-process>`.
+
+```html
+<lk-stepper current="1" label="Enrolment steps">
+  <ol>
+    <li>Your details</li>
+    <li>Choose a course</li>
+    <li>Confirm</li>
+  </ol>
+</lk-stepper>
+```
+
+| Attribute | Description |
+| --- | --- |
+| `current` | Zero-based index of the current step. Steps before it show as complete. Also settable as `stepper.current = 2`. |
+| `label` | Accessible name for the list. |
+
+The current step has `aria-current="step"`, and each step carries a hidden "(completed)" or "(current step)" note for screen readers. On narrow screens the steps stack vertically.

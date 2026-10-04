@@ -14,7 +14,7 @@
   "files": ["src", "docs"],
   "scripts": {
     "test": "node --test \"test/*.test.js\"",
-    "start": "python3 -m http.server 8080"
+    "start": "node scripts/serve.mjs"
   },
   "keywords": ["web-components", "learning", "education", "elearning", "accessibility"],
   "license": "MIT",

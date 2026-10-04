@@ -17,13 +17,16 @@ Thanks for helping. LearnKit aims to stay small, dependency-free and accessible.
 2. Add its styles to `src/learnkit.css`.
 3. Export it from `src/index.js`.
 4. Add an example to `examples/index.html` and a section to `docs/getting-started.md`.
-5. Add an entry to `CHANGELOG.md`.
+5. Add a browser test to `test/browser/components.test.js`, and a Node test for any DOM-free logic.
+6. Style it in each theme in `src/themes/` if the tokens alone do not look right.
+7. Add an entry to `CHANGELOG.md`.
 
 ## Running locally
 
 ```sh
-npm start   # http://localhost:8080/examples/
-npm test
+npm start   # http://localhost:8080/examples/ (no-cache dev server, needs only Node)
+npm test    # Node tests: helpers, contrast checks for every theme
+# Browser tests for each component: open http://localhost:8080/test/browser/
 ```
 
 ## Pull requests

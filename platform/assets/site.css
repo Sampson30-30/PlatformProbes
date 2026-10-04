@@ -149,3 +149,18 @@ lk-quiz, lk-scenario, lk-journal, lk-spectrum, lk-rating, lk-timeline, lk-grid-e
 .brief-checks .lk-button { margin-inline-start: 0.25rem; }
 .brief-text { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 0.8125rem; line-height: 1.5; min-height: 16rem; }
 .brief-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 0.75rem 0 0; }
+
+/* Words */
+
+.word-jump { margin: 0.75rem 0 0; }
+.word-status { margin: 0 0 1rem; font-size: 0.9375rem; color: var(--lk-color-muted); }
+.words { display: grid; gap: 1.25rem; }
+.word { padding: 1rem 1.25rem; background: var(--lk-color-bg); border: var(--lk-border-width) solid var(--lk-color-divider); border-radius: min(var(--lk-radius), 1rem); }
+.word:target { border-color: var(--lk-color-primary); }
+.word > * + * { margin-top: 0.75rem; }
+.word__plain { margin-bottom: 0; font-size: 1.0625rem; }
+.word__facts { margin: 0; display: grid; gap: 0.5rem; }
+.word__facts dt { font-size: 0.8125rem; font-weight: 700; color: var(--lk-color-muted); }
+.word__facts dd { margin: 0; }
+.word__habit { margin-bottom: 0; font-size: 0.9375rem; }
+#phrasebook .b-say { margin-top: 1rem; }

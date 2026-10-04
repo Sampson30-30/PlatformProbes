@@ -70,7 +70,7 @@ Each stage ends with working, tested pages, a commit and a push.
 - [x] **3. Case file: the world time map.** A stepped story of the build with decision points, written from the build account and free of colleague details and internal references.
 - [x] **4. Gallery.** Eight things code can do, each decomposed, with two small live demos built for the purpose.
 - [x] **5. Brief builder.** Guided worksheet with a quality check and an export.
-- [ ] **6. Words.** Searchable plain-English vocabulary and phrasebook.
+- [x] **6. Words.** Searchable plain-English vocabulary and phrasebook.
 - [ ] **7. Progress and coach's guide.** Before and after self-assessment, a progress view, and the guide for whoever runs sessions.
 - [ ] **8. Review.** Accessibility pass, responsive check, content read-through against the principles, and a list of what is unverified.
 

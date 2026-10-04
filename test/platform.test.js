@@ -9,6 +9,8 @@ import { HOME } from '../platform/data/home.js';
 import { ALL_TOPICS, HABITS, REACH } from '../platform/data/habits.js';
 import { CASES } from '../platform/data/cases/world-time-map.js';
 import { GALLERY } from '../platform/data/gallery.js';
+import { WORDS, WORDS_TEXT } from '../platform/data/words.js';
+import { slug, filterEntries, collectPhrases } from '../platform/lib/words.js';
 
 const root = new URL('../platform/', import.meta.url);
 const pageFiles = new Set(readdirSync(root).filter((f) => f.endsWith('.html')));
@@ -86,7 +88,7 @@ test('internal links in content point to real pages and topics', () => {
     const h = new URLSearchParams(query).get('h');
     return !h || topicIds.has(h);
   };
-  const all = [SITE, HOME, ALL_TOPICS, CASES, GALLERY];
+  const all = [SITE, HOME, ALL_TOPICS, CASES, GALLERY, WORDS];
   for (const data of all) {
     for (const text of walkStrings(data)) {
       for (const [, , href] of text.matchAll(/\[([^\]]+)\]\(([^)\s]+)\)/g)) {
@@ -135,4 +137,40 @@ test('gallery exhibits are complete, honest about their limits and well worded',
     assert.ok(ex.demo === null || demos.has(ex.demo), `${ex.id} has an unknown demo`);
   }
   assert.deepEqual(checkWording(GALLERY, 'gallery'), []);
+});
+
+test('vocabulary entries are complete, unique and linked to real habits', () => {
+  assert.ok(WORDS.length >= 20);
+  const slugs = new Set();
+  const topicIds = new Set(ALL_TOPICS.map((t) => t.id));
+  for (const w of WORDS) {
+    for (const field of ['term', 'plain', 'example', 'cost', 'ask', 'habit']) assert.ok(w[field], `${w.term} needs ${field}`);
+    assert.ok(topicIds.has(w.habit), `${w.term} points at an unknown habit`);
+    assert.ok(!slugs.has(slug(w.term)), `duplicate term ${w.term}`);
+    slugs.add(slug(w.term));
+    assert.ok(w.plain.length < 200, `${w.term}: keep the plain meaning short`);
+  }
+  assert.deepEqual(checkWording({ WORDS, WORDS_TEXT }, 'words'), []);
+});
+
+test('search finds terms and aliases first, then meanings, and ignores case and punctuation', () => {
+  const names = (q) => filterEntries(WORDS, q).map((w) => w.term);
+  assert.equal(slug('Edge case'), 'edge-case');
+  assert.equal(filterEntries(WORDS, '').length, WORDS.length);
+  assert.equal(names('hard-coded')[0], 'Hardcoded');
+  assert.equal(names('LIBRARY')[0], 'Library');
+  assert.equal(names('framework')[0], 'Library');
+  assert.equal(names('spec')[0], 'Specification');
+  assert.ok(names('summer').length === 0 || names('summer').every((t) => typeof t === 'string'));
+  assert.deepEqual(names('zzzz'), []);
+  assert.ok(names('typed in').includes('Derived'), 'matches inside the plain meaning');
+});
+
+test('the phrasebook gathers every say block exactly once', () => {
+  const groups = collectPhrases(ALL_TOPICS);
+  assert.equal(groups.length, 7);
+  const total = groups.reduce((n, g) => n + g.phrases.length, 0);
+  const expected = ALL_TOPICS.flatMap((t) => t.blocks.filter((b) => b.type === 'say').flatMap((b) => b.phrases)).length;
+  assert.equal(total, expected);
+  assert.ok(total >= 25);
 });

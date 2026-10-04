@@ -112,3 +112,21 @@ Open it with any element that has `data-lk-open="<id>"`, or in script with `moda
 Keyboard: Escape closes. Tab and Shift+Tab stay inside the modal. Focus starts on the close button, or on any element inside that has `autofocus`, and returns to the element that opened the modal when it closes. Put `autofocus` on the safest button of a destructive confirmation.
 
 The modal's content is hidden until the script loads, so the trigger needs JavaScript. For content that must work without it, use a normal link to a page instead.
+
+
+### Buttons and badges
+
+These are plain CSS classes, so they work on any element and need no JavaScript.
+
+```html
+<button type="button" class="lk-button" data-variant="primary">Save changes</button>
+<a href="/help" class="lk-button" data-variant="link">Read the guide</a>
+<span class="lk-badge" data-tone="success">Complete</span>
+```
+
+| Class | Options |
+| --- | --- |
+| `lk-button` | `data-variant`: `primary`, `danger`, `link`. `data-size="small"`. Use a real `disabled` attribute on buttons. |
+| `lk-badge` | `data-tone`: `primary`, `success`, `warning`, `danger`, `info`. |
+
+Buttons are at least 40px high. Badges must contain text, so meaning never depends on colour alone. Use one primary button per view, and name buttons with verbs that say what happens.

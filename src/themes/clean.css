@@ -26,6 +26,14 @@
     --lk-color-primary: #0f766e;
     --lk-color-primary-text: #ffffff;
     --lk-color-focus: #0f766e;
+    --lk-color-success: #0f7a4f;
+    --lk-color-success-bg: #e2f5ec;
+    --lk-color-warning: #8a5100;
+    --lk-color-warning-bg: #fdf1d6;
+    --lk-color-danger: #c0262d;
+    --lk-color-danger-bg: #fde6e7;
+    --lk-color-info: #1f5fd1;
+    --lk-color-info-bg: #e6eefc;
     --lk-color-backdrop: rgb(15 23 34 / 45%);
 
     --lk-radius: 14px;
@@ -48,6 +56,14 @@
       --lk-color-primary: #2dd4bf;
       --lk-color-primary-text: #04201d;
       --lk-color-focus: #2dd4bf;
+      --lk-color-success: #4ade9a;
+      --lk-color-success-bg: #10291f;
+      --lk-color-warning: #f6c453;
+      --lk-color-warning-bg: #2f2410;
+      --lk-color-danger: #ff8d8d;
+      --lk-color-danger-bg: #341819;
+      --lk-color-info: #8ab4ff;
+      --lk-color-info-bg: #15233f;
       --lk-color-backdrop: rgb(0 0 0 / 60%);
       --lk-shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 8px 24px rgb(0 0 0 / 35%);
     }
@@ -64,6 +80,14 @@
     --lk-color-primary: #2dd4bf;
     --lk-color-primary-text: #04201d;
     --lk-color-focus: #2dd4bf;
+    --lk-color-success: #4ade9a;
+    --lk-color-success-bg: #10291f;
+    --lk-color-warning: #f6c453;
+    --lk-color-warning-bg: #2f2410;
+    --lk-color-danger: #ff8d8d;
+    --lk-color-danger-bg: #341819;
+    --lk-color-info: #8ab4ff;
+    --lk-color-info-bg: #15233f;
     --lk-color-backdrop: rgb(0 0 0 / 60%);
     --lk-shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 8px 24px rgb(0 0 0 / 35%);
   }

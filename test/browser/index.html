@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <title>LearnKit browser tests</title>
+    <link rel="stylesheet" href="../../src/learnkit.css" />
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 1rem; }
+      #results { font: 13px/1.6 ui-monospace, monospace; }
+      #stage { opacity: 0.6; }
+    </style>
+  </head>
+  <body>
+    <script type="module">
+      import '../../src/index.js';
+      import { run } from './harness.js';
+      import './components.test.js';
+      await run();
+    </script>
+  </body>
+</html>
